@@ -1,0 +1,25 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+@font-face {
+    font-family: "source";
+    src: url("../fonts/Source_Sans_Pro/SourceSansPro-Regular.ttf");
+}
+@font-face {
+    font-family: "source bold";
+    src: url("../fonts/Source_Sans_Pro/SourceSansPro-Bold.ttf");
+}
+
+body{
+    font-family: source;
+}
+ body a{
+    text-decoration: none;
+}
+header .brand{
+    font-family: "source bold";
+    font-size: 24px;
+    color: rgb(0, 82, 255);
+}
