@@ -1,4 +1,4 @@
 const config = {
-    baseUrl: '/',
+    baseUrl: '/crypto-wallet/',
 };
 export default config;
