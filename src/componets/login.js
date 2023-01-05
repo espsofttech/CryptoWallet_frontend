@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col, Form, Button, InputGroup } from 'react-bootstrap';
-import Header from "./directories/Header";
-import Footer from "./directories/Footer";
+import Header from "./directives/Header";
+import Footer from "./directives/Footer";
 import { Zoom} from 'react-reveal';
 
 const Login = () => {

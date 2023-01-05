@@ -4,6 +4,8 @@ import Home from '../componets/home';
 import Login from '../componets/login';
 import Signup from '../componets/signup';
 import Forgetpassword from '../componets/forgetpassword';
+import Dashboard from '../componets/dashboard';
+
 
 import config from '../config/config';
 const RouterComponent = () => {
@@ -14,6 +16,7 @@ const RouterComponent = () => {
                     <Route path={`${config.baseUrl}login`} element={<Login/>} />
                     <Route path={`${config.baseUrl}signup`} element={<Signup/>} />
                     <Route path={`${config.baseUrl}forgetpassword`} element={<Forgetpassword/>} />
+                    <Route path={`${config.baseUrl}dashboard`} element={<Dashboard/>} />
                 </Routes>
             </div>
     </BrowserRouter>

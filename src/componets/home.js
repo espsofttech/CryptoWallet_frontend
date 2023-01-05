@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col } from 'react-bootstrap';
-import Header from "./directories/Header";
-import Footer from "./directories/Footer";
+import Header from "./directives/Header";
+import Footer from "./directives/Footer";
 import CountUp, { useCountUp } from "react-countup";
 import AnimatedText from 'react-animated-text-content';
 import { Zoom,Fade,Roll} from 'react-reveal';

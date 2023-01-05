@@ -51,6 +51,7 @@ header .nav-link {
 .feature-card .feature-icon {
     width: 70px;
     height: 70px;
+    margin: inherit;
     border: 1px solid #2f2cd8;
     margin-bottom: 18px;
     text-align: center;
@@ -178,8 +179,9 @@ text-align: right;
 .count-box .count-card:last-child:after {
     background: transparent;
   }
-.count-card p{
- color: #fff;
+  .count-card p {
+    color: #fff;
+    font-size: 16px;
 }
 .count-card h3 {
     font-size: 34px;
