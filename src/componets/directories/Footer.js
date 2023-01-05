@@ -17,11 +17,22 @@ const Footer = () => {
          
         </a>
         <p>Lorem ipsum  consectetur adipiscing elit, sed do eiusmod incididunt ut labore et dolore magna aliqua.</p>
-        <ul className="social-profile style2 list-style "><a className="logo" href="#">
-          </a><li><a className="logo" href="#">
-            </a><a target="_blank" href="#"><img src="images/facebook.png" /></a></li><li><a target="_blank" href="#"><img src="images/instagram.png" /></a></li><li><a target="_blank" href="#"><img src="images/twitter.png" /></a></li><li><a target="_blank" href="#"><img src="images/linkedin.png" /></a></li></ul>
+          <ul className="social-profile style2 list-style ">
+           <li>
+              <a target="_blank" href="#"><i className="fa fa-facebook"></i></a>
+            </li>
+            <li>
+              <a target="_blank" href="#"><i className="fa fa-instagram"></i></a>
+            </li>
+            <li>
+                <a target="_blank" href="#"><i className="fa fa-twitter"></i></a>
+            </li>
+            <li>
+                  <a target="_blank" href="#"><i className="fa fa-linkedin"></i></a>
+            </li>
+          </ul>
       </Col>
-      <Col lg={3}>
+      <Col lg={3} sm={6} xs={6}>
         <div className="footer-widget pl-lg-4">
           <h3 className="footer-widget-title">Product</h3>
           <ul className="footer-menu list-style">
@@ -32,7 +43,7 @@ const Footer = () => {
           </ul>
         </div>
       </Col>
-      <Col lg={3}>
+      <Col lg={3} sm={6} xs={6}>
         <div className="footer-widget pl-lg-4">
           <h3 className="footer-widget-title">Service</h3>
           <ul className="footer-menu list-style">
@@ -43,7 +54,7 @@ const Footer = () => {
           </ul>
         </div>
       </Col>
-      <Col lg={3}>
+      <Col lg={3} sm={6} xs={6}>
         <div className="footer-widget">
           <h3 className="footer-widget-title">Contact Us</h3>
           <ul className="contact-info list-style">
@@ -62,11 +73,10 @@ const Footer = () => {
       </Col>
     </Row>
     <Row className=" pt-10 pb-20">
-    <Col lg={6}>
+    <Col lg={12}>
         <p className="copyright-text">© Copyright 2022 -  <a href="#" target="_blank" className="">Crypto Wallet</a></p>
       </Col>
-      <Col lg={6}>
-        </Col>
+     
     </Row>
   </Container>
 </footer>

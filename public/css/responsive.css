@@ -10,3 +10,19 @@
     }
     
   }
+
+  @media only screen and (max-width: 450px) {
+  .footer-wrap {
+    position: relative;
+    /* background-color: #e8f1fe; */
+    background-image: url("../images/footerlayer.png");
+    margin-top: 40px;
+    background-repeat: no-repeat;
+    padding: 148px 0px 20px 0px;
+    background-size: cover;
+    background-position: bottom;
+}
+.footer-wrap .footer-widget {
+  margin-bottom: 25px;
+  margin-top: 25px;
+}}
