@@ -1,0 +1,12 @@
+@media only screen and (min-width: 992px) {
+    .pl-lg-4{
+      padding-left: 4em;
+    }
+    .pr-lg-0 {
+      padding-right: 0px!important;
+   }
+    .pl-lg-0 {
+      padding-left: 0px!important;
+    }
+    
+  }
