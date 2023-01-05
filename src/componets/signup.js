@@ -9,7 +9,7 @@ const Signup = () => {
     return (
         <>
             <Header />
-            <div className="Login-wrap ptb-100 mt-5">
+            <div className="Login-wrap ptb-30 mt-5">
                 <Container>
                     <Row className="justify-content-center">
                         <Col lg={6} className="">
