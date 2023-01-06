@@ -12,6 +12,22 @@
   }
 
   @media only screen and (max-width: 450px) {
+    .hero-text h1 {
+      font-size: 36px;
+  }
+  .hero-section {
+    background-size: cover;
+}
+.hero-text {
+  padding: 40px 0px 0px 0px;
+}
+.hero-section .hero-video lottie-player {
+  margin-top: 20px;
+  height: 100%!important;
+}
+.headings h2 {
+  font-size: 36px;
+}
   .footer-wrap {
     position: relative;
     /* background-color: #e8f1fe; */
