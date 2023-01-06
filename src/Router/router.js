@@ -1,13 +1,19 @@
 import React, { Component, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import config from '../config/config';
 import Home from '../componets/home';
 import Login from '../componets/login';
 import Signup from '../componets/signup';
 import Forgetpassword from '../componets/forgetpassword';
 import Dashboard from '../componets/dashboard';
+import Buy from '../componets/buy';
+import Wallet from '../componets/wallet';
+import Bankdetail from '../componets/bankdetail';
+import Kycdetail from '../componets/kycdetails';
+import Changepassword from '../componets/changepassword';
+import Withdraw from '../componets/withdraw';
+import Profile from '../componets/profile';
 
-
-import config from '../config/config';
 const RouterComponent = () => {
     return (<BrowserRouter >
             <div> 
@@ -17,6 +23,14 @@ const RouterComponent = () => {
                     <Route path={`${config.baseUrl}signup`} element={<Signup/>} />
                     <Route path={`${config.baseUrl}forgetpassword`} element={<Forgetpassword/>} />
                     <Route path={`${config.baseUrl}dashboard`} element={<Dashboard/>} />
+                    <Route path={`${config.baseUrl}buy`} element={<Buy/>} />
+                    <Route path={`${config.baseUrl}wallet`} element={<Wallet/>} />
+                    <Route path={`${config.baseUrl}bankdetail`} element={<Bankdetail/>} />
+                    <Route path={`${config.baseUrl}kycdetails`} element={<Kycdetail/>} />
+                    <Route path={`${config.baseUrl}changepassword`} element={<Changepassword/>} />
+                    <Route path={`${config.baseUrl}withdraw`} element={<Withdraw/>} />
+                    <Route path={`${config.baseUrl}profile`} element={<Profile/>} />
+
                 </Routes>
             </div>
     </BrowserRouter>
