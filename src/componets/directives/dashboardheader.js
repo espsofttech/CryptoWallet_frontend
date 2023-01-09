@@ -5,6 +5,11 @@ import {Link} from 'react-router-dom';
 import $ from 'jquery';
 
 const Dashboardheader = () => {
+    
+    const toggleClass = () => {
+        $('.page-wrapper').toggleClass("toggled");
+        // setActive(!isActive);
+      };
 
     useEffect(() => {
         // Update the document title using the browser API
@@ -15,7 +20,9 @@ const Dashboardheader = () => {
     return (
         <>
            <div className="page-header">
-                            <div className="toggle-sidebar" id="toggle-sidebar"><i className="bi bi-list" /></div>
+                            <div className="toggle-sidebar" id="toggle-sidebar">
+                                <i className="bi bi-list" />
+                            </div>
                             <ol className="breadcrumb">
                                 <li className="breadcrumb-item"><i className="bi bi-house" /><a href="#">Home</a></li>
                                 <li className="breadcrumb-item breadcrumb-active" aria-current="page">Dashboard</li>

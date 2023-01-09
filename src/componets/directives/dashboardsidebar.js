@@ -5,10 +5,13 @@ import { Container, Row, Col, Form, Button, InputGroup } from 'react-bootstrap';
 import {Link} from 'react-router-dom'
 
 const Dashboardsidebar = () => {
+    
     return (
         <>
            <nav className="sidebar-wrapper">
-                        <div className="sidebar-brand"><a href="#" className="logo"><img src="dashboardFolder/img/logo.png" alt="Vivo Admin Dashboard" /></a></div>
+                        <div className="sidebar-brand">
+                            <a href="#" className="logo"><img src="dashboardFolder/img/logo.png" alt=" Admin Dashboard" /></a>
+                        </div>
                         <div className="sidebar-menu">
                             <div className="sidebarMenuScroll">
                                 <ul>
