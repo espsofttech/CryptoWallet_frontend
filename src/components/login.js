@@ -9,8 +9,12 @@ import config from "../config/config"
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 
+import { useSelector, useDispatch } from 'react-redux'
+import * as ACTIONTYPES from '../../src/redux/actionTypes'
+
 const Login = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const [form, setForm] = useState({ email: '', password: '' })
     const [validatioError, setvalidatioError] = useState({});
@@ -99,6 +103,12 @@ const Login = () => {
                 let res = await LoginAction(form);
                 if (res.status == true) {
                     toast.success(res.msg);
+                    dispatch({
+                        type: ACTIONTYPES.USER_FORM, payload: {
+                            template: res.data,
+                        }
+                    })
+
                     // Cookies.set('loginSuccessMrMint', JSON.stringify(res.data));
                     // Cookies.set('loginType', loginType);
 
@@ -122,10 +132,10 @@ const Login = () => {
 
 
     const navigation = async (id) => {
-        if(id == 'Register'){
+        if (id == 'Register') {
             navigate(config.baseUrl + 'signup')
         }
-        else if(id == 'Forgot'){
+        else if (id == 'Forgot') {
             navigate(config.baseUrl + 'forgetpassword')
         }
     }

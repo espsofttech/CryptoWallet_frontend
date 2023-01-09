@@ -3,9 +3,15 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col, Form, Button, InputGroup } from 'react-bootstrap';
 import Dashboardheader from "./directives/dashboardheader";
 import Dashboardsidebar from "./directives/dashboardsidebar";
-
+import { useSelector, useDispatch } from 'react-redux'
+import * as ACTIONTYPES from '../../src/redux/actionTypes'
 
 const Dashboard = () => {
+
+    const dispatch = useDispatch();
+    const USER_LOGIN_DETAILS = useSelector((state) => state.auth.USER_LOGIN_DETAILS)
+
+    console.log(USER_LOGIN_DETAILS)
     return (
         <>
             <div>

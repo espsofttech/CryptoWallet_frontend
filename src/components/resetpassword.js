@@ -49,13 +49,15 @@ const Resetpassword = () => {
 
     const SubmitForm = async (e) => {
         e.preventDefault()
-        const isValid = validate();
+        const isValid = validate(); 
+        try {
+
         if (!isValid) {
 
         }
         else {
             let res = await ResetPasswordAction(form);
-            if (res.success) {
+            if (res.status == true) {
                 toast.success(res.msg);
                 setTimeout(() => {
                     window.location.href = `${config.baseUrl}login`;
@@ -64,6 +66,11 @@ const Resetpassword = () => {
                 toast.error(res.msg);
             }
         }
+    }
+    catch (err) {
+        console.log(err.response)
+        toast.error(err.response.data.msg);
+    }
     }
 
     return (
