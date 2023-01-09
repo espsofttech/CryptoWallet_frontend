@@ -49,7 +49,104 @@ Jump Start Your Crypto Portfolio
                     </Row>
                 </Container>
             </section>
-            <section>
+            <section className="exchange-table-wrap pt-5 mt-3">
+  <Container>
+    <Row>
+      <Col lg={12}>
+        {/* <div className="section-title style1 text-center mb-40"><h2>Market Trade</h2></div> */}
+      </Col>
+    </Row>
+    <div className="exchange-table">
+        <div className="table-responsive">
+      <table className="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Amount</th>
+            <th scope="col">24h Change</th>
+            <th scope="col">Markets</th>
+            <th scope="col">Trade</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div className="country-flag"><img src="images/BTC.png" alt="Image" />BTC</div>
+            </td>
+            <td>$48,706.42</td>
+            <td><span className="text-green">+0.50%</span></td>
+            <td><img src="images/waveline.png" alt="Image" width="90px" /></td>
+            <td>
+              <div className="d-flex">
+                <button className="btn style1 mr-1" type="button">Buy</button>&nbsp;&nbsp;
+                <button className="btn style1" type="button">Trade</button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div className="country-flag"><img src="images/ETC.png" alt="Image" />ETH</div>
+            </td>
+            <td>$0.332767</td>
+            <td><span className="text-green">+0.24%</span></td>
+            <td><img src="images/waveline.png" alt="Image" width="90px" /></td>
+            <td>
+              <div className="d-flex">
+                <button className="btn style1 mr-1" type="button">Buy</button>&nbsp;&nbsp;
+                <button className="btn style1" type="button">Trade</button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div className="country-flag"><img src="images/CHZ.png" alt="Image" />CHZ</div>
+            </td>
+            <td>$48,706.42</td>
+            <td><span className="text-red">-0.30%</span></td>
+            <td><img src="images/waveline.png" alt="Image" width="90px" /></td>
+            <td>
+              <div className="d-flex">
+                <button className="btn style1 mr-1" type="button">Buy</button>&nbsp;&nbsp;
+                <button className="btn style1" type="button">Trade</button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div className="country-flag"><img src="images/AGRS.png" alt="Image" />AGRS</div>
+            </td>
+            <td>$0.332767</td>
+            <td><span className="text-red">-0.063%</span></td>
+            <td><img src="images/waveline.png" alt="Image" width="90px" /></td>
+            <td>
+              <div className="d-flex">
+                <button className="btn style1 mr-1" type="button">Buy</button>&nbsp;&nbsp;
+                <button className="btn style1" type="button">Trade</button>
+            </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div className="country-flag"><img src="images/ACT.png" alt="Image" />ACT</div>
+            </td>
+            <td>$48,706.42</td>
+            <td><span className="text-red">-0.76%</span></td>
+            <td><img src="images/waveline.png" alt="Image" width="90px" /></td>
+            <td>
+              <div className="d-flex">
+                <button className="btn style1 mr-1" type="button">Buy</button>&nbsp;&nbsp;
+                <button className="btn style1" type="button">Trade</button>
+            </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+    
+  </Container>
+</section>
+            <section class="pt-0">
                 <Container>
                     <Row className="justify-content-center">
                         <Col md={6}>
