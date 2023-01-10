@@ -58,7 +58,7 @@ Jump Start Your Crypto Portfolio
     </Row>
     <div className="exchange-table">
         <div className="table-responsive">
-      <table className="table table-striped">
+      <table className="table table-striped mb-0">
         <thead>
           <tr>
             <th scope="col">Name</th>
@@ -79,7 +79,7 @@ Jump Start Your Crypto Portfolio
             <td>
               <div className="d-flex">
                 <button className="btn style1 mr-1" type="button">Buy</button>&nbsp;&nbsp;
-                <button className="btn style1" type="button">Trade</button>
+                <button className="btn style1" type="button">Sell</button>
               </div>
             </td>
           </tr>
@@ -93,13 +93,13 @@ Jump Start Your Crypto Portfolio
             <td>
               <div className="d-flex">
                 <button className="btn style1 mr-1" type="button">Buy</button>&nbsp;&nbsp;
-                <button className="btn style1" type="button">Trade</button>
+                <button className="btn style1" type="button">Sell</button>
               </div>
             </td>
           </tr>
           <tr>
             <td>
-              <div className="country-flag"><img src="images/CHZ.png" alt="Image" />CHZ</div>
+              <div className="country-flag"><img src="images/usdt.png" alt="Image" />USDT</div>
             </td>
             <td>$48,706.42</td>
             <td><span className="text-red">-0.30%</span></td>
@@ -107,13 +107,13 @@ Jump Start Your Crypto Portfolio
             <td>
               <div className="d-flex">
                 <button className="btn style1 mr-1" type="button">Buy</button>&nbsp;&nbsp;
-                <button className="btn style1" type="button">Trade</button>
+                <button className="btn style1" type="button">Sell</button>
               </div>
             </td>
           </tr>
           <tr>
             <td>
-              <div className="country-flag"><img src="images/AGRS.png" alt="Image" />AGRS</div>
+              <div className="country-flag"><img src="images/usdc.png" alt="Image" />USDC</div>
             </td>
             <td>$0.332767</td>
             <td><span className="text-red">-0.063%</span></td>
@@ -121,24 +121,11 @@ Jump Start Your Crypto Portfolio
             <td>
               <div className="d-flex">
                 <button className="btn style1 mr-1" type="button">Buy</button>&nbsp;&nbsp;
-                <button className="btn style1" type="button">Trade</button>
+                <button className="btn style1" type="button">Sell</button>
             </div>
             </td>
           </tr>
-          <tr>
-            <td>
-              <div className="country-flag"><img src="images/ACT.png" alt="Image" />ACT</div>
-            </td>
-            <td>$48,706.42</td>
-            <td><span className="text-red">-0.76%</span></td>
-            <td><img src="images/waveline.png" alt="Image" width="90px" /></td>
-            <td>
-              <div className="d-flex">
-                <button className="btn style1 mr-1" type="button">Buy</button>&nbsp;&nbsp;
-                <button className="btn style1" type="button">Trade</button>
-            </div>
-            </td>
-          </tr>
+         
         </tbody>
       </table>
       </div>
