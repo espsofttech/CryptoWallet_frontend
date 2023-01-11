@@ -6223,6 +6223,7 @@ select:-webkit-autofill:focus {
 .table>tbody td {
 	width: 200px;
 	white-space: nowrap;
+	vertical-align: middle;
 }
 
 .table.v-middle {
@@ -10740,5 +10741,20 @@ a.menuLink {
 .login-container {
     background: #fff;
 }
+/* ---------------------- */
+.exchange-table {
+    border: 1px solid #e3e3e3;
+    border-radius: 15px;
+    overflow: hidden;
+}
 
+.exchange-table .table>thead td, .exchange-table .table>thead th {
+    padding: 18px 15px;
+    vertical-align: middle;
+}
+.exchange-table .country-flag img {
+    width: 30px;
+    object-fit: contain;
+    margin-right: 7px;
+}
 
