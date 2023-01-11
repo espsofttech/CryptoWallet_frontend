@@ -550,3 +550,7 @@ header {
 .login-body span {
   font-size: 14px;
 }
+/* ----------------- */
+.bg-light-blue{
+  background-color: #e8f1fe;
+}

@@ -13,6 +13,9 @@ import Kycdetail from '../componets/kycdetails';
 import Changepassword from '../componets/changepassword';
 import Withdraw from '../componets/withdraw';
 import Profile from '../componets/profile';
+import Aboutus from '../componets/aboutus';
+import Privacypolicy from '../componets/privacypolicy';
+import Faq from '../componets/faq';
 
 const RouterComponent = () => {
     return (<BrowserRouter >
@@ -30,6 +33,9 @@ const RouterComponent = () => {
                     <Route path={`${config.baseUrl}changepassword`} element={<Changepassword/>} />
                     <Route path={`${config.baseUrl}withdraw`} element={<Withdraw/>} />
                     <Route path={`${config.baseUrl}profile`} element={<Profile/>} />
+                    <Route path={`${config.baseUrl}aboutus`} element={<Aboutus/>} />
+                    <Route path={`${config.baseUrl}faq`} element={<Faq/>} />
+                    <Route path={`${config.baseUrl}privacypolicy`} element={<Privacypolicy/>} />
 
                 </Routes>
             </div>
