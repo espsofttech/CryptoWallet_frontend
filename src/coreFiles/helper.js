@@ -16,7 +16,7 @@ export const request = (path, data, method) => {
         dataType: 'json'
     };
     if (loginData) {
-        options.headers['Authorization'] = loginData?.authToken
+        options.headers['Authorization'] = loginData
     }
     if (method === 'GET') {
         options['params'] = data
@@ -37,7 +37,7 @@ export const requestFormData = (path, data, method) => {
         method: method,
         url: `${serverPath}/${path}`,
         data: form_data,
-        headers: { authorization: loginData?.authToken },
+        headers: { authorization: loginData },
     };
     let res = axios(options);
     res.then(res1 => { })
@@ -49,3 +49,4 @@ export const getRequest = async (path, data) => await request(path, data, 'GET')
 export const putRequest = async (path, data) => await request(path, data, 'PUT')
 export const deleteRequest = async (path, data) => await request(path, data, 'DELETE')
 export const postRequestFormData = async (path, data) => await requestFormData(path, data, 'POST')
+export const putRequestFormData = async (path, data) => await requestFormData(path, data, 'PUT')

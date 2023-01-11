@@ -4,7 +4,7 @@ import { Container, Row, Col, Form, Button, InputGroup } from 'react-bootstrap';
 import $ from 'jquery';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import config from '../../config/config';
-
+import Cookies from 'js-cookie';
 import { useSelector, useDispatch } from 'react-redux'
 import * as ACTIONTYPES from '../../../src/redux/actionTypes'
 const Dashboardheader = () => {
@@ -21,6 +21,7 @@ const Dashboardheader = () => {
         if(USER_LOGIN_DETAILS.template == ''){
             window.location.href = config.baseUrl
         }
+        Cookies.set('loginSuccessCryptoWallet', JSON.stringify(USER_LOGIN_DETAILS.token));
     },[]);
 
     const toggleClass = () => {

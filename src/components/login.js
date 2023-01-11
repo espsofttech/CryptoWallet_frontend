@@ -106,6 +106,7 @@ const Login = () => {
                     dispatch({
                         type: ACTIONTYPES.USER_FORM, payload: {
                             template: res.data,
+                            token: res.token
                         }
                     })
 

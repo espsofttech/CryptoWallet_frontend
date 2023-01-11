@@ -1,29 +1,172 @@
-import React, { useEffect, useState } from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Row, Col, Form, Button, InputGroup } from 'react-bootstrap';
-import ReactDatatable from '@ashvin27/react-datatable';
+import React, { Component, useEffect, useState } from 'react'
+import config from '../config/config';
 import Dashboardheader from "./directives/dashboardheader";
 import Dashboardsidebar from "./directives/dashboardsidebar";
+import ReactDatatable from '@ashvin27/react-datatable'
+import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux'
+import * as ACTIONTYPES from '../../src/redux/actionTypes'
+import { getgetadminbankdetailsAction, getgetuserbankdetailsAction, updateupdateuserbankdetailsAction } from '../Action/user.action';
+import toast, { Toaster } from 'react-hot-toast';
 
+// const loginData = (!Cookies.get('loginSuccessSilkyExchangeDevelopement')) ? [] : JSON.parse(Cookies.get('loginSuccessSilkyExchangeDevelopement'));
 
 const Bankdetail = () => {
+    const dispatch = useDispatch();
+
+
+    const USER_LOGIN_DETAILS = useSelector((state) => state.auth.USER_LOGIN_DETAILS)
+
+    console.log(USER_LOGIN_DETAILS)
+
+    const [toggleSet, settoggleSet] = useState(1)
+    const [bankdetails, setbankdetails] = useState([]);
+    const [adminbankdetails, setadminbankdetails] = useState([]);
+    const [validatioError, setvalidatioError] = useState(false);
+    useEffect(() => {
+        // console.log(loginData)
+        getbankdetails({ id: USER_LOGIN_DETAILS.template.id });
+        getadminbankdetails({ id: 1 });
+
+    }, []);
+
+    const toggleManage = (data) => {
+        settoggleSet(data)
+    }
+
+    const getbankdetails = async (data) => {
+        try {
+            let res = await getgetuserbankdetailsAction(data);
+            console.log('res', res.success);
+            if (res.status == true) {
+                setbankdetails(res.data);
+            }
+        }
+        catch (err) {
+
+        }
+    };
+
+    const getadminbankdetails = async (data) => {
+        let res = await getgetadminbankdetailsAction(data);
+        if (res) {
+            setadminbankdetails(res.data);
+        }
+    };
+
+    const inputHandler = (e) => {
+        const { name, value } = e.target;
+        if (bankdetails?.bank_account_holder_name) {
+            setbankdetails((old) => {
+                return { ...old, [name]: value };
+            });
+            validatioError.AccountnameError = ''
+        } if (bankdetails?.branchName) {
+            setbankdetails((old) => {
+                return { ...old, [name]: value };
+            });
+            validatioError.branchnameError = ''
+        } if (bankdetails?.bank_name) {
+            setbankdetails((old) => {
+                return { ...old, [name]: value };
+            });
+            validatioError.banknameError = ''
+        } if (bankdetails?.AccountNumber) {
+            setbankdetails((old) => {
+                return { ...old, [name]: value };
+            });
+            validatioError.accountnumberError = ''
+        } if (bankdetails?.ifsc_code) {
+            setbankdetails((old) => {
+                return { ...old, [name]: value };
+            });
+            validatioError.ifsccodeError = ''
+        } if (bankdetails?.panCardno) {
+            setbankdetails((old) => {
+                return { ...old, [name]: value };
+            });
+            validatioError.panCardno = ''
+        }
+
+        // const { name, value } = e.target;
+        setbankdetails((old) => {
+            return { ...old, [name]: value };
+        });
+    };
+
+    function validate() {
+
+        let AccountnameError = "";
+        let branchnameError = '';
+        let banknameError = '';
+        let accountnumberError = '';
+        let ifsccodeError = '';
+        let pancardnumberError = '';
+        if (bankdetails?.bank_account_holder_name == '' || bankdetails?.bank_account_holder_name == undefined) {
+            AccountnameError = "Bank Account Holder Name  is required."
+        } else if (bankdetails?.branchName == '' || bankdetails?.branchName == undefined) {
+            branchnameError = "Branch name  is required."
+        } else if (bankdetails?.bank_name == '' || bankdetails?.bank_name == undefined) {
+            banknameError = "Bank name  is required."
+        } else if (bankdetails?.AccountNumber == '' || bankdetails?.AccountNumber == undefined) {
+            accountnumberError = "Account number  is required."
+        } else if (bankdetails?.ifsc_code == '' || bankdetails?.ifsc_code == undefined) {
+            ifsccodeError = "IFSC code  is required."
+        } else if (bankdetails?.panCardno == '' || bankdetails?.panCardno == undefined) {
+            pancardnumberError = "Pancard Number is required."
+        }
+
+
+
+        if (banknameError || accountnumberError || branchnameError || AccountnameError || ifsccodeError || pancardnumberError) {
+            setvalidatioError({
+                banknameError, accountnumberError, branchnameError, ifsccodeError, AccountnameError, pancardnumberError
+            })
+            return false
+        } else {
+            return true
+        }
+    }
+
+    const updatebankdetails = async (e) => {
+        e.preventDefault();
+
+        const isValid = validate();
+
+        if (isValid) {
+            bankdetails.id = USER_LOGIN_DETAILS.template?.id
+
+            let res = await updateupdateuserbankdetailsAction(bankdetails);
+            if (res.success) {
+                // setTimeout(() => {
+
+                toast.success(res.msg);
+                // }, 10000);
+                // toast.success(res.msg);
+                // setTimeout(() => {
+                //     window.location.href = `${config.baseUrl}carddetail`;
+                // }, 22000);
+            } else {
+                toast.error(res.msg);
+            }
+        }
+    };
+
+
 
     return (
         <>
-            <div>
-
-                <div className="page-wrapper">
-                    <Dashboardsidebar />
-                    <div className="main-container">
-                        <Dashboardheader />
-
-                        <div className="content-wrapper-scroll">
-                            <div className="content-wrapper">
+            <div className={`page-wrapper${toggleSet == 1 ? '' : ' toggled'}`}>
+                <Dashboardsidebar />
+                <div className="main-container">
+                    <Dashboardheader clickToggle={toggleManage} />
+                    <div className="content-wrapper-scroll">
+                        <div className="content-wrapper">
 
                             <div className="row">
                                 <div className='col-md-12 '>
                                     <div className=' p-3'>
-
+                                        <Toaster />
                                         <div className='form-body'>
                                             <div className='row'>
                                                 <div className='col-md-6'>
@@ -33,7 +176,8 @@ const Bankdetail = () => {
                                                         <h4>User Bank detail</h4>
                                                         <hr class="mt-2" />
                                                         <div className="">
-                                                            <form>
+                                                            <form
+                                                                onSubmit={updatebankdetails}>
                                                                 <div className="mb-3">
                                                                     <label
 
@@ -44,11 +188,12 @@ const Bankdetail = () => {
                                                                     <input
                                                                         type="text"
                                                                         className="form-control"
-                                                                       
-                                                                        name="account_name"
+                                                                        onChange={inputHandler}
+                                                                        value={bankdetails?.bank_account_holder_name}
+                                                                        name="bank_account_holder_name"
 
                                                                     />
-                                                                    <span className="validationErr"></span>
+                                                                    <span className="validationErr">{validatioError.AccountnameError}</span>
                                                                 </div>
 
                                                                 <div className="mb-3">
@@ -61,12 +206,13 @@ const Bankdetail = () => {
                                                                     <input
                                                                         type="text"
                                                                         className="form-control"
-                                                                        
+                                                                        onChange={inputHandler}
+                                                                        value={bankdetails?.bank_name}
 
                                                                         name="bank_name"
 
                                                                     />
-                                                                    <span className="validationErr"></span>
+                                                                    <span className="validationErr">{validatioError.banknameError}</span>
                                                                 </div>
                                                                 <div className="mb-3">
                                                                     <label
@@ -78,12 +224,13 @@ const Bankdetail = () => {
                                                                     <input
                                                                         type="text"
                                                                         className="form-control"
-                                                                       
+                                                                        onChange={inputHandler}
+                                                                        value={bankdetails?.branchName}
 
-                                                                        name="branch_name"
+                                                                        name="branchName"
 
                                                                     />
-                                                                    <span className="validationErr"></span>
+                                                                    <span className="validationErr">{validatioError.branchnameError}</span>
                                                                 </div>
 
 
@@ -97,13 +244,14 @@ const Bankdetail = () => {
                                                                     <input
                                                                         type="text"
                                                                         className="form-control"
-                                                                        
+                                                                        onChange={inputHandler}
+                                                                        value={bankdetails?.AccountNumber}
 
-                                                                        name="account_number"
+                                                                        name="AccountNumber"
 
 
                                                                     />
-                                                                    <span className="validationErr"></span>
+                                                                    <span className="validationErr">{validatioError.accountnumberError}</span>
                                                                 </div>
 
 
@@ -117,13 +265,13 @@ const Bankdetail = () => {
                                                                     <input
                                                                         type="text"
                                                                         className="form-control"
-                                                                      
-                                                                        
+                                                                        onChange={inputHandler}
+                                                                        value={bankdetails?.ifsc_code}
 
                                                                         name="ifsc_code"
 
                                                                     />
-                                                                    <span className="validationErr"></span>
+                                                                    <span className="validationErr">{validatioError.ifsccodeError}</span>
                                                                 </div>
 
                                                                 <div className="mb-3">
@@ -136,14 +284,84 @@ const Bankdetail = () => {
                                                                     <input
                                                                         type="text"
                                                                         className="form-control"
-                                                                      
-                                                                    
+                                                                        onChange={inputHandler}
+                                                                        value={bankdetails?.panCardno}
 
-                                                                        name="pancard_number"
+                                                                        name="panCardno"
 
                                                                     />
-                                                                    <span className="validationErr"></span>
+                                                                    <span className="validationErr">{validatioError.pancardnumberError}</span>
                                                                 </div>
+
+                                                                <div className="mb-3">
+                                                                    <label
+
+                                                                        className="form-label"
+                                                                    >
+                                                                        Account Type
+                                                                    </label>
+                                                                    <select className='form-control' onChange={inputHandler}
+                                                                        value={bankdetails?.accountType}
+
+                                                                        name="accountType">
+                                                                        <option value=''>Select Account Type</option>
+                                                                        <option value='1'>Saving Account</option>
+                                                                        <option value='2'>current Account</option>
+                                                                    </select>
+
+                                                                </div>
+                                                                {bankdetails?.accountType == 2 ?
+                                                                    <>
+                                                                        <div className="mb-3">
+                                                                            <label className="form-label">
+                                                                                GST Image
+                                                                            </label>
+                                                                            <input
+                                                                                name="GSTimage"
+                                                                                id="fileInput"
+                                                                                accept="image/*"
+                                                                                className="choose-file mt-3"
+                                                                                type="file"
+                                                                            />
+                                                                            <span className="validationErr danger">
+
+                                                                            </span>
+                                                                        </div>
+
+                                                                        <div className="mb-3">
+                                                                            <label className="form-label">
+                                                                                Cancelled Cheque Image
+                                                                            </label>
+                                                                            <input
+                                                                                name="cancelledChequeImage"
+                                                                                id="fileInput"
+                                                                                accept="image/*"
+                                                                                className="choose-file mt-3"
+                                                                                type="file"
+                                                                            />
+                                                                            <span className="validationErr danger">
+
+                                                                            </span>
+                                                                        </div>
+
+                                                                        <div className="mb-3">
+                                                                            <label className="form-label">
+                                                                                Bank Statement Image
+                                                                            </label>
+                                                                            <input
+                                                                                name="bankStatementImage"
+                                                                                id="fileInput"
+                                                                                accept="image/*"
+                                                                                className="choose-file mt-3"
+                                                                                type="file"
+                                                                            />
+                                                                            <span className="validationErr danger">
+
+                                                                            </span>
+                                                                        </div>
+                                                                    </> : ''
+                                                                }
+
 
                                                                 <div className=" mx-10  mt-20">
                                                                     <button
@@ -174,9 +392,9 @@ const Bankdetail = () => {
                                                                 <input
                                                                     type="text"
                                                                     className="form-control"
-                                                                    
-                                                                    name="account_name"
-                                                                   
+                                                                    disabled
+                                                                    name="bank_account_holder_name"
+                                                                    value={adminbankdetails?.bank_account_holder_name}
 
                                                                 />
                                                             </div>
@@ -191,9 +409,9 @@ const Bankdetail = () => {
                                                                 <input
                                                                     type="text"
                                                                     className="form-control"
-                                                                    
-                                                                    name="branch_name"
-                                                                   
+                                                                    disabled
+                                                                    name="branchName"
+                                                                    value={adminbankdetails?.branchName}
 
                                                                 />
                                                             </div>
@@ -208,9 +426,9 @@ const Bankdetail = () => {
                                                                 <input
                                                                     type="text"
                                                                     className="form-control"
-                                                                    
+                                                                    disabled
                                                                     name="bank_name"
-                                                                   
+                                                                    value={adminbankdetails?.bank_name}
 
                                                                 />
                                                             </div>
@@ -224,9 +442,9 @@ const Bankdetail = () => {
                                                                 <input
                                                                     type="text"
                                                                     className="form-control"
-                                                                    
-                                                                    name="account_number"
-                                                                 
+                                                                    disabled
+                                                                    name="AccountNumber"
+                                                                    value={adminbankdetails?.AccountNumber}
 
                                                                 />
                                                             </div>
@@ -239,9 +457,9 @@ const Bankdetail = () => {
                                                                 <input
                                                                     type="text"
                                                                     className="form-control"
-                                                                    
+                                                                    disabled
                                                                     name="ifsc_code"
-                                                                    
+                                                                    value={adminbankdetails?.ifsc_code}
 
                                                                 />
                                                             </div>
@@ -255,8 +473,6 @@ const Bankdetail = () => {
                                     </div>
                                 </div>
                             </div>
-                            </div>
-
                         </div>
                     </div>
                 </div>
@@ -264,4 +480,4 @@ const Bankdetail = () => {
         </>
     )
 }
-export default Bankdetail
+export default Bankdetail;
