@@ -50,7 +50,7 @@ const Dashboardheader = () => {
                 </ol>
 
                 <div className="header-actions-container">
-                    <a class="btn style1 mb-3" href="#">Exchange</a>
+                    {/* <a class="btn style1 mb-3" href="#">Exchange</a> */}
 
                     <ul className="header-actions">
                         <li className="dropdown">

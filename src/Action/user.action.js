@@ -40,3 +40,11 @@ export const updateupdateuserbankdetailsAction = (data) => {
       return res.data;
    });
 }
+
+export const showkycAction = (data) => {
+   return getRequest(`getKycDetailById/${data.id}`).then(res => { return res.data })
+}
+
+export const updatekycAction = (data) => {
+   return postRequestFormData('InsertKycData', data).then(res => { return res.data })
+}

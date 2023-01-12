@@ -18,7 +18,15 @@ const Bankdetail = () => {
     const USER_LOGIN_DETAILS = useSelector((state) => state.auth.USER_LOGIN_DETAILS)
 
     console.log(USER_LOGIN_DETAILS)
-
+    const [image_file, setimage_file] = useState("");
+    const [image_preview, setimage_preview] = useState("");
+    const [image_file2, setimage_file2] = useState("");
+    const [image_preview2, setimage_preview2] = useState("");
+    const [image_file3, setimage_file3] = useState("");
+    const [image_preview3, setimage_preview3] = useState("");
+    const [kycdetails, setkycdetails] = useState({
+        GSTimage: ''
+    });
     const [toggleSet, settoggleSet] = useState(1)
     const [bankdetails, setbankdetails] = useState([]);
     const [adminbankdetails, setadminbankdetails] = useState([]);
@@ -48,7 +56,7 @@ const Bankdetail = () => {
     };
 
     const getadminbankdetails = async (data) => {
-        let res = await getgetadminbankdetailsAction(data);
+        let res = await getgetuserbankdetailsAction(data);
         if (res) {
             setadminbankdetails(res.data);
         }
@@ -134,10 +142,30 @@ const Bankdetail = () => {
         const isValid = validate();
 
         if (isValid) {
+            if (!image_file) {
+                bankdetails.old_GSTimage = bankdetails?.GSTimage;
+            }
+            else {
+                bankdetails.GSTimage = image_file;
+            }
+
+            if (!image_file2) {
+                bankdetails.old_cancelledChequeImage = bankdetails?.cancelledChequeImage;
+            }
+            else {
+                bankdetails.cancelledChequeImage = image_file2;
+            }
+
+            if (!image_file3) {
+                bankdetails.old_bankStatementImage = bankdetails?.bankStatementImage;
+            }
+            else {
+                bankdetails.bankStatementImage = image_file3;
+            }
             bankdetails.id = USER_LOGIN_DETAILS.template?.id
 
             let res = await updateupdateuserbankdetailsAction(bankdetails);
-            if (res.success) {
+            if (res.status == true) {
                 // setTimeout(() => {
 
                 toast.success(res.msg);
@@ -152,6 +180,30 @@ const Bankdetail = () => {
         }
     };
 
+
+    const gstPic = async (e) => {
+        e.preventDefault();
+        let image_as_base64 = URL.createObjectURL(e.target.files[0]);
+        let image_as_files = e.target.files[0];
+        setimage_file(image_as_files);
+        setimage_preview(image_as_base64);
+    };
+
+    const cancelCheque = async (e) => {
+        e.preventDefault();
+        let image_as_base64 = URL.createObjectURL(e.target.files[0]);
+        let image_as_files = e.target.files[0];
+        setimage_file2(image_as_files);
+        setimage_preview2(image_as_base64);
+    };
+
+    const bankStatement = async (e) => {
+        e.preventDefault();
+        let image_as_base64 = URL.createObjectURL(e.target.files[0]);
+        let image_as_files = e.target.files[0];
+        setimage_file3(image_as_files);
+        setimage_preview3(image_as_base64);
+    };
 
 
     return (
@@ -305,16 +357,16 @@ const Bankdetail = () => {
 
                                                                         name="accountType">
                                                                         <option value=''>Select Account Type</option>
-                                                                        <option value='1'>Saving Account</option>
-                                                                        <option value='2'>current Account</option>
+                                                                        <option value='Saving Account'>Saving Account</option>
+                                                                        <option value='current Account'>current Account</option>
                                                                     </select>
 
                                                                 </div>
-                                                                {bankdetails?.accountType == 2 ?
+                                                                {bankdetails?.accountType == 'current Account' ?
                                                                     <>
                                                                         <div className="mb-3">
                                                                             <label className="form-label">
-                                                                                GST Image
+                                                                                GST Image : <a href={config.imageUrl + bankdetails.GSTImage} target="_blank">View</a>
                                                                             </label>
                                                                             <input
                                                                                 name="GSTimage"
@@ -322,6 +374,7 @@ const Bankdetail = () => {
                                                                                 accept="image/*"
                                                                                 className="choose-file mt-3"
                                                                                 type="file"
+                                                                                onChange={gstPic}
                                                                             />
                                                                             <span className="validationErr danger">
 
@@ -330,7 +383,7 @@ const Bankdetail = () => {
 
                                                                         <div className="mb-3">
                                                                             <label className="form-label">
-                                                                                Cancelled Cheque Image
+                                                                                Cancelled Cheque Image : <a href={config.imageUrl + bankdetails.cancelledChequeImage} target="_blank">View</a>
                                                                             </label>
                                                                             <input
                                                                                 name="cancelledChequeImage"
@@ -338,6 +391,7 @@ const Bankdetail = () => {
                                                                                 accept="image/*"
                                                                                 className="choose-file mt-3"
                                                                                 type="file"
+                                                                                onChange={cancelCheque}
                                                                             />
                                                                             <span className="validationErr danger">
 
@@ -346,7 +400,8 @@ const Bankdetail = () => {
 
                                                                         <div className="mb-3">
                                                                             <label className="form-label">
-                                                                                Bank Statement Image
+                                                                                Bank Statement Image :  
+                                                                                <a href={config.imageUrl + bankdetails.bankStatementImage} target="_blank">View</a>
                                                                             </label>
                                                                             <input
                                                                                 name="bankStatementImage"
@@ -354,6 +409,7 @@ const Bankdetail = () => {
                                                                                 accept="image/*"
                                                                                 className="choose-file mt-3"
                                                                                 type="file"
+                                                                                onChange={bankStatement}
                                                                             />
                                                                             <span className="validationErr danger">
 
