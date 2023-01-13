@@ -1,21 +1,22 @@
 import React, { Component, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import config from '../config/config';
-import Home from '../componets/home';
-import Login from '../componets/login';
-import Signup from '../componets/signup';
-import Forgetpassword from '../componets/forgetpassword';
-import Dashboard from '../componets/dashboard';
-import Buy from '../componets/buy';
-import Wallet from '../componets/wallet';
-import Bankdetail from '../componets/bankdetail';
-import Kycdetail from '../componets/kycdetails';
-import Changepassword from '../componets/changepassword';
-import Withdraw from '../componets/withdraw';
-import Profile from '../componets/profile';
-import Aboutus from '../componets/aboutus';
-import Privacypolicy from '../componets/privacypolicy';
-import Faq from '../componets/faq';
+import Home from '../components/home';
+import Login from '../components/login';
+import Signup from '../components/signup';
+import Forgetpassword from '../components/forgetpassword';
+import Dashboard from '../components/dashboard';
+import Buy from '../components/buy';
+import Wallet from '../components/wallet';
+import Bankdetail from '../components/bankdetail';
+import Kycdetail from '../components/kycdetails';
+import Changepassword from '../components/changepassword';
+import Withdraw from '../components/withdraw';
+import Profile from '../components/profile';
+import Aboutus from '../components/aboutus';
+import Privacypolicy from '../components/privacypolicy';
+import Faq from '../components/faq';
+import Contactus from '../components/contactus';
 
 const RouterComponent = () => {
     return (<BrowserRouter >
@@ -36,6 +37,7 @@ const RouterComponent = () => {
                     <Route path={`${config.baseUrl}aboutus`} element={<Aboutus/>} />
                     <Route path={`${config.baseUrl}faq`} element={<Faq/>} />
                     <Route path={`${config.baseUrl}privacypolicy`} element={<Privacypolicy/>} />
+                    <Route path={`${config.baseUrl}contactus`} element={<Contactus/>} />
 
             </Routes>
         </div>
