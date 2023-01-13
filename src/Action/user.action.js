@@ -48,3 +48,8 @@ export const showkycAction = (data) => {
 export const updatekycAction = (data) => {
    return postRequestFormData('InsertKycData', data).then(res => { return res.data })
 }
+
+export const getAllIdentity = (data) => {
+   return getRequest('getAllIdentity', data).then(res => { return res.data })
+}
+

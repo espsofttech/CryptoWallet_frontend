@@ -5,7 +5,7 @@ import ReactDatatable from '@ashvin27/react-datatable';
 import Dashboardheader from "./directives/dashboardheader";
 import Dashboardsidebar from "./directives/dashboardsidebar";
 import { useSelector, useDispatch } from 'react-redux'
-import { showkycAction, updatekycAction } from '../Action/user.action';
+import { showkycAction, updatekycAction, getAllIdentity } from '../Action/user.action';
 import toast, { Toaster } from 'react-hot-toast';
 import config from '../config/config';
 
@@ -28,23 +28,8 @@ const Kycdetail = () => {
   const [image_preview, setimage_preview] = useState("");
   const [kycStatus, setkycStatus] = useState(false);
   const [kycStatusApproveReject, setkycStatusApproveReject] = useState(false);
-  const [image_file2, setimage_file2] = useState("");
-  const [image_preview2, setimage_preview2] = useState("");
-  const [image_file3, setimage_file3] = useState("");
-  const [image_preview3, setimage_preview3] = useState("");
-  // const [userDetails, setuserDetails] = useState({
-  //   user_name: "",
-  //   dob: "",
-  //   doc_no:"",
-  //   email:"",
-  //   doc_no:"",
-  //   Address:"",
-  //   image2:"",
-  //   user_photo:"",
-  //   identity_proof_id:"",
-  //   identity_proof_id2:"",
+  const [identity, setIdentity] = useState([])
 
-  // });
   const [validationError, setvalidationError] = useState({});
 
   function validate() {
@@ -110,6 +95,7 @@ const Kycdetail = () => {
 
   useEffect(() => {
     getkycdetails({ id: USER_LOGIN_DETAILS.template.id });
+    getAllIdentityAPI()
   }, []);
 
   const getkycdetails = async (data) => {
@@ -123,6 +109,17 @@ const Kycdetail = () => {
       console.log("123", res.data.doc_no == "");
     }
   };
+
+
+  const getAllIdentityAPI = async () => {
+    let res = await getAllIdentity();
+    if (res.status == true) {
+      setIdentity(res.data);
+    }
+  };
+
+
+
 
 
   const inputHandler = (e) => {
@@ -155,7 +152,7 @@ const Kycdetail = () => {
       }
       kycdetails.user_id = USER_LOGIN_DETAILS.template.id
       let res = await updatekycAction(kycdetails);
-      if (res.success) {
+      if (res.status === true) {
         toast.success(res.msg);
         setTimeout(() => {
           window.location.href = `${config.baseUrl}kycdetails`;
@@ -266,13 +263,17 @@ const Kycdetail = () => {
                                       aria-label="Default select example"
                                       onChange={inputHandler}
                                       name="identity_proof_id"
-                                      value={kycdetails.identity_proof_id}
+                                      value={kycdetails?.identity_proof_id}
                                     >
-                                      {/* <option selected="">Open this status</option> value={0} value={1} */}
-                                      <option value={0}>Aadhar Card</option>
-                                      <option value={1}>Pan Card</option>
-                                      <option value={2}>Voter ID </option>
-                                      <option value={3}>Driving License </option>
+                                      {identity?.map((item) => {
+                                        return (
+                                          <>
+                                            <option value="">Please select identity proof</option>
+                                            <option value={item.id}>{item.Identity_name}</option>
+                                          </>
+                                        )
+                                      })}
+
                                     </select>
                                   </div>
 
