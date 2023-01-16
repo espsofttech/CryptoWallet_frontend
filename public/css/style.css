@@ -232,7 +232,7 @@ body .btn-outline-primary {
 }
 .btn.style1 {
     background: rgb(0, 82, 255);
-    font-family: 'Product Sans';
+    font-family: 'source semi';
     border: 1px solid  rgb(0, 82, 255);
     color: #fff;
     padding: 7px 20px;
@@ -553,4 +553,14 @@ header {
 /* ----------------- */
 .bg-light-blue{
   background-color: #e8f1fe;
+}
+.contact-form {
+  background-color: transparent;
+  padding: 30px 30px 25px;
+  border: 1px solid rgb(0 0 0 / 20%);
+  box-shadow: 0 0px 7px 0px rgb(0 0 0 / 37%);
+  border-radius: 20px;
+}
+.contact-img {
+  padding: 30px;
 }

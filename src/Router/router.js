@@ -15,7 +15,10 @@ import Withdraw from '../components/withdraw';
 import Profile from '../components/profile';
 import Resetpassword from '../components/resetpassword';
 import VerifyAccount from '../components/login'
-
+import Aboutus from '../components/aboutus';
+import Privacypolicy from '../components/privacypolicy';
+import Faq from '../components/faq';
+import Contactus from '../components/contactus';
 const RouterComponent = () => {
     return (<BrowserRouter >
         <div>
@@ -34,6 +37,10 @@ const RouterComponent = () => {
                 <Route path={`${config.baseUrl}withdraw`} element={<Withdraw />} />
                 <Route path={`${config.baseUrl}profile`} element={<Profile />} />
                 <Route path={`${config.baseUrl}resetpassword/:token`} element={<Resetpassword />} />
+                <Route path={`${config.baseUrl}aboutus`} element={<Aboutus />} />
+                <Route path={`${config.baseUrl}faq`} element={<Faq />} />
+                <Route path={`${config.baseUrl}privacypolicy`} element={<Privacypolicy />} />
+                <Route path={`${config.baseUrl}contactus`} element={<Contactus />} />
 
             </Routes>
         </div>
