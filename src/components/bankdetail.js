@@ -25,7 +25,7 @@ const Bankdetail = () => {
     const [image_file3, setimage_file3] = useState("");
     const [image_preview3, setimage_preview3] = useState("");
     const [kycdetails, setkycdetails] = useState({
-        GSTimage: ''
+        GSTImage: ''
     });
     const [toggleSet, settoggleSet] = useState(1)
     const [bankdetails, setbankdetails] = useState([]);
@@ -143,10 +143,13 @@ const Bankdetail = () => {
 
         if (isValid) {
             if (!image_file) {
-                bankdetails.old_GSTimage = bankdetails?.GSTimage;
+                console.log('3442')
+                bankdetails.old_GSTImage = bankdetails?.GSTImage;
             }
             else {
-                bankdetails.GSTimage = image_file;
+                console.log('34423333')
+
+                bankdetails.GSTImage = image_file;
             }
 
             if (!image_file2) {
@@ -172,8 +175,8 @@ const Bankdetail = () => {
                 // }, 10000);
                 // toast.success(res.msg);
                 // setTimeout(() => {
-                //     window.location.href = `${config.baseUrl}carddetail`;
-                // }, 22000);
+                //     window.location.reload()
+                // }, 1000);
             } else {
                 toast.error(res.msg);
             }
@@ -364,12 +367,37 @@ const Bankdetail = () => {
                                                                 </div>
                                                                 {bankdetails?.accountType == 'current Account' ?
                                                                     <>
+
                                                                         <div className="mb-3">
-                                                                            <label className="form-label">
-                                                                                GST Image : <a href={config.imageUrl + bankdetails.GSTImage} target="_blank">View</a>
+                                                                            <label
+
+                                                                                className="form-label"
+                                                                            >
+                                                                                Company Name
                                                                             </label>
                                                                             <input
-                                                                                name="GSTimage"
+                                                                                type="text"
+                                                                                className="form-control"
+                                                                                onChange={inputHandler}
+                                                                                value={bankdetails?.company_name}
+
+                                                                                name="company_name"
+
+                                                                            />
+
+                                                                        </div>
+
+
+                                                                        <div className="mb-3">
+                                                                            <label className="form-label">
+                                                                                GST Image :
+                                                                                {bankdetails.GSTImage ?
+                                                                                    <a href={config.imageUrl + bankdetails.GSTImage} target="_blank">View</a> : ''
+                                                                                }
+
+                                                                            </label>
+                                                                            <input
+                                                                                name="GSTImage"
                                                                                 id="fileInput"
                                                                                 accept="image/*"
                                                                                 className="choose-file mt-3"
@@ -383,7 +411,11 @@ const Bankdetail = () => {
 
                                                                         <div className="mb-3">
                                                                             <label className="form-label">
-                                                                                Cancelled Cheque Image : <a href={config.imageUrl + bankdetails.cancelledChequeImage} target="_blank">View</a>
+                                                                                Cancelled Cheque Image :
+                                                                                {bankdetails.cancelledChequeImage ?
+                                                                                    <a href={config.imageUrl + bankdetails.cancelledChequeImage} target="_blank">View</a> : ''
+
+                                                                                }
                                                                             </label>
                                                                             <input
                                                                                 name="cancelledChequeImage"
@@ -400,8 +432,11 @@ const Bankdetail = () => {
 
                                                                         <div className="mb-3">
                                                                             <label className="form-label">
-                                                                                Bank Statement Image :  
-                                                                                <a href={config.imageUrl + bankdetails.bankStatementImage} target="_blank">View</a>
+                                                                                Bank Statement Image :
+                                                                                {bankdetails.bankStatementImage ?
+                                                                                    <a href={config.imageUrl + bankdetails.bankStatementImage} target="_blank">View</a> : ''
+
+                                                                                }
                                                                             </label>
                                                                             <input
                                                                                 name="bankStatementImage"

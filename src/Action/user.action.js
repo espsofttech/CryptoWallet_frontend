@@ -53,3 +53,13 @@ export const getAllIdentity = (data) => {
    return getRequest('getAllIdentity', data).then(res => { return res.data })
 }
 
+export const getProfileAction = (data) => {
+   console.log('data', data)
+   return getRequest(`getUserDetailsById/${data}`).then(res => { return res.data })
+}
+
+export const UpdateProfileAction = (data) => {
+   return putRequestFormData(`updateUser/${data.id}`, data).then(res => { return res.data })
+}
+
+

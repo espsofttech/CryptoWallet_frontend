@@ -2,10 +2,45 @@ import React, { useEffect, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Navbar, Offcanvas, Nav, NavDropdown, Form, Button } from 'react-bootstrap';
 // import Navbar from 'react-bootstrap/Navbar';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import config from "../../config/config";
+import { useSelector, useDispatch } from 'react-redux'
+import * as ACTIONTYPES from '../../../src/redux/actionTypes'
+import { getProfileAction } from '../../Action/user.action';
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const USER_LOGIN_DETAILS = useSelector((state) => state.auth.USER_LOGIN_DETAILS)
+  const [userDetails, setuserDetails] = useState({});
+
+  console.log(USER_LOGIN_DETAILS)
+
+  const logoutClick = () => {
+    dispatch({
+      type: ACTIONTYPES.USER_FORM, payload: {
+        template: '',
+      }
+    })
+    setTimeout(() => {
+      window.location.href = config.baseUrl;
+    }, 500);
+  }
+
+
+  useEffect(() => {
+    getProfileAPI(USER_LOGIN_DETAILS?.template?.id)
+  }, []);
+
+
+  const getProfileAPI = async (id) => {
+    let res = await getProfileAction(id);
+    if (res.status == true) {
+      setuserDetails(res.data)
+    }
+  }
+
+
   return (
     <>
       <header className="pt-1 pb-1">
@@ -44,7 +79,7 @@ const Header = () => {
                     </NavDropdown.Item>
                   </NavDropdown> */}
                     </Nav>
-                    <Form className="d-flex">
+                    {/* <Form className="d-flex">
                       <Link to={`${config.baseUrl}login`}>
                         <button type="button" className="btn style1">Login</button>
                       </Link>
@@ -52,7 +87,26 @@ const Header = () => {
                       <Link to={`${config.baseUrl}signup`}>
                         <button type="button" className="btn style1">Signup</button>
                       </Link>
-                    </Form>
+                    </Form> */}
+                    {USER_LOGIN_DETAILS.template == '' ?
+                      <Form className="d-flex">
+                        <Link to={`${config.baseUrl}login`}>
+                          <button type="button" className="btn style1">Login</button>
+                        </Link>
+                        &nbsp;&nbsp;
+                        <Link to={`${config.baseUrl}signup`}>
+                          <button type="button" className="btn style1">Signup</button>
+                        </Link>
+                      </Form> :
+                     <Nav className="justify-content-center flex-grow-1 pe-3">
+                     <Nav.Link href={`${config.baseUrl}dashboard`}>Dashboard </Nav.Link>
+                     <Nav.Link href="javascript:void(0)" onClick={logoutClick} >Logout</Nav.Link>
+                   
+                   </Nav>
+                    }
+
+
+
                   </Offcanvas.Body>
                 </Navbar.Offcanvas>
               </Container>

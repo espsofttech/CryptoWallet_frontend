@@ -564,3 +564,8 @@ header {
 .contact-img {
   padding: 30px;
 }
+
+a.menuLink.activebar {
+  color: #fff !important;
+  background-color: rgb(0 82 255);
+}

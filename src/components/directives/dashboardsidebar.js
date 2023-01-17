@@ -2,49 +2,57 @@ import React, { useEffect, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import config from '../../config/config';
 import { Container, Row, Col, Form, Button, InputGroup } from 'react-bootstrap';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const Dashboardsidebar = () => {
-    
+
+    const [activeBar, setActivebar] = useState('')
+
+    useEffect(() => {
+        var lastPart = window.location.href.split("/").pop();
+        setActivebar(lastPart)
+        console.log(lastPart)
+    }, []);
+
     return (
         <>
-           <nav className="sidebar-wrapper">
-                        <div className="sidebar-brand">
-                            <a href="#" className="logo"><img src="dashboardFolder/img/logo.png" alt=" Admin Dashboard" /></a>
-                        </div>
-                        <div className="sidebar-menu">
-                            <div className="sidebarMenuScroll">
-                                <ul>
-                                    <li class=" ">
-                                        <a href={`${config.baseUrl}dashboard`} class="menuLink"><i class="bi bi-house"></i><span class="menu-text">Dashboard</span></a>
-                                    </li>
-                                    <li>
-                                        <a href={`${config.baseUrl}buy`} class="menuLink"><i class="bi bi-wallet"></i><span class="menu-text">Buy Crypto</span></a>
-                                    </li>
-                                    <li>
-                                        <a href={`${config.baseUrl}wallet`} class="menuLink"><i class="bi bi-wallet"></i><span class="menu-text">Crypto Wallet</span></a>
-                                    </li>
-                                
-                                    <li>
-                                        <a href="#" class="menuLink"><i class="fa fa-credit-card-alt"></i><span class="menu-text">Withdraw</span></a>
-                                    </li>
-                                    <li>
-                                        <a href={`${config.baseUrl}bankdetail`} class="menuLink"><i class="fa fa-database"></i><span class="menu-text">Bank detail</span></a>
-                                    </li>
-                            
-                            
-                                    <li>
-                                        <a href={`${config.baseUrl}kycdetails`} class="menuLink"><i class="fa fa-align-justify"></i><span class="menu-text">Kyc Details</span></a>
-                                    </li>
-                                  
-                                    <li>
-                                        <a href={`${config.baseUrl}changepassword`} class="menuLink"><i class="fa fa-lock"></i><span class="menu-text">Change Password</span></a>
-                                    </li>
-                                </ul>
+            <nav className="sidebar-wrapper">
+                <div className="sidebar-brand">
+                    <a href="#" className="logo"><img src="dashboardFolder/img/logo.png" alt=" Admin Dashboard" /></a>
+                </div>
+                <div className="sidebar-menu">
+                    <div className="sidebarMenuScroll">
+                        <ul>
+                            <li className=" ">
+                                <a href={`${config.baseUrl}dashboard`} className={activeBar == 'dashboard' ? "menuLink activebar" : "menuLink"}><i className="bi bi-house"></i><span className="menu-text">Dashboard</span></a>
+                            </li>
+                            <li>
+                                <a href={`${config.baseUrl}buy`} className={activeBar == 'buy' ? "menuLink activebar" : "menuLink"}><i className="bi bi-wallet"></i><span className="menu-text">Buy Crypto</span></a>
+                            </li>
+                            {/* <li>
+                                <a href={`${config.baseUrl}wallet`} className={activeBar == 'wallet' ? "menuLink activebar" : "menuLink"}><i className="bi bi-wallet"></i><span className="menu-text">Crypto Wallet</span></a>
+                            </li> */}
 
-                            </div>
-                        </div>
-                    </nav>
+                            <li>
+                                <a href={`${config.baseUrl}withdraw`} className={activeBar == 'withdraw' ? "menuLink activebar" : "menuLink"}><i className="fa fa-credit-card-alt"></i><span className="menu-text">Withdraw</span></a>
+                            </li>
+                            <li>
+                                <a href={`${config.baseUrl}bankdetail`} className={activeBar == 'bankdetail' ? "menuLink activebar" : "menuLink"}><i className="fa fa-database"></i><span className="menu-text">Bank detail</span></a>
+                            </li>
+
+
+                            <li>
+                                <a href={`${config.baseUrl}kycdetails`} className={activeBar == 'kycdetails' ? "menuLink activebar" : "menuLink"}><i className="fa fa-align-justify"></i><span className="menu-text">Kyc Details</span></a>
+                            </li>
+
+                            <li>
+                                <a href={`${config.baseUrl}changepassword`} className={activeBar == 'changepassword' ? "menuLink activebar" : "menuLink"}><i className="fa fa-lock"></i><span className="menu-text">Change Password</span></a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </nav>
         </>
     )
 }

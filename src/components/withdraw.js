@@ -25,10 +25,10 @@ const Withdraw = () => {
                                             <div className='buyform withdraw'>
 
                                                 <div className='text-center my-3'>
-                                                    <strong style={{ fontSize: "22px", marginBottom: "20px" }}>Withdraw SLC Token</strong>
+                                                    <strong style={{ fontSize: "22px", marginBottom: "20px" }}>Withdraw Crypto Wallet Token</strong>
                                                 </div>
                                                 <div className='text-center pb-2'>
-                                                    <p>Get Your SLC Token in your INR </p>
+                                                    <p>Get Your Crypto Wallet Token in your INR </p>
                                                 </div>
 
                                                 <div className="sc-kcDeIU cvqsCp text-left">
@@ -41,11 +41,11 @@ const Withdraw = () => {
                                                         <div class="form-group ">
                                                             <label className="pull-left">Amount</label>
 
-                                                            <div class="pull-right mntbalance">SLC Balance: <span id="web13Balance">
+                                                            <div class="pull-right mntbalance">Crypto Wallet Balance: <span id="web13Balance">
                                                                 ~ INR
                                                             </span></div>
                                                             <div class="input-group my-3">
-                                                                <input type="text" class="form-control " name='tokenAmount' aria-label="Enter Amount (SLC)" aria-describedby="basic-addon2" placeholder="Enter Amount (SLC)" />
+                                                                <input type="text" class="form-control " name='tokenAmount' aria-label="Enter Amount (Crypto Wallet)" aria-describedby="basic-addon2" placeholder="Enter Amount (Crypto Wallet)" />
 
                                                                 <div class="input-group-append">
                                                                     <button class="btn btn-primary copybtn" type="button">MAX</button>
@@ -57,7 +57,7 @@ const Withdraw = () => {
                                                 </div>
                                                 <small class=""> Withdraw Fee: % </small><br />
                                                 <small class=""> You will get:  INR </small>
-                                                <small class="" style={{ float: 'right' }}> Minimum Withdraw =  SLC</small>
+                                                <small class="" style={{ float: 'right' }}> Minimum Withdraw =  Crypto Wallet</small>
                                          
                                                   
                                                     <div className="sc-CtfFt bxUreM my-3" id="token-buy-button"  >Withdraw Now</div>

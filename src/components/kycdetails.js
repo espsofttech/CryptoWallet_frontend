@@ -100,7 +100,7 @@ const Kycdetail = () => {
 
   const getkycdetails = async (data) => {
     let res = await showkycAction(data);
-    setkycStatusApproveReject(res.data.kyc_approval);
+    setkycStatusApproveReject(res.data.kyc_status);
     if (res.data.doc_no == "") {
       setkycStatus(true);
     }
@@ -148,15 +148,15 @@ const Kycdetail = () => {
       return false;
     } else {
       if (!image_file) {
-        kycdetails.old_image = kycdetails?.image;
+        kycdetails.old_profile_pic = kycdetails?.image;
       }
       kycdetails.user_id = USER_LOGIN_DETAILS.template.id
       let res = await updatekycAction(kycdetails);
       if (res.status === true) {
         toast.success(res.msg);
-        setTimeout(() => {
-          window.location.href = `${config.baseUrl}kycdetails`;
-        }, 2000);
+        // setTimeout(() => {
+        //   window.location.href = `${config.baseUrl}kycdetails`;
+        // }, 2000);
       } else {
         toast.error(res.msg);
       }
@@ -185,19 +185,19 @@ const Kycdetail = () => {
                             <div className="card p-3">
                               <div className="kycapproved">
                                 <h4>Fill KYC Form</h4>
-                                {kycStatusApproveReject == 2 ? (
+                                {kycStatusApproveReject == 3 ? (
                                   <span
-                                    style={{ textAlign: "center", color: "blue" }}
+                                    style={{ textAlign: "center", color: "red" }}
                                   >
                                     KYC Rejected
                                   </span>
-                                ) : kycStatusApproveReject == 1 ? (
+                                ) : kycStatusApproveReject == 2 ? (
                                   <span
                                     style={{ textAlign: "center", color: "green" }}
                                   >
                                     KYC Approved
                                   </span>
-                                ) : kycStatusApproveReject == 0 && kycStatus == false ? (
+                                ) : kycStatusApproveReject == 1 ? (
                                   <span
                                     style={{ textAlign: "center", color: "blue" }}
                                   >
@@ -293,7 +293,7 @@ const Kycdetail = () => {
                                             objectFit: "cover",
                                           }}
                                           className="object-cover w-full h-32"
-                                          src="images/dummydoc.png"
+                                          src="dashboardFolder/img/dummy.jpg"
                                           alt=""
                                         />
                                       ) : (
@@ -371,23 +371,22 @@ const Kycdetail = () => {
 
 
                                   <div className=" mx-10  mt-20">
-                                    {kycStatus == false ? (
+                                    {kycStatusApproveReject == 2 ?
+                                      <button
+                                        type="submit"
+                                        class="btn btn-primary pt-2 pb-2 mx-20 btn-md col-lg-12  " disabled
+                                      >
+                                        Submit
+                                      </button>
+                                      :
                                       <button
                                         type="submit"
                                         class="btn btn-primary pt-2 pb-2 mx-20 btn-md col-lg-12  "
                                       >
                                         Submit
                                       </button>
-                                    ) : kycStatusApproveReject == 2 ? (
-                                      <button
-                                        type="submit"
-                                        class="btn btn-primary pt-2 pb-2 mx-20 btn-md col-lg-12  "
-                                      >
-                                        Submit
-                                      </button>
-                                    ) : (
-                                      ""
-                                    )}
+
+                                    }
                                   </div>
                                 </form>
                               </div>
