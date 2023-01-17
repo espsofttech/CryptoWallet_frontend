@@ -62,4 +62,6 @@ export const UpdateProfileAction = (data) => {
    return putRequestFormData(`updateUser/${data.id}`, data).then(res => { return res.data })
 }
 
-
+export const ContactFormAction = (data) => {
+   return postRequest('insertsupportDetails', data).then(res => { return res.data })
+}

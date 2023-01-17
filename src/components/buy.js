@@ -35,7 +35,7 @@ const Buy = () => {
             text: "Transaction fee",
             cell: (item) => {
                 return (
-                    `${item.fee} SLC`
+                    `${item.fee} Crypto`
                 );
             }
         },
@@ -91,7 +91,7 @@ const Buy = () => {
                                             {/* <a onClick={adminBank} className="btn w-10">Admin bank</a> */}
 
                                             <span className="text-left text-black" style={{ display: 'flex', flex: '1 1 auto', justifyContent: "center" }}>
-                                                <strong style={{ fontSize: "22px" }}>BUY SLC</strong></span>
+                                                <strong style={{ fontSize: "22px" }}>BUY Crypto</strong></span>
                                             <div className="sc-kcDeIU cvqsCp">
                                                 {/* Connected Wallet: */}
                                                 <div style={{ wordBreak: "break-all" }}>
@@ -136,13 +136,13 @@ const Buy = () => {
                                                                     <input className="sc-iybRtq iQKTjs token-amount-input" name="mnt_amount" type="text" id='tokenAmountError' placeholder="0.00" />
 
                                                                     <button className="open-currency-select-button">
-                                                                        <span>SLC</span>
+                                                                        <span>Crypto</span>
                                                                     </button>
                                                                 </div>
 
 
                                                                 <div className="balance">
-                                                                    <p> 1 SLC = INR</p><br />
+                                                                    <p> 1 Crypto = INR</p><br />
                                                                     <p> Transaction Fee =  % </p>
                                                                 </div>
                                                                 <div> <span style={{ marginLeft: '30px' }} className="validationErr pull-left"></span></div>

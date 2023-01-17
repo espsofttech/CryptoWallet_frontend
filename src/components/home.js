@@ -6,11 +6,19 @@ import Footer from "./directives/Footer";
 import CountUp, { useCountUp } from "react-countup";
 import AnimatedText from 'react-animated-text-content';
 import { Zoom, Fade, Roll } from 'react-reveal';
-import LivePrice from '../components/liveprice'
+import Websocket from 'react-websocket';
+// import LivePrice from '../components/liveprice'
 const Home = () => {
+    function livePairDataFromBinance(data){
+        console.log("aaaaaa",data)
+        return "123";
+    }
     return (
         <>
+        {/* {console.log("aaaa",livePairDataFromBinance())} */}
             <Header />
+                <Websocket url='wss://stream.binance.com:9443/ws/!ticker@arr'
+                    onMessage={livePairDataFromBinance()} />
             <section className="hero-section pt-0">
                 <Container className="">
                     <Row className=" align-items-center">
