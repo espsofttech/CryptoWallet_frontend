@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Row, Col, Form, Button, InputGroup } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, InputGroup, FormGroup } from 'react-bootstrap';
 import Header from "./directives/Header";
 import Footer from "./directives/Footer";
 import { Zoom } from 'react-reveal';
@@ -156,8 +156,8 @@ const Login = () => {
                                     <div class="login-header text-center"><h2>Login</h2></div>
                                     <div className="login-body mt-4">
                                         <Form>
-
-                                            <InputGroup className="mb-3">
+<FormGroup  className="mb-3">
+                                            <InputGroup>
                                                 <InputGroup.Text id="basic-addon1"><img src="images/send.png" /></InputGroup.Text>
                                                 <Form.Control
                                                     placeholder="Email Address"
@@ -167,8 +167,9 @@ const Login = () => {
                                                 />
                                             </InputGroup>
                                             <span className="validationErr">{validatioError.emailError}</span>
-
-                                            <InputGroup className="mb-3">
+                                            </FormGroup>
+                                            <FormGroup className="mb-3">
+                                            <InputGroup >
                                                 <InputGroup.Text id="basic-addon1"><img src="images/key.png" /></InputGroup.Text>
                                                 <Form.Control
                                                     type="password"
@@ -179,7 +180,7 @@ const Login = () => {
                                                 />
                                             </InputGroup>
                                             <span className="validationErr">{validatioError.passwordError}</span>
-
+                                            </FormGroup>
                                             <Row className=" mt-4">
                                                 <Col lg={6}>
                                                     <button className="btn style1 btn-rounded" onClick={SubmitForm} type="submit">

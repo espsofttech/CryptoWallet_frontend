@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Row, Col, Form, Button, InputGroup } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, InputGroup, FormGroup } from 'react-bootstrap';
 import Header from "./directives/Header";
 import Footer from "./directives/Footer";
 import { Zoom } from 'react-reveal';
@@ -89,8 +89,8 @@ const Forgetpassword = () => {
                                     <div class="login-header text-center"><h2>Forgot password</h2></div>
                                     <div className="login-body mt-4">
                                         <Form onSubmit={SubmitForm}>
-
-                                            <InputGroup className="mb-3">
+<FormGroup className="mb-3">
+                                            <InputGroup >
                                                 <InputGroup.Text id="basic-addon1"><img src="images/send.png" /></InputGroup.Text>
                                                 <Form.Control
                                                     placeholder="Email Address"
@@ -100,7 +100,7 @@ const Forgetpassword = () => {
                                                 />
                                             </InputGroup>
                                             <span className="validationErr">{validatioError.emailError}</span>
-
+                                            </FormGroup>
 
 
                                             <Row className=" mt-4">

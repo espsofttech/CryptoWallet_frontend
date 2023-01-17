@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Row, Col, Form, Button, InputGroup } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, InputGroup, FormGroup } from 'react-bootstrap';
 import Header from "./directives/Header";
 import Footer from "./directives/Footer";
 import { Zoom } from 'react-reveal';
@@ -50,7 +50,7 @@ const Signup = () => {
             confirmPasswordError = "Password and confirm password does not match."
         }
         if (form.termscondition === false) {
-            termsconditionError = "Terms and conditions checkbox required."
+            termsconditionError = "Checkbox is required."
         }
 
 
@@ -110,8 +110,8 @@ const Signup = () => {
                                     <div class="login-header text-center"><h2>Register</h2></div>
                                     <div className="login-body mt-4">
                                         <Form onSubmit={SubmitForm}>
-
-                                            <InputGroup className="mb-3">
+                                           <FormGroup className="mb-3">
+                                            <InputGroup className="">
                                                 <InputGroup.Text id="basic-addon1"><img src="images/send.png" /></InputGroup.Text>
                                                 <Form.Control
                                                     placeholder="Email Address"
@@ -121,9 +121,11 @@ const Signup = () => {
                                                 />
 
                                             </InputGroup>
+                                            
                                             <span className="validationErr">{validatioError.emailError}</span>
-
-                                            <InputGroup className="mb-3">
+                                            </FormGroup>
+                                            <FormGroup className="mb-3">
+                                            <InputGroup className="">
                                                 <InputGroup.Text id="basic-addon1"><img src="images/key.png" /></InputGroup.Text>
                                                 <Form.Control
                                                     type="password"
@@ -134,9 +136,9 @@ const Signup = () => {
                                                 />
                                             </InputGroup>
                                             <span className="validationErr">{validatioError.passwordError}</span>
-
-
-                                            <InputGroup className="mb-3">
+                                            </FormGroup>
+                                            <FormGroup className="mb-3">
+                                            <InputGroup className="">
                                                 <InputGroup.Text id="basic-addon1"><img src="images/key.png" /></InputGroup.Text>
                                                 <Form.Control
                                                     type="password"
@@ -148,12 +150,12 @@ const Signup = () => {
 
                                             </InputGroup>
                                             <span className="validationErr">{validatioError.confirmPasswordError}</span>
-
+                                            </FormGroup>
 
 
                                             <Row className=" mt-4">
                                                 <Col lg={7}>
-                                                    <Form.Group className="mb-3 d-flex" controlId="formBasicCheckbox">
+                                                    <Form.Group className="mb-0 d-flex" controlId="formBasicCheckbox">
                                                         <Form.Check type="checkbox" onChange={inputHandler} name="termscondition" />&nbsp;
                                                         <span>I accept to the <u>Terms and Conditions</u> </span>
                                                     </Form.Group>
