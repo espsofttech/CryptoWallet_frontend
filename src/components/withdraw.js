@@ -63,7 +63,7 @@ const Withdraw = () => {
                                                     <div className="sc-CtfFt bxUreM my-3" id="token-buy-button"  >Withdraw Now</div>
                                               
 
-                                                <span style={{ fontSize: '12px' }}> <b>Note: Please allow us 2 - 5 Business Days to Process your Request. Once Approved, It may take upto 14 days to reflect the Amount in your Bank Account. Incase, the Same is not reflected, Please Mail us at <a style={{ color: 'blue' }} target='_blank' href='#'>admin@silkyex.io.</a> </b></span>
+                                                <span style={{ fontSize: '12px' }}> <b>Note: Please allow us 2 - 5 Business Days to Process your Request. Once Approved, It may take upto 14 days to reflect the Amount in your Bank Account. Incase, the Same is not reflected, Please Mail us at <a style={{ color: 'blue' }} target='_blank' href='#'>admin@cryptowallet.io.</a> </b></span>
                                             </div>
                                         </Col>
 

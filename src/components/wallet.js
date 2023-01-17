@@ -79,7 +79,9 @@ const Wallet = () => {
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div className="col-md-6 text-center"><img src="dashboardFolder/img/wall-gif.gif" /></div>
+                                                    <div className="col-md-6 text-center">
+                                                        <img src="dashboardFolder/img/wall-gif.gif" width="100%" />
+                                                        </div>
                                                 </div>
                                             </div>
                                         </div>

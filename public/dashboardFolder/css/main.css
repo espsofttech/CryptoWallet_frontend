@@ -7941,9 +7941,9 @@ article .content-feature-list,
 }
 
 .changepassword .form-control {
-	border: 1px solid transparent;
+	/* border: 1px solid transparent; */
 	font-size: 15px;
-	padding-left: 0px;
+	/* padding-left: 0px; */
 	outline: none;
 	/* color: #fff !important; */
 }
@@ -8371,6 +8371,9 @@ a.menuLink {
 	.content-wrapper {
 		height: auto;
 		padding: 0 15px 0 15px
+	}
+	.mb-xs-4 {
+		margin-bottom: 4em!important;
 	}
 }
 

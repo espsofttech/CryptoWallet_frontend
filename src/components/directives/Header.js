@@ -61,34 +61,27 @@ const Header = () => {
                     </Offcanvas.Title>
                   </Offcanvas.Header>
                   <Offcanvas.Body>
-                    <Nav className="justify-content-center flex-grow-1 pe-3">
+                    <Nav className="justify-content-end align-items-center flex-grow-1 pe-3">
                       <Nav.Link href="#">Explore </Nav.Link>
                       <Nav.Link href="#">About Us</Nav.Link>
                       <Nav.Link href="#">Learn</Nav.Link>
-                      {/* <NavDropdown
-                    title="Dropdown"
-                    id={`offcanvasNavbarDropdown-expand-${expand}`}
-                  >
-                    <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-                    <NavDropdown.Item href="#action4">
-                      Another action
-                    </NavDropdown.Item>
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item href="#action5">
-                      Something else here
-                    </NavDropdown.Item>
-                  </NavDropdown> */}
-                    </Nav>
-                    {/* <Form className="d-flex">
+                      {USER_LOGIN_DETAILS.template != '' ?
+                      <>
+                      <Nav.Link className="" href={`${config.baseUrl}dashboard`}>Dashboard </Nav.Link>
+                      <Link className="mr-0" href="javascript:void(0)" onClick={logoutClick} ><button type="button" className="btn style1">Logout</button></Link>
+                      </>:
+                     <Form className="d-flex">
                       <Link to={`${config.baseUrl}login`}>
-                        <button type="button" className="btn style1">Login</button>
-                      </Link>
-                      &nbsp;&nbsp;
-                      <Link to={`${config.baseUrl}signup`}>
-                        <button type="button" className="btn style1">Signup</button>
-                      </Link>
-                    </Form> */}
-                    {USER_LOGIN_DETAILS.template == '' ?
+                          <button type="button" className="btn style1">Login</button>
+                        </Link>&nbsp;&nbsp;
+                        <Link to={`${config.baseUrl}signup`}>
+                          <button type="button" className="btn style1">Signup</button>
+                        </Link>
+                        </Form>
+}
+                    </Nav>
+                   
+                    {/* {USER_LOGIN_DETAILS.template == '' ?
                       <Form className="d-flex">
                         <Link to={`${config.baseUrl}login`}>
                           <button type="button" className="btn style1">Login</button>
@@ -98,12 +91,13 @@ const Header = () => {
                           <button type="button" className="btn style1">Signup</button>
                         </Link>
                       </Form> :
-                     <Nav className="justify-content-center flex-grow-1 pe-3">
-                     <Nav.Link href={`${config.baseUrl}dashboard`}>Dashboard </Nav.Link>
-                     <Nav.Link href="javascript:void(0)" onClick={logoutClick} >Logout</Nav.Link>
+                     <Nav className="">
+                     <Nav.Link className="mr-0" href={`${config.baseUrl}dashboard`}>Dashboard </Nav.Link>
+                     &nbsp;&nbsp;
+                     <Nav.Link className="mr-0" href="javascript:void(0)" onClick={logoutClick} >Logout</Nav.Link>
                    
                    </Nav>
-                    }
+                    } */}
 
 
 

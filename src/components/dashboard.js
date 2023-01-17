@@ -25,7 +25,7 @@ const Dashboard = () => {
                             <div className="content-wrapper">
                                 <Row>
                                    
-                                    <Col lg={3}>
+                                    <Col lg={4}>
                                     <div className="stats-tile">
                                             <div className="d-flex">
                                                 <div className="sale-icon shade-blue">
@@ -37,7 +37,7 @@ const Dashboard = () => {
                                             </div>
                                         </div>
                                     </Col>
-                                    <Col lg={3}>
+                                    <Col lg={4}>
                                     <div className="stats-tile">
                                             <div className="d-flex">
                                                 <div className="sale-icon shade-blue">
@@ -51,7 +51,7 @@ const Dashboard = () => {
                                             </div>
                                         </div>
                                     </Col>
-                                    <Col lg={3}>
+                                    <Col lg={4}>
                                     <div className="stats-tile">
                                             <div className="d-flex">
                                                 <div className="sale-icon shade-blue">
