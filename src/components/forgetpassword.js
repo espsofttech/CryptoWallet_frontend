@@ -86,7 +86,7 @@ const Forgetpassword = () => {
                         <Col lg={6} className="">
                             <Zoom>
                                 <div className="login-form-wrap ">
-                                    <div class="login-header text-center"><h2>Forget password</h2></div>
+                                    <div class="login-header text-center"><h2>Forgot password</h2></div>
                                     <div className="login-body mt-4">
                                         <Form onSubmit={SubmitForm}>
 

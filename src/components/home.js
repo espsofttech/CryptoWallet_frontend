@@ -70,7 +70,7 @@ const Home = () => {
                             <table className="table table-striped mb-0">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Name</th>
+                                        <th scope="col" className="pl-2">Name</th>
                                         <th scope="col">Amount</th>
                                         <th scope="col">24h Change</th>
                                         {/* <th scope="col">Markets</th> */}
@@ -79,7 +79,7 @@ const Home = () => {
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>
+                                        <td className="pl-2">
                                             <div className="country-flag">
                                                 {/* <img src="images/BTC.png" alt="Image" /> */}
                                                 BTC</div>
@@ -95,7 +95,7 @@ const Home = () => {
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>
+                                        <td className="pl-2">
                                             <div className="country-flag">
                                                 {/* <img src="images/ETC.png" alt="Image" /> */}
                                                 ETH</div>
@@ -111,7 +111,7 @@ const Home = () => {
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>
+                                        <td className="pl-2">
                                             <div className="country-flag">
                                                 {/* <img src="images/usdt.png" alt="Image" /> */}
                                                 USDT</div>
@@ -127,7 +127,7 @@ const Home = () => {
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>
+                                        <td className="pl-2">
                                             <div className="country-flag">
                                                 {/* <img src="images/usdc.png" alt="Image" /> */}
                                                 USDC</div>
@@ -164,7 +164,7 @@ const Home = () => {
                     <Row>
                         <Col md={6}>
                             <Zoom>
-                                <div className="chart pr-3">
+                                <div className="chart pr-3 mb-xs-4">
                                     <img src="images/chart.png" width="100%" />
                                 </div>
                             </Zoom>

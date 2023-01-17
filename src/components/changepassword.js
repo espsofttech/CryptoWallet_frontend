@@ -118,25 +118,28 @@ const Changepassword = () => {
                                         <div className='buyform changepassword'>
                                             <span className="text-left text-black" style={{ display: 'flex', flex: '1 1 auto', justifyContent: "center" }}>
                                                 <strong style={{ fontSize: "22px" }}>Change Password</strong></span>
-                                            <div className="sc-kcDeIU cvqsCp">
+                                            <div className="sc-kcDeIU ">
+                                            <label className="mb-2 mt-2 cvqsCp">Change Your Login Password</label>
                                                 <div className=''>
-                                                    <div className="form-group mb-4">
-                                                        <label className="mb-2 mt-2">Change Your Login Password</label>
+                                                    
+                                                        
 
-                                                        <div className='form-group mb-4 boxboder'>
+                                                    <div className='form-group mb-4 boxboder'>
                                                             <input type="password" name="old_password" onChange={inputHandler} id='oldPasswordError' autoComplete="off" placeholder='Enter old password' className='form-control' />
                                                             <span className="validationErr">{validatioError.oldPasswordError}</span>
-                                                        </div>
-
-                                                        <div className="input-group boxboder">
+                                                    </div>
+                                                    <div className='form-group mb-4 boxboder'>
+                                                    <div className="input-group boxboder">
 
                                                             <input type={passwordType} name="password" autoComplete="off" onChange={inputHandler} id='passwordError' className="form-control text-black" aria-label="Enter New Password" aria-describedby="basic-addon2" placeholder="Enter New Password" />
                                                             <div className="input-group-append">
                                                                 {/* <button className="btn btn-outline-secondary btn-sm" type="button"><i onClick={togglePassword} className={passwordType == 'password' ? 'fa fa-eye' : 'fa fa-eye-slash'} style={{ fontSize: "15px", margin: "0" }}></i></button> */}
                                                             </div>
-                                                        </div>
-                                                        <span className="validationErr">{validatioError.passwordError}</span>
                                                     </div>
+                                                    <span className="validationErr">{validatioError.passwordError}</span>
+                                                    </div>
+                                                   
+                                                   
                                                     <div className='form-group mb-4 boxboder'>
                                                         <input type={passwordType} name="confirm_password" id='confirmPasswordError' autoComplete="off" onChange={inputHandler} placeholder='Confirm New Password' className='form-control' />
                                                         <span className="validationErr">{validatioError.confirmPasswordError}</span>
