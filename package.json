@@ -17,6 +17,7 @@
     "react-animated-text-content": "^1.0.1",
     "react-bootstrap": "^2.7.0",
     "react-countup": "^6.4.0",
+    "react-datepicker": "^4.8.0",
     "react-dom": "^18.2.0",
     "react-google-charts": "^4.0.0",
     "react-hot-toast": "^2.4.0",

@@ -34,6 +34,21 @@ export const getgetuserbankdetailsAction = (data) => {
    return getRequest(`getBankDetailsById/${data.id}`).then(res => { return res.data })
 }
 
+export const buyNowAction = (data) => {
+   return postRequest(`exchange`, data).then(res => { return res.data })
+}
+
+
+export const getAllDetailsOfcoinAction = (data) => {
+   return getRequest(`getAllDetailsOfcoin/${data}`).then(res => { return res.data })
+}
+
+export const depositFiatAction = (data) => {
+   return postRequestFormData(`depositFiat`, data).then(res => { return res.data })
+}
+
+
+
 export const updateupdateuserbankdetailsAction = (data) => {
    console.log('data:', data)
    return putRequestFormData(`updateBankDetails/${data.id}`, data).then((res) => {

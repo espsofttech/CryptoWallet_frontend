@@ -27,14 +27,17 @@ const Dashboardsidebar = () => {
                                 <a href={`${config.baseUrl}dashboard`} className={activeBar == 'dashboard' ? "menuLink activebar" : "menuLink"}><i className="bi bi-house"></i><span className="menu-text">Dashboard</span></a>
                             </li>
                             <li>
-                                <a href={`${config.baseUrl}buy`} className={activeBar == 'buy' ? "menuLink activebar" : "menuLink"}><i className="bi bi-wallet"></i><span className="menu-text">Buy Crypto</span></a>
+                                <a href={`${config.baseUrl}buy`} className={activeBar == 'buy' ? "menuLink activebar" : "menuLink"}><i className="bi bi-wallet"></i><span className="menu-text">Buy/Sell Crypto</span></a>
                             </li>
-                            {/* <li>
-                                <a href={`${config.baseUrl}wallet`} className={activeBar == 'wallet' ? "menuLink activebar" : "menuLink"}><i className="bi bi-wallet"></i><span className="menu-text">Crypto Wallet</span></a>
-                            </li> */}
+                            <li>
+                                <a href={`${config.baseUrl}wallet`} className={activeBar == 'wallet' ? "menuLink activebar" : "menuLink"}><i className="bi bi-wallet"></i><span className="menu-text">Wallet</span></a>
+                            </li>
 
                             <li>
                                 <a href={`${config.baseUrl}withdraw`} className={activeBar == 'withdraw' ? "menuLink activebar" : "menuLink"}><i className="fa fa-credit-card-alt"></i><span className="menu-text">Withdraw</span></a>
+                            </li>
+                            <li>
+                                <a href={`${config.baseUrl}deposit`} className={activeBar == 'deposit' ? "menuLink activebar" : "menuLink"}><i className="fa fa-credit-card-alt"></i><span className="menu-text">Deposit</span></a>
                             </li>
                             <li>
                                 <a href={`${config.baseUrl}bankdetail`} className={activeBar == 'bankdetail' ? "menuLink activebar" : "menuLink"}><i className="fa fa-database"></i><span className="menu-text">Bank detail</span></a>

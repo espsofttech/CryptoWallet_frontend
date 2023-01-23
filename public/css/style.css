@@ -572,3 +572,46 @@ a.menuLink.activebar {
 .mr-0 {
   margin-right: 0px!important;
 }
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
+.btn-upload {
+  border: none;
+  color: #fff;
+  padding: 8px 20px;
+  border-radius: 8px;
+  width: 100%;
+  font-size: 20px;
+  cursor: pointer;
+  font-weight: 700;
+  background: linear-gradient(80deg,#435fef,#435fef);
+}
+
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+.crypt-button-red-full {
+  background: linear-gradient(80deg, #435fef, #435fef);
+  border: none !important;
+  color: #fff;
+  padding: 9px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  font-weight: 600;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  font-size: 20px;
+  transition: all 0.4s ease;
+}
