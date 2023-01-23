@@ -20,6 +20,7 @@ import Privacypolicy from '../components/privacypolicy';
 import Faq from '../components/faq';
 import Contactus from '../components/contactus';
 import LivePrice from '../components/liveprice';
+import Deposit from '../components/deposit';
 const RouterComponent = () => {
     return (<BrowserRouter >
         <div>
@@ -43,6 +44,8 @@ const RouterComponent = () => {
                 <Route path={`${config.baseUrl}privacypolicy`} element={<Privacypolicy />} />
                 <Route path={`${config.baseUrl}contactus`} element={<Contactus />} />
                 <Route path={`${config.baseUrl}LivePrice`} element={<LivePrice />} />
+                <Route path={`${config.baseUrl}deposit`} element={<Deposit />} />
+
 
 
             </Routes>

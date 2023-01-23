@@ -16,8 +16,6 @@ const Dashboardheader = () => {
 
     const USER_LOGIN_DETAILS = useSelector((state) => state.auth.USER_LOGIN_DETAILS)
 
-    console.log(USER_LOGIN_DETAILS)
-
     useEffect(() => {
         // Update the document title using the browser API
         $('body').addClass("lighttheme");

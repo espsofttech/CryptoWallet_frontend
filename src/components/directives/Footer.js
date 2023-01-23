@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container,Navbar,Offcanvas,Nav,NavDropdown,Form,Button,Row,Col } from 'react-bootstrap';
 // import Navbar from 'react-bootstrap/Navbar';
 import {Link} from 'react-router-dom'
+import config from '../../config/config';
 
 const Footer = () => {
     return (
@@ -47,10 +48,10 @@ const Footer = () => {
         <div className="footer-widget pl-lg-4">
           <h3 className="footer-widget-title">Service</h3>
           <ul className="footer-menu list-style">
-            <li><a href="#" target="_blank">About</a></li>
-            <li><a href="#" target="_blank">FAQ</a></li>
-            <li><a href="#" target="_blank">Privacy Policy</a></li>
-            <li><a href="#" target="_blank">Support</a></li>
+            <li><a href={`${config.baseUrl}aboutus`} target="_blank">About</a></li>
+            <li><a href={`${config.baseUrl}faq`} target="_blank">FAQ</a></li>
+            <li><a href={`${config.baseUrl}privacypolicy`} target="_blank">Privacy Policy</a></li>
+            <li><a href={`${config.baseUrl}contactus`} target="_blank">Support</a></li>
           </ul>
         </div>
       </Col>

@@ -13,9 +13,6 @@ const Header = () => {
   const navigate = useNavigate();
   const USER_LOGIN_DETAILS = useSelector((state) => state.auth.USER_LOGIN_DETAILS)
   const [userDetails, setuserDetails] = useState({});
-
-  console.log(USER_LOGIN_DETAILS)
-
   const logoutClick = () => {
     dispatch({
       type: ACTIONTYPES.USER_FORM, payload: {
