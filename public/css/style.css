@@ -615,3 +615,12 @@ a.menuLink.activebar {
   font-size: 20px;
   transition: all 0.4s ease;
 }
+/* --------------------- */
+button:disabled {
+  background: #6573e5;
+}
+.kycStatus{
+    text-align: center;
+    border: 1px solid;
+    padding: 113px;
+}

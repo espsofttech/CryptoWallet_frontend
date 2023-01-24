@@ -6641,10 +6641,19 @@ select:-webkit-autofill:focus {
 
 .sc-iQtOjA.fLKthc button.open-currency-select-button {
     background-color: rgba(255, 255, 255, 0.1);
-    padding: 9px 9px;
+    min-width: 66px;
+    padding: 4px 4px;
     border-radius: 15px;
     border: 1px solid #807c7c;
     font-weight: bold;
+}
+.open-currency-select-button select{
+	border:none!important;
+	appearance: auto;
+	border-radius: 15px;
+}
+.open-currency-select-button select:focus{
+	box-shadow: none!important;
 }
 
 .sc-iQtOjA.fLKthc button.open-currency-select-button img {
