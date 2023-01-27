@@ -4,6 +4,7 @@ import { Container, Row, Col, Form, Button, InputGroup } from 'react-bootstrap';
 import ReactDatatable from '@ashvin27/react-datatable';
 import Dashboardheader from "./directives/dashboardheader";
 import Dashboardsidebar from "./directives/dashboardsidebar";
+import Imagecapture from "./imagecapture";
 import { useSelector, useDispatch } from 'react-redux'
 import { showkycAction, updatekycAction, getAllIdentity } from '../Action/user.action';
 import toast, { Toaster } from 'react-hot-toast';
@@ -297,8 +298,9 @@ const Kycdetail = () => {
 
                                     </select>
                                   </div>
-
-                                  <div className="mb-3">
+<Row>
+  <Col lg={6}>
+  <div className="mb-3">
                                     <label className="form-label">
                                       Identity Document Image
                                     </label>
@@ -347,17 +349,18 @@ const Kycdetail = () => {
                                       onChange={partnerPic}
                                       id="fileInput"
                                       accept="image/*"
-                                      className="choose-file mt-5"
+                                      className="choose-file mt-3"
                                       type="file"
                                     />
                                     <span className="validationErr danger">
                                       {validationError.imageError}
                                     </span>
+                                   
                                   </div>
-
-
-
-                                  <div className="mb-3">
+  </Col>
+  <Col lg={6}>
+   
+  <div className="mb-3">
                                     <label className="form-label">
                                       Bank Statement
                                     </label>
@@ -406,7 +409,43 @@ const Kycdetail = () => {
                                       onChange={bankstatementPic}
                                       id="fileInput"
                                       accept="image/*"
-                                      className="choose-file mt-5"
+                                      className="choose-file mt-3"
+                                      type="file"
+                                    />
+                                    {/* <span className="validationErr danger">
+                                      {validationError.imageError}
+                                    </span> */}
+                                  </div>
+      
+  </Col>
+</Row>
+                                  
+
+
+
+                                  <div className="mb-3">
+                                    <label className="form-label">
+                                      Upload Image
+                                    </label>
+                                    <br />
+                                  
+                                        <img
+                                          style={{
+                                            height: "150px",
+                                            width: "150px",
+                                            objectFit: "cover",
+                                          }}
+                                          className="object-cover w-full h-32"
+                                          src="dashboardFolder/img/dummy.jpg"
+                                          alt=""
+                                        />
+  
+                                    <input
+                                      name="image"
+                                    
+                                      id="fileInput"
+                                      accept="image/*"
+                                      className="choose-file mt-3"
                                       type="file"
                                     />
                                     {/* <span className="validationErr danger">

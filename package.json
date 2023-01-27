@@ -27,6 +27,7 @@
     "react-router-dom": "^6.6.1",
     "react-scripts": "5.0.1",
     "react-scroll-fade-animation": "^0.5.4",
+    "react-webcam": "^7.0.1",
     "react-websocket": "^2.1.0",
     "redux-persist": "^6.0.0",
     "toast": "^0.5.4",

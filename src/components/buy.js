@@ -475,11 +475,11 @@ const Buy = () => {
                                         <div className="col-md-12">
                                             <div className="kycStatus">
                                                 {purchaseList11.kyc_status == 0 ?
-                                                    <span style={{ color: '#ffa500cf' }}>
+                                                    <span style={{ color: '#000' }}>
                                                         For Buy/Sell Firstly You have to Complete Your KYC
                                                     </span> :
                                                     purchaseList11.kyc_status == 1 ?
-                                                        <span style={{ color: '#ffa500cf' }}>
+                                                        <span style={{ color: '#000' }}>
                                                             Your KYC Is Pending From Admin Side
                                                         </span> :
                                                         <span style={{ color: 'red' }}>

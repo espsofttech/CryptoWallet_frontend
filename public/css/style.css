@@ -617,10 +617,22 @@ a.menuLink.activebar {
 }
 /* --------------------- */
 button:disabled {
-  background: #6573e5;
+  background: #0d6efdde;
 }
-.kycStatus{
-    text-align: center;
-    border: 1px solid;
-    padding: 113px;
+.kycStatus {
+  text-align: center;
+  border: 1px solid #ccc;
+  padding: 113px;
+  background: #fff;
+  font-size: 18px;
+  border-radius: 14px;
+}
+#as-react-datatable {
+  background: #fff;
+}
+/* -------------------- */
+.input-group-append .form-control {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  /* padding: 0px; */
 }
