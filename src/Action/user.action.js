@@ -38,6 +38,21 @@ export const buyNowAction = (data) => {
    return postRequest(`exchange`, data).then(res => { return res.data })
 }
 
+export const withdrawCryptoAction = (data) => {
+   return postRequest(`withdrawcrypto`, data).then(res => { return res.data })
+}
+
+export const withdrawBankAction = (data) => {
+   return postRequest(`bankWithdraw`, data).then(res => { return res.data })
+}
+
+export const getAllWithdrawTransactionsAction = (data) => {
+   return getRequest(`getAllWithdrawTransactionsbyuser/${data}`).then(res => { return res.data })
+}
+
+export const getAllTransactionsAction = (data) => {
+   return getRequest(`getAllTransactionDetail`,{}).then(res => { return res.data })
+}
 
 export const getAllDetailsOfcoinAction = (data) => {
    return getRequest(`getAllDetailsOfcoin/${data}`).then(res => { return res.data })

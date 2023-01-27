@@ -22,10 +22,17 @@ const Kycdetail = () => {
     image: "",
     old_image: "",
     identity_proof_id: "",
+    BankStatement:'',
+    old_bankStatement:'',
+    phoneNo:""
   });
   const [adminkycdetails, setadminkycdetails] = useState([]);
   const [image_file, setimage_file] = useState("");
+  const [image_file1, setimage_file1] = useState("");
+
   const [image_preview, setimage_preview] = useState("");
+  const [image_preview1, setimage_preview1] = useState("");
+
   const [kycStatus, setkycStatus] = useState(false);
   const [kycStatusApproveReject, setkycStatusApproveReject] = useState(false);
   const [identity, setIdentity] = useState([])
@@ -140,6 +147,16 @@ const Kycdetail = () => {
     });
   };
 
+  const bankstatementPic = async (e) => {
+    e.preventDefault();
+    let image_as_base64 = URL.createObjectURL(e.target.files[0]);
+    let image_as_files = e.target.files[0];
+    setimage_file1(image_as_files);
+    setimage_preview1(image_as_base64);
+    setkycdetails((old) => {
+      return { ...old, ["BankStatement"]: image_as_files };
+    });
+  };
 
   const updatekycdetails = async (e) => {
     e.preventDefault();
@@ -149,6 +166,10 @@ const Kycdetail = () => {
     } else {
       if (!image_file) {
         kycdetails.old_profile_pic = kycdetails?.image;
+      }
+      if (!image_file1) {
+        kycdetails.old_bankStatement = kycdetails?.BankStatement;
+        kycdetails.BankStatement = "";
       }
       kycdetails.user_id = USER_LOGIN_DETAILS.template.id
       let res = await updatekycAction(kycdetails);
@@ -334,6 +355,67 @@ const Kycdetail = () => {
                                     </span>
                                   </div>
 
+
+
+                                  <div className="mb-3">
+                                    <label className="form-label">
+                                      Bank Statement
+                                    </label>
+                                    <br />
+                                    {image_preview1 == "" ? (
+                                      kycdetails?.BankStatement === null ||
+                                        kycdetails?.BankStatement === "null" ||
+                                        kycdetails?.BankStatement == "" ? (
+                                        <img
+                                          style={{
+                                            height: "150px",
+                                            width: "150px",
+                                            objectFit: "cover",
+                                          }}
+                                          className="object-cover w-full h-32"
+                                          src="dashboardFolder/img/dummy.jpg"
+                                          alt=""
+                                        />
+                                      ) : (
+                                        <img
+                                          style={{
+                                            height: "150px",
+                                            width: "150px",
+                                            objectFit: "cover",
+                                          }}
+                                          className="object-cover w-full h-32"
+                                          src={`${config.imageUrl}${kycdetails?.BankStatement}`}
+                                          alt=""
+                                        />
+                                      )
+                                    ) : (
+                                      <img
+                                        style={{
+                                          height: "150px",
+                                          width: "150px",
+                                          objectFit: "cover",
+                                        }}
+                                        id="image"
+                                        className="object-cover w-full h-32"
+                                        src={image_preview1}
+                                      />
+                                    )}
+
+                                    <input
+                                      name="image"
+                                      onChange={bankstatementPic}
+                                      id="fileInput"
+                                      accept="image/*"
+                                      className="choose-file mt-5"
+                                      type="file"
+                                    />
+                                    {/* <span className="validationErr danger">
+                                      {validationError.imageError}
+                                    </span> */}
+                                  </div>
+
+
+
                                   <div className="mb-3">
                                     <label className="form-label">
                                       Document Number
@@ -348,6 +430,22 @@ const Kycdetail = () => {
                                     <span className="validationErr danger">
                                       {validationError.kycdocumentError}
                                     </span>
+                                  </div>
+
+                                  <div className="mb-3">
+                                    <label className="form-label">
+                                     Phone Number
+                                    </label>
+                                    <input
+                                      type="text"
+                                      className="form-control"
+                                      onChange={inputHandler}
+                                      value={kycdetails?.phoneNo}
+                                      name="phoneNo"
+                                    />
+                                    {/* <span className="validationErr danger">
+                                      {validationError.kycdocumentError}
+                                    </span> */}
                                   </div>
 
 
