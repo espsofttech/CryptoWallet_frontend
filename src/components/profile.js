@@ -101,7 +101,7 @@ const Profile = () => {
                                                             <img style={{ height: '190px', width: '190px', objectFit: 'cover' }} src={image_preview} className='d-profile-img-edit img-fluid' />
                                                             :
                                                             !userDetails?.image || userDetails?.image == undefined || userDetails?.image == 'undefined' ?
-                                                                <img style={{ height: '190px', width: '190px', objectFit: 'cover' }} src="dashboardFolder/img/dummy.jpg" className='d-profile-img-edit img-fluid' />
+                                                                <img style={{ height: '190px', width: '190px', objectFit: 'cover' }} src="images/dummy-man.png" className='d-profile-img-edit img-fluid' />
                                                                 :
                                                                 <img style={{ height: '190px', width: '190px', objectFit: 'cover' }} src={`${config.imageUrl + userDetails?.image}`} className='d-profile-img-edit img-fluid' />
                                                         }

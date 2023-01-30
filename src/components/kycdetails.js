@@ -23,16 +23,22 @@ const Kycdetail = () => {
     image: "",
     old_image: "",
     identity_proof_id: "",
-    BankStatement:'',
-    old_bankStatement:'',
-    phoneNo:""
+    BankStatement: '',
+    old_bankStatement: '',
+    phoneNo: "",
+    userImage: '',
+    old_userImage: ''
   });
   const [adminkycdetails, setadminkycdetails] = useState([]);
   const [image_file, setimage_file] = useState("");
   const [image_file1, setimage_file1] = useState("");
+  const [image_file3, setimage_file3] = useState("");
+
 
   const [image_preview, setimage_preview] = useState("");
   const [image_preview1, setimage_preview1] = useState("");
+  const [image_preview3, setimage_preview3] = useState("");
+
 
   const [kycStatus, setkycStatus] = useState(false);
   const [kycStatusApproveReject, setkycStatusApproveReject] = useState(false);
@@ -46,7 +52,18 @@ const Kycdetail = () => {
     let kycdocumentError = "";
     let AddressError = "";
     let imageError = "";
-    console.log("setkycdetails.dob", kycdetails?.dob);
+    let BankStatementError = "";
+    let emailError = "";
+    let identity_proof_idError = "";
+    let phoneNoError = ''
+    let userImageError = "";
+
+    if (kycdetails.phoneNo === "" || kycdetails.phoneNo == undefined) {
+      phoneNoError = "Phone No is required.";
+    }
+    if (kycdetails.identity_proof_id === "" || kycdetails.identity_proof_id == undefined) {
+      identity_proof_idError = "Identity Proof is required.";
+    }
     if (kycdetails.user_name === "" || kycdetails.user_name == undefined) {
       firstnameError = "Name is required.";
     }
@@ -75,7 +92,29 @@ const Kycdetail = () => {
       kycdetails.image === "" ||
       kycdetails.image == undefined
     ) {
-      imageError = "document image is required.";
+      imageError = "Document image is required.";
+    }
+
+    if (
+      kycdetails.BankStatement === "" ||
+      kycdetails.BankStatement == undefined
+    ) {
+      BankStatementError = "Bank Statement is required.";
+    }
+
+    if (
+      kycdetails.userImage === "" ||
+      kycdetails.userImage == undefined
+    ) {
+      userImageError = "User Image is required.";
+    }
+
+
+    if (
+      kycdetails.email === "" ||
+      kycdetails.email == undefined
+    ) {
+      emailError = "Email is required.";
     }
 
 
@@ -85,7 +124,12 @@ const Kycdetail = () => {
       dateofbirthError ||
       kycdocumentError ||
       AddressError ||
-      imageError
+      imageError ||
+      emailError ||
+      identity_proof_idError ||
+      phoneNoError ||
+      BankStatementError ||
+      userImageError
     ) {
       setvalidationError({
         firstnameError,
@@ -93,6 +137,11 @@ const Kycdetail = () => {
         kycdocumentError,
         AddressError,
         imageError,
+        emailError,
+        identity_proof_idError,
+        phoneNoError,
+        BankStatementError,
+        userImageError
       });
 
       return false;
@@ -114,7 +163,7 @@ const Kycdetail = () => {
     }
     if (res.status == true) {
       setkycdetails(res.data);
-      console.log("123", res.data.doc_no == "");
+
     }
   };
 
@@ -159,6 +208,18 @@ const Kycdetail = () => {
     });
   };
 
+  const userImageChange = async (e) => {
+    e.preventDefault();
+    let image_as_base64 = URL.createObjectURL(e.target.files[0]);
+    let image_as_files = e.target.files[0];
+    setimage_file3(image_as_files);
+    setimage_preview3(image_as_base64);
+    setkycdetails((old) => {
+      return { ...old, ["userImage"]: image_as_files };
+    });
+  };
+
+
   const updatekycdetails = async (e) => {
     e.preventDefault();
     const isValid = validate();
@@ -172,13 +233,17 @@ const Kycdetail = () => {
         kycdetails.old_bankStatement = kycdetails?.BankStatement;
         kycdetails.BankStatement = "";
       }
+      if (!image_file3) {
+        kycdetails.old_userImage = kycdetails?.userImage;
+        kycdetails.userImage = "";
+      }
       kycdetails.user_id = USER_LOGIN_DETAILS.template.id
       let res = await updatekycAction(kycdetails);
       if (res.status === true) {
         toast.success(res.msg);
-        // setTimeout(() => {
-        //   window.location.href = `${config.baseUrl}kycdetails`;
-        // }, 2000);
+        setTimeout(() => {
+          window.location.href = `${config.baseUrl}kycdetails`;
+        }, 2000);
       } else {
         toast.error(res.msg);
       }
@@ -233,7 +298,7 @@ const Kycdetail = () => {
                               <div className="">
                                 <form onSubmit={updatekycdetails}>
                                   <div className="mb-3">
-                                    <label className="form-label">Name</label>
+                                    <label className="form-label">Name <span className="astrick"> *</span></label>
                                     <input
                                       type="text"
                                       className="form-control"
@@ -248,7 +313,7 @@ const Kycdetail = () => {
 
                                   <div className="mb-3">
                                     <label className="form-label">
-                                      Date Of Birth
+                                      Date Of Birth<span className="astrick"> *</span>
                                     </label>
                                     <input
                                       type="date"
@@ -263,7 +328,7 @@ const Kycdetail = () => {
                                   </div>
 
                                   <div className="mb-3">
-                                    <label className="form-label">Email</label>
+                                    <label className="form-label">Email<span className="astrick"> *</span></label>
                                     <input
                                       type="text"
                                       className="form-control"
@@ -271,6 +336,9 @@ const Kycdetail = () => {
                                       onChange={inputHandler}
                                       name="email"
                                     />
+                                    <span className="validationErr danger">
+                                      {validationError.emailError}
+                                    </span>
                                   </div>
 
                                   <div className="mb-3">
@@ -278,7 +346,7 @@ const Kycdetail = () => {
                                       htmlFor="exampleFormControlInput1"
                                       className="form-label"
                                     >
-                                      Select Document For Identity proof
+                                      Select Document For Identity proof<span className="astrick"> *</span>
                                     </label>
                                     <select
                                       className="form-select"
@@ -287,28 +355,154 @@ const Kycdetail = () => {
                                       name="identity_proof_id"
                                       value={kycdetails?.identity_proof_id}
                                     >
+                                      <option value="">Please select identity proof</option>
                                       {identity?.map((item) => {
                                         return (
                                           <>
-                                            <option value="">Please select identity proof</option>
                                             <option value={item.id}>{item.Identity_name}</option>
                                           </>
                                         )
                                       })}
 
                                     </select>
+                                    <span className="validationErr danger">
+                                      {validationError.identity_proof_idError}
+                                    </span>
                                   </div>
-<Row>
-  <Col lg={6}>
-  <div className="mb-3">
+                                  <Row>
+                                    <Col lg={6}>
+                                      <div className="mb-3">
+                                        <label className="form-label">
+                                          Identity Document Image<span className="astrick"> *</span>
+                                        </label>
+                                        <br />
+                                        {image_preview == "" ? (
+                                          kycdetails?.image === null ||
+                                            kycdetails?.image === "null" ||
+                                            kycdetails?.image == "" ? (
+                                            <img
+                                              style={{
+                                                height: "150px",
+                                                width: "150px",
+                                                objectFit: "cover",
+                                              }}
+                                              className="object-cover w-full h-32"
+                                              src="dashboardFolder/img/dummy.jpg"
+                                              alt=""
+                                            />
+                                          ) : (
+                                            <img
+                                              style={{
+                                                height: "150px",
+                                                width: "150px",
+                                                objectFit: "cover",
+                                              }}
+                                              className="object-cover w-full h-32"
+                                              src={`${config.imageUrl}${kycdetails?.image}`}
+                                              alt=""
+                                            />
+                                          )
+                                        ) : (
+                                          <img
+                                            style={{
+                                              height: "150px",
+                                              width: "150px",
+                                              objectFit: "cover",
+                                            }}
+                                            id="image"
+                                            className="object-cover w-full h-32"
+                                            src={image_preview}
+                                          />
+                                        )}
+
+                                        <input
+                                          name="image"
+                                          onChange={partnerPic}
+                                          id="fileInput"
+                                          accept="image/*"
+                                          className="choose-file mt-3"
+                                          type="file"
+                                        />
+                                        <span className="validationErr danger">
+                                          {validationError.imageError}
+                                        </span>
+
+                                      </div>
+                                    </Col>
+                                    <Col lg={6}>
+
+                                      <div className="mb-3">
+                                        <label className="form-label">
+                                          Bank Statement<span className="astrick"> *</span>
+                                        </label>
+                                        <br />
+                                        {image_preview1 == "" ? (
+                                          kycdetails?.BankStatement === null ||
+                                            kycdetails?.BankStatement === "null" ||
+                                            kycdetails?.BankStatement == "" ? (
+                                            <img
+                                              style={{
+                                                height: "150px",
+                                                width: "150px",
+                                                objectFit: "cover",
+                                              }}
+                                              className="object-cover w-full h-32"
+                                              src="dashboardFolder/img/dummy.jpg"
+                                              alt=""
+                                            />
+                                          ) : (
+                                            <img
+                                              style={{
+                                                height: "150px",
+                                                width: "150px",
+                                                objectFit: "cover",
+                                              }}
+                                              className="object-cover w-full h-32"
+                                              src={`${config.imageUrl}${kycdetails?.BankStatement}`}
+                                              alt=""
+                                            />
+                                          )
+                                        ) : (
+                                          <img
+                                            style={{
+                                              height: "150px",
+                                              width: "150px",
+                                              objectFit: "cover",
+                                            }}
+                                            id="image"
+                                            className="object-cover w-full h-32"
+                                            src={image_preview1}
+                                          />
+                                        )}
+
+                                        <input
+                                          name="image"
+                                          onChange={bankstatementPic}
+                                          id="fileInput"
+                                          accept="image/*"
+                                          className="choose-file mt-3"
+                                          type="file"
+                                        />
+                                        <span className="validationErr danger">
+                                          {validationError.BankStatementError}
+                                        </span>
+                                      </div>
+
+                                    </Col>
+                                  </Row>
+
+
+
+
+                                  <div className="mb-3">
                                     <label className="form-label">
-                                      Identity Document Image
+                                      Upload Image<span className="astrick"> *</span>
                                     </label>
                                     <br />
-                                    {image_preview == "" ? (
-                                      kycdetails?.image === null ||
-                                        kycdetails?.image === "null" ||
-                                        kycdetails?.image == "" ? (
+                                    {image_preview3 == "" ? (
+                                      kycdetails?.userImage === null ||
+                                        kycdetails?.userImage === "null" ||
+                                        kycdetails?.userImage == "" ? (
                                         <img
                                           style={{
                                             height: "150px",
@@ -327,7 +521,7 @@ const Kycdetail = () => {
                                             objectFit: "cover",
                                           }}
                                           className="object-cover w-full h-32"
-                                          src={`${config.imageUrl}${kycdetails?.image}`}
+                                          src={`${config.imageUrl}${kycdetails?.userImage}`}
                                           alt=""
                                         />
                                       )
@@ -340,124 +534,28 @@ const Kycdetail = () => {
                                         }}
                                         id="image"
                                         className="object-cover w-full h-32"
-                                        src={image_preview}
+                                        src={image_preview3}
                                       />
                                     )}
 
                                     <input
                                       name="image"
-                                      onChange={partnerPic}
+                                      onChange={userImageChange}
                                       id="fileInput"
                                       accept="image/*"
                                       className="choose-file mt-3"
                                       type="file"
                                     />
                                     <span className="validationErr danger">
-                                      {validationError.imageError}
+                                      {validationError.userImageError}
                                     </span>
-                                   
-                                  </div>
-  </Col>
-  <Col lg={6}>
-   
-  <div className="mb-3">
-                                    <label className="form-label">
-                                      Bank Statement
-                                    </label>
-                                    <br />
-                                    {image_preview1 == "" ? (
-                                      kycdetails?.BankStatement === null ||
-                                        kycdetails?.BankStatement === "null" ||
-                                        kycdetails?.BankStatement == "" ? (
-                                        <img
-                                          style={{
-                                            height: "150px",
-                                            width: "150px",
-                                            objectFit: "cover",
-                                          }}
-                                          className="object-cover w-full h-32"
-                                          src="dashboardFolder/img/dummy.jpg"
-                                          alt=""
-                                        />
-                                      ) : (
-                                        <img
-                                          style={{
-                                            height: "150px",
-                                            width: "150px",
-                                            objectFit: "cover",
-                                          }}
-                                          className="object-cover w-full h-32"
-                                          src={`${config.imageUrl}${kycdetails?.BankStatement}`}
-                                          alt=""
-                                        />
-                                      )
-                                    ) : (
-                                      <img
-                                        style={{
-                                          height: "150px",
-                                          width: "150px",
-                                          objectFit: "cover",
-                                        }}
-                                        id="image"
-                                        className="object-cover w-full h-32"
-                                        src={image_preview1}
-                                      />
-                                    )}
-
-                                    <input
-                                      name="image"
-                                      onChange={bankstatementPic}
-                                      id="fileInput"
-                                      accept="image/*"
-                                      className="choose-file mt-3"
-                                      type="file"
-                                    />
-                                    {/* <span className="validationErr danger">
-                                      {validationError.imageError}
-                                    </span> */}
-                                  </div>
-      
-  </Col>
-</Row>
-                                  
-
-
-
-                                  <div className="mb-3">
-                                    <label className="form-label">
-                                      Upload Image
-                                    </label>
-                                    <br />
-                                  
-                                        <img
-                                          style={{
-                                            height: "150px",
-                                            width: "150px",
-                                            objectFit: "cover",
-                                          }}
-                                          className="object-cover w-full h-32"
-                                          src="dashboardFolder/img/dummy.jpg"
-                                          alt=""
-                                        />
-  
-                                    <input
-                                      name="image"
-                                    
-                                      id="fileInput"
-                                      accept="image/*"
-                                      className="choose-file mt-3"
-                                      type="file"
-                                    />
-                                    {/* <span className="validationErr danger">
-                                      {validationError.imageError}
-                                    </span> */}
                                   </div>
 
 
 
                                   <div className="mb-3">
                                     <label className="form-label">
-                                      Document Number
+                                      Document Number<span className="astrick"> *</span>
                                     </label>
                                     <input
                                       type="text"
@@ -473,7 +571,7 @@ const Kycdetail = () => {
 
                                   <div className="mb-3">
                                     <label className="form-label">
-                                     Phone Number
+                                      Phone Number<span className="astrick"> *</span>
                                     </label>
                                     <input
                                       type="text"
@@ -482,16 +580,16 @@ const Kycdetail = () => {
                                       value={kycdetails?.phoneNo}
                                       name="phoneNo"
                                     />
-                                    {/* <span className="validationErr danger">
-                                      {validationError.kycdocumentError}
-                                    </span> */}
+                                    <span className="validationErr danger">
+                                      {validationError.phoneNoError}
+                                    </span>
                                   </div>
 
 
 
                                   <div className="mb-3">
                                     <label className="form-label">
-                                      Full Address
+                                      Full Address<span className="astrick"> *</span>
                                     </label>
                                     <input
                                       type="text"

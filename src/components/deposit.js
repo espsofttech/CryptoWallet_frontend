@@ -121,39 +121,66 @@ const Deposit = () => {
     };
 
 
+    function validate() {
+        let bankError = "";
+        let balanceError = "";
+        let transaction_idError = "";
+        let upload_fileError = "";
+        if (bankdetails.bank_name === '') {
+            bankError = "Bank Name is required."
+        }
+        if (depositfiat.balance === '') {
+            balanceError = "Balance is required."
+        }
+        if (depositfiat.transaction_id === '') {
+            transaction_idError = "Transaction id is required."
+        }
+        if (image_file === '') {
+            upload_fileError = "File is required."
+        }
+        if (bankError || balanceError || transaction_idError || upload_fileError) {
+            setvalidatioError({
+                bankError, balanceError, transaction_idError, upload_fileError
+            })
+            return false
+        } else {
+            return true
+        }
+    }
+
 
     const updatebankdetails = async (e) => {
         e.preventDefault();
 
-        // const isValid = validate();
+        const isValid = validate();
 
-        // if (isValid) {
-        if (!image_file) {
-            console.log('3442')
-            depositfiat.old_upload_file = depositfiat?.upload_file;
+        if (isValid) {
+            if (!image_file) {
+               
+                depositfiat.old_upload_file = depositfiat?.upload_file;
+            }
+            else {
+              
+
+                depositfiat.upload_file = image_file;
+            }
+            depositfiat.admin_bank_id = adminbankdetails.id
+            depositfiat.bank_name = bankdetails?.bank_name
+
+            let res = await depositFiatAction(depositfiat);
+            if (res.status == true) {
+                // setTimeout(() => {
+
+                toast.success(res.msg);
+                // }, 10000);
+                // toast.success(res.msg);
+                setTimeout(() => {
+                    window.location.reload()
+                }, 1000);
+            } else {
+                toast.error(res.msg);
+            }
         }
-        else {
-            console.log('34423333')
-
-            depositfiat.upload_file = image_file;
-        }
-        depositfiat.admin_bank_id = adminbankdetails.id
-        depositfiat.bank_name = bankdetails?.bank_name
-
-        let res = await depositFiatAction(depositfiat);
-        if (res.status == true) {
-            // setTimeout(() => {
-
-            toast.success(res.msg);
-            // }, 10000);
-            // toast.success(res.msg);
-            // setTimeout(() => {
-            //     window.location.reload()
-            // }, 1000);
-        } else {
-            toast.error(res.msg);
-        }
-        // }
     };
 
 
@@ -303,6 +330,7 @@ const Deposit = () => {
                                                                         name="bank_name"
 
                                                                     />
+                                                                    <span className="validationErr">{validatioError.bankError}</span>
 
                                                                 </div>
 
@@ -337,6 +365,8 @@ const Deposit = () => {
                                                                         value={depositfiat?.balance}
                                                                         name="balance"
                                                                     />
+                                                                    <span className="validationErr">{validatioError.balanceError}</span>
+
                                                                 </div>
 
 
@@ -389,6 +419,7 @@ const Deposit = () => {
                                                                         name="transaction_id"
 
                                                                     />
+                                                                    <span className="validationErr">{validatioError.transaction_idError}</span>
 
                                                                 </div>
 
@@ -401,6 +432,8 @@ const Deposit = () => {
                                                                                 {/* {this.state.error.length > 0 && this.state.error[0].name == 'receipt_name' ? <div>
                                                                                     <span className='alert_validation'>{this.state.error[0].err}</span>
                                                                                 </div> : ''} */}
+                                                                                <span className="validationErr">{validatioError.upload_fileError}</span>
+
                                                                             </div>
                                                                         </div>
                                                                         <div className='col-lg-6'>

@@ -91,7 +91,7 @@ const Buy = () => {
 
     useEffect(() => {
         livePriceAPI()
-        getAllTransactions()
+        getAllTransactions(USER_LOGIN_DETAILS.template.id)
         getkycdetails(USER_LOGIN_DETAILS.template.id)
     }, []);
 
@@ -175,6 +175,9 @@ const Buy = () => {
             let res = await buyNowAction(data);
             if (res.status == true) {
                 toast.success(res.data);
+                setTimeout(() => {
+                    window.location.reload()
+                }, 1000);
             }
             else {
                 toast.error(res.msg);
@@ -474,16 +477,16 @@ const Buy = () => {
                                     <div className="row">
                                         <div className="col-md-12">
                                             <div className="kycStatus">
-                                                {purchaseList11.kyc_status == 0 ?
-                                                    <span style={{ color: '#000' }}>
-                                                        For Buy/Sell Firstly You have to Complete Your KYC
+                                                {purchaseList11.kyc_status == 3 ?
+                                                    <span style={{ color: 'red' }}>
+                                                         Your KYC Is Rejected From Admin Side
                                                     </span> :
                                                     purchaseList11.kyc_status == 1 ?
                                                         <span style={{ color: '#000' }}>
                                                             Your KYC Is Pending From Admin Side
                                                         </span> :
-                                                        <span style={{ color: 'red' }}>
-                                                            Your KYC Is Rejected From Admin Side
+                                                        <span style={{ color: '#000' }}>
+                                                            For Buy/Sell Firstly You have to Complete Your KYC
                                                         </span>
                                                 }
 

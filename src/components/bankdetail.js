@@ -110,25 +110,29 @@ const Bankdetail = () => {
         let accountnumberError = '';
         let ifsccodeError = '';
         let pancardnumberError = '';
+        let accountTypeError = ''
         if (bankdetails?.bank_account_holder_name == '' || bankdetails?.bank_account_holder_name == undefined) {
             AccountnameError = "Bank Account Holder Name  is required."
-        } else if (bankdetails?.branchName == '' || bankdetails?.branchName == undefined) {
+        } if (bankdetails?.branchName == '' || bankdetails?.branchName == undefined) {
             branchnameError = "Branch name  is required."
-        } else if (bankdetails?.bank_name == '' || bankdetails?.bank_name == undefined) {
+        } if (bankdetails?.bank_name == '' || bankdetails?.bank_name == undefined) {
             banknameError = "Bank name  is required."
-        } else if (bankdetails?.AccountNumber == '' || bankdetails?.AccountNumber == undefined) {
+        } if (bankdetails?.AccountNumber == '' || bankdetails?.AccountNumber == undefined) {
             accountnumberError = "Account number  is required."
-        } else if (bankdetails?.ifsc_code == '' || bankdetails?.ifsc_code == undefined) {
+        } if (bankdetails?.ifsc_code == '' || bankdetails?.ifsc_code == undefined) {
             ifsccodeError = "IFSC code  is required."
-        } else if (bankdetails?.panCardno == '' || bankdetails?.panCardno == undefined) {
+        } if (bankdetails?.panCardno == '' || bankdetails?.panCardno == undefined) {
             pancardnumberError = "Pancard Number is required."
+        }
+        if (bankdetails?.accountType == '' || bankdetails?.accountType == undefined) {
+            accountTypeError = "Account Type is required."
         }
 
 
 
-        if (banknameError || accountnumberError || branchnameError || AccountnameError || ifsccodeError || pancardnumberError) {
+        if (banknameError || accountnumberError || branchnameError || AccountnameError || ifsccodeError || pancardnumberError || accountTypeError) {
             setvalidatioError({
-                banknameError, accountnumberError, branchnameError, ifsccodeError, AccountnameError, pancardnumberError
+                banknameError, accountnumberError, branchnameError, ifsccodeError, AccountnameError, pancardnumberError, accountTypeError
             })
             return false
         } else {
@@ -174,9 +178,9 @@ const Bankdetail = () => {
                 toast.success(res.msg);
                 // }, 10000);
                 // toast.success(res.msg);
-                // setTimeout(() => {
-                //     window.location.reload()
-                // }, 1000);
+                setTimeout(() => {
+                    window.location.reload()
+                }, 1000);
             } else {
                 toast.error(res.msg);
             }
@@ -363,7 +367,7 @@ const Bankdetail = () => {
                                                                         <option value='Saving Account'>Saving Account</option>
                                                                         <option value='current Account'>current Account</option>
                                                                     </select>
-
+                                                                    <span className="validationErr">{validatioError.accountTypeError}</span>
                                                                 </div>
                                                                 {bankdetails?.accountType == 'current Account' ?
                                                                     <>

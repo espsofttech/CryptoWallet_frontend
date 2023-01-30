@@ -60,24 +60,24 @@ const Header = () => {
                   <Offcanvas.Body>
                     <Nav className="justify-content-end align-items-center flex-grow-1 pe-3">
                       <Nav.Link href="#">Explore </Nav.Link>
-                      <Nav.Link href="#">About Us</Nav.Link>
+                      <Nav.Link href={`${config.baseUrl}aboutus`}>About Us</Nav.Link>
                       <Nav.Link href="#">Learn</Nav.Link>
                       {USER_LOGIN_DETAILS.template != '' ?
-                      <>
-                      <Nav.Link className="" href={`${config.baseUrl}dashboard`}>Dashboard </Nav.Link>
-                      <Link className="mr-0" href="javascript:void(0)" onClick={logoutClick} ><button type="button" className="btn style1">Logout</button></Link>
-                      </>:
-                     <Form className="d-flex">
-                      <Link to={`${config.baseUrl}login`}>
-                          <button type="button" className="btn style1">Login</button>
-                        </Link>&nbsp;&nbsp;
-                        <Link to={`${config.baseUrl}signup`}>
-                          <button type="button" className="btn style1">Signup</button>
-                        </Link>
+                        <>
+                          <Nav.Link className="" href={`${config.baseUrl}dashboard`}>Dashboard </Nav.Link>
+                          <Link className="mr-0" href="javascript:void(0)" onClick={logoutClick} ><button type="button" className="btn style1">Logout</button></Link>
+                        </> :
+                        <Form className="d-flex">
+                          <Link to={`${config.baseUrl}login`}>
+                            <button type="button" className="btn style1">Login</button>
+                          </Link>&nbsp;&nbsp;
+                          <Link to={`${config.baseUrl}signup`}>
+                            <button type="button" className="btn style1">Signup</button>
+                          </Link>
                         </Form>
-}
+                      }
                     </Nav>
-                   
+
                     {/* {USER_LOGIN_DETAILS.template == '' ?
                       <Form className="d-flex">
                         <Link to={`${config.baseUrl}login`}>

@@ -98,35 +98,45 @@ const Login = () => {
         try {
             if (!isValid) {
 
+
             }
             else {
                 let res = await LoginAction(form);
-                if (res.status == true) {
-                    toast.success(res.msg);
-                    dispatch({
-                        type: ACTIONTYPES.USER_FORM, payload: {
-                            template: res.data,
-                            token: res.token
-                        }
-                    })
-
-                    // Cookies.set('loginSuccessMrMint', JSON.stringify(res.data));
-                    // Cookies.set('loginType', loginType);
-
-                    // Cookies.set('loginSuccessMrMint', JSON.stringify(res.data), { domain: 'nft.mrmint.io' });
-                    // Cookies.set('loginType', loginType, { domain: 'nft.mrmint.io' });
-
-                    setTimeout(() => {
-                        window.location.href = `${config.baseUrl}dashboard`;
-                    }, 2000);
-                } else {
-                    toast.error(res.msg);
+                if (res?.data?.is_admin == 0) {
+                    toast.error('We dont have user with this email');
                 }
+                else {
+                    if (res.status == true) {
+                        toast.success(res.msg);
+                        dispatch({
+                            type: ACTIONTYPES.USER_FORM, payload: {
+                                template: res.data,
+                                token: res.token
+                            }
+                        })
+
+                        // Cookies.set('loginSuccessMrMint', JSON.stringify(res.data));
+                        // Cookies.set('loginType', loginType);
+
+                        // Cookies.set('loginSuccessMrMint', JSON.stringify(res.data), { domain: 'nft.mrmint.io' });
+                        // Cookies.set('loginType', loginType, { domain: 'nft.mrmint.io' });
+
+                        setTimeout(() => {
+                            window.location.href = `${config.baseUrl}dashboard`;
+                        }, 2000);
+                    }
+                    // if (res.success == false) {
+                    //     toast.error(res.msg);
+                    // }
+                    else {
+                        toast.error(res.msg);
+                    }
+                }
+
 
             }
         }
         catch (err) {
-            console.log(err.response)
             toast.error(err.response.data.msg);
         }
     }
@@ -156,30 +166,30 @@ const Login = () => {
                                     <div class="login-header text-center"><h2>Login</h2></div>
                                     <div className="login-body mt-4">
                                         <Form>
-<FormGroup  className="mb-3">
-                                            <InputGroup>
-                                                <InputGroup.Text id="basic-addon1"><img src="images/send.png" /></InputGroup.Text>
-                                                <Form.Control
-                                                    placeholder="Email Address"
-                                                    aria-label="Email Address"
-                                                    aria-describedby="basic-addon1"
-                                                    autoComplete="off" name="email" onChange={inputHandler}
-                                                />
-                                            </InputGroup>
-                                            <span className="validationErr">{validatioError.emailError}</span>
+                                            <FormGroup className="mb-3">
+                                                <InputGroup>
+                                                    <InputGroup.Text id="basic-addon1"><img src="images/send.png" /></InputGroup.Text>
+                                                    <Form.Control
+                                                        placeholder="Email Address"
+                                                        aria-label="Email Address"
+                                                        aria-describedby="basic-addon1"
+                                                        autoComplete="off" name="email" onChange={inputHandler}
+                                                    />
+                                                </InputGroup>
+                                                <span className="validationErr">{validatioError.emailError}</span>
                                             </FormGroup>
                                             <FormGroup className="mb-3">
-                                            <InputGroup >
-                                                <InputGroup.Text id="basic-addon1"><img src="images/key.png" /></InputGroup.Text>
-                                                <Form.Control
-                                                    type="password"
-                                                    placeholder="Password"
-                                                    aria-label="Password"
-                                                    aria-describedby="basic-addon1"
-                                                    autoComplete="off" name="password" onChange={inputHandler}
-                                                />
-                                            </InputGroup>
-                                            <span className="validationErr">{validatioError.passwordError}</span>
+                                                <InputGroup >
+                                                    <InputGroup.Text id="basic-addon1"><img src="images/key.png" /></InputGroup.Text>
+                                                    <Form.Control
+                                                        type="password"
+                                                        placeholder="Password"
+                                                        aria-label="Password"
+                                                        aria-describedby="basic-addon1"
+                                                        autoComplete="off" name="password" onChange={inputHandler}
+                                                    />
+                                                </InputGroup>
+                                                <span className="validationErr">{validatioError.passwordError}</span>
                                             </FormGroup>
                                             <Row className=" mt-4">
                                                 <Col lg={6}>

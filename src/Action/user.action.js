@@ -7,11 +7,20 @@ export const RegisterAction = (data) => {
 export const LoginAction = (data) => {
    return postRequest('loginuser', data).then(res => { return res.data })
 }
-
+export const getFaqListAction = (data) => {
+   return getRequest("getfaqDetails", data).then((res) => {
+     return res.data;
+   });
+ };
+ 
 export const verifyAccountAction = (data) => {
    return postRequest('verifyAccount', data).then(res => { return res.data })
 }
-
+export const getAboutListAction = (data) => {
+   return getRequest("getDetails1", data).then((res) => {
+     return res.data;
+   });
+ };
 
 export const ForgotPasswordAction = (data) => {
    return postRequest('forgetPassword', data).then(res => { return res.data })
@@ -51,7 +60,7 @@ export const getAllWithdrawTransactionsAction = (data) => {
 }
 
 export const getAllTransactionsAction = (data) => {
-   return getRequest(`getAllTransactionDetail`,{}).then(res => { return res.data })
+   return getRequest(`getAllTransactionDetail/${data}`).then(res => { return res.data })
 }
 
 export const getAllDetailsOfcoinAction = (data) => {

@@ -636,3 +636,6 @@ button:disabled {
   border-bottom-left-radius: 0px;
   /* padding: 0px; */
 }
+.astrick{
+  color: red;
+}
