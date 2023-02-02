@@ -387,7 +387,7 @@ const Kycdetail = () => {
                                                 objectFit: "cover",
                                               }}
                                               className="object-cover w-full h-32"
-                                              src="dashboardFolder/img/dummy.jpg"
+                                              src="images/document.png"
                                               alt=""
                                             />
                                           ) : (
@@ -447,7 +447,7 @@ const Kycdetail = () => {
                                                 objectFit: "cover",
                                               }}
                                               className="object-cover w-full h-32"
-                                              src="dashboardFolder/img/dummy.jpg"
+                                              src="images/document.png"
                                               alt=""
                                             />
                                           ) : (

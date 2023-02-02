@@ -27,10 +27,10 @@ const Withdraw = () => {
             cell: (row, index) => index + 1
         },
         {
-            text: "User Name",
+            text: "Type",
             cell: (item) => {
                 return (
-                    item.userName
+                    item.withdrawal_Address == '' ? 'Bank' : 'Crypto'
                 );
             }
         },
@@ -146,7 +146,6 @@ const Withdraw = () => {
     const getAllWithdrawTransactions = async () => {
         try {
             let res = await getAllWithdrawTransactionsAction(USER_LOGIN_DETAILS.template.id);
-            console.log('res', res.success);
             if (res.status == true) {
                 setwithdrawHistory(res.data);
             }

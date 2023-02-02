@@ -10,6 +10,8 @@ import { useSelector, useDispatch } from 'react-redux'
 
 const Wallet = () => {
     const [purchaseList, setPurchaseList] = useState([]);
+    const [purchaseList1, setPurchaseList1] = useState([]);
+
 
     const USER_LOGIN_DETAILS = useSelector((state) => state.auth.USER_LOGIN_DETAILS)
 
@@ -23,19 +25,19 @@ const Wallet = () => {
         {
             key: "coinName",
             text: "Coin",
-          
+
         },
         {
             key: "balance",
             text: "Balance",
             cell: (item) => {
                 return (
-                    `${item.balance ? item.balance:0}`
+                    `${item.balance ? item.balance : 0}`
                 );
             }
-           
+
         },
-        
+
 
     ];
     const configForWallet = {
@@ -52,16 +54,16 @@ const Wallet = () => {
     }
 
     useEffect(() => {
-        // console.log(loginData)
         getAllDetailsOfcoinApi(USER_LOGIN_DETAILS.template.id);
     }, []);
 
     const getAllDetailsOfcoinApi = async (data) => {
         try {
             let res = await getAllDetailsOfcoinAction(data);
-            console.log('res', res.success);
+
             if (res.status == true) {
-                setPurchaseList(res.msg);
+                setPurchaseList(res.msg.filter((item => item.coin == 1 || item.coin == 2 || item.coin == 3 || item.coin == 4)));
+                setPurchaseList1(res.msg.filter((item => item.coin == 5 || item.coin == 6 || item.coin == 7 || item.coin == 8)));
             }
         }
         catch (err) {
@@ -81,15 +83,30 @@ const Wallet = () => {
 
                         <div className="content-wrapper-scroll">
                             <div className="content-wrapper">
-                               
-                             
+
+
                                 <div className='col-lg-12 col-12 '>
-                                    <h4 class="mb-3">User Wallet</h4>
-                                    <ReactDatatable
-                                        config={configForWallet}
-                                        records={purchaseList}
-                                        columns={columnsForWallet}
-                                    />
+                                    <h4 class="mb-3">Crypto Wallet</h4>
+                                    <div className="tableData">
+                                        <ReactDatatable
+                                            config={configForWallet}
+                                            records={purchaseList}
+                                            columns={columnsForWallet}
+                                        />
+
+                                    </div>
+                                </div>
+
+                                <div className='col-lg-12 col-12 '>
+                                    <h4 class="mb-3">Fiat Wallet</h4>
+                                    <div className="tableData">
+
+                                        <ReactDatatable
+                                            config={configForWallet}
+                                            records={purchaseList1}
+                                            columns={columnsForWallet}
+                                        />
+                                    </div>
                                 </div>
                             </div>
 

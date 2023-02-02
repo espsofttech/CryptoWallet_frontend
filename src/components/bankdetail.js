@@ -17,7 +17,7 @@ const Bankdetail = () => {
 
     const USER_LOGIN_DETAILS = useSelector((state) => state.auth.USER_LOGIN_DETAILS)
 
-    console.log(USER_LOGIN_DETAILS)
+
     const [image_file, setimage_file] = useState("");
     const [image_preview, setimage_preview] = useState("");
     const [image_file2, setimage_file2] = useState("");
@@ -32,7 +32,7 @@ const Bankdetail = () => {
     const [adminbankdetails, setadminbankdetails] = useState([]);
     const [validatioError, setvalidatioError] = useState(false);
     useEffect(() => {
-        // console.log(loginData)
+
         getbankdetails({ id: USER_LOGIN_DETAILS.template.id });
         getadminbankdetails({ id: 1 });
 
@@ -45,7 +45,7 @@ const Bankdetail = () => {
     const getbankdetails = async (data) => {
         try {
             let res = await getgetuserbankdetailsAction(data);
-            console.log('res', res.success);
+
             if (res.status == true) {
                 setbankdetails(res.data);
             }
@@ -111,6 +111,11 @@ const Bankdetail = () => {
         let ifsccodeError = '';
         let pancardnumberError = '';
         let accountTypeError = ''
+        let company_nameError = ''
+        let image_fileError = ''
+        let image_file2Error = ''
+        let image_file3Error = ''
+
         if (bankdetails?.bank_account_holder_name == '' || bankdetails?.bank_account_holder_name == undefined) {
             AccountnameError = "Bank Account Holder Name  is required."
         } if (bankdetails?.branchName == '' || bankdetails?.branchName == undefined) {
@@ -127,13 +132,35 @@ const Bankdetail = () => {
         if (bankdetails?.accountType == '' || bankdetails?.accountType == undefined) {
             accountTypeError = "Account Type is required."
         }
+        if (bankdetails?.accountType == 'current Account') {
+            if (bankdetails?.company_name == '' || bankdetails?.company_name == 'undefined' || bankdetails?.company_name == undefined) {
+                company_nameError = "Company Name is required."
+            }
+            if ((image_file == '' || image_file == undefined) || (bankdetails.GSTImage == '')) {
+                image_fileError = "GST Image is required."
+            }
+
+            if ((image_file2 == '' || image_file2 == undefined) || (bankdetails.cancelledChequeImage == '')) {
+                image_file2Error = "Cancelled Cheque is required."
+            }
+
+            if ((image_file3 == '' || image_file3 == undefined) || (bankdetails.bankStatementImage == '')) {
+                image_file3Error = "Bank Statement is required."
+            }
+        }
 
 
 
-        if (banknameError || accountnumberError || branchnameError || AccountnameError || ifsccodeError || pancardnumberError || accountTypeError) {
-            setvalidatioError({
-                banknameError, accountnumberError, branchnameError, ifsccodeError, AccountnameError, pancardnumberError, accountTypeError
-            })
+        if (bankdetails?.accountType == 'current Account' ? banknameError || accountnumberError || branchnameError || AccountnameError || ifsccodeError || pancardnumberError || accountTypeError || company_nameError || image_fileError || image_file2Error || image_file3Error :
+            banknameError || accountnumberError || branchnameError || AccountnameError || ifsccodeError || pancardnumberError || accountTypeError
+        ) {
+            bankdetails?.accountType == 'current Account' ?
+                setvalidatioError({
+                    banknameError, accountnumberError, branchnameError, ifsccodeError, AccountnameError, pancardnumberError, accountTypeError, company_nameError, image_fileError, image_file2Error, image_file3Error
+                }) :
+                setvalidatioError({
+                    banknameError, accountnumberError, branchnameError, ifsccodeError, AccountnameError, pancardnumberError, accountTypeError
+                })
             return false
         } else {
             return true
@@ -147,11 +174,11 @@ const Bankdetail = () => {
 
         if (isValid) {
             if (!image_file) {
-                console.log('3442')
+
                 bankdetails.old_GSTImage = bankdetails?.GSTImage;
             }
             else {
-                console.log('34423333')
+
 
                 bankdetails.GSTImage = image_file;
             }
@@ -243,7 +270,7 @@ const Bankdetail = () => {
                                                                         className="form-label"
                                                                     >
                                                                         Bank Account Holder Name
-                                                                    </label>
+                                                                    </label><span className="astrick"> *</span>
                                                                     <input
                                                                         type="text"
                                                                         className="form-control"
@@ -261,7 +288,7 @@ const Bankdetail = () => {
                                                                         className="form-label"
                                                                     >
                                                                         Bank Name
-                                                                    </label>
+                                                                    </label><span className="astrick"> *</span>
                                                                     <input
                                                                         type="text"
                                                                         className="form-control"
@@ -279,7 +306,7 @@ const Bankdetail = () => {
                                                                         className="form-label"
                                                                     >
                                                                         Branch Name
-                                                                    </label>
+                                                                    </label><span className="astrick"> *</span>
                                                                     <input
                                                                         type="text"
                                                                         className="form-control"
@@ -299,7 +326,7 @@ const Bankdetail = () => {
                                                                         className="form-label"
                                                                     >
                                                                         Account Number
-                                                                    </label>
+                                                                    </label><span className="astrick"> *</span>
                                                                     <input
                                                                         type="text"
                                                                         className="form-control"
@@ -320,7 +347,7 @@ const Bankdetail = () => {
                                                                         className="form-label"
                                                                     >
                                                                         IFSC Code
-                                                                    </label>
+                                                                    </label><span className="astrick"> *</span>
                                                                     <input
                                                                         type="text"
                                                                         className="form-control"
@@ -339,7 +366,7 @@ const Bankdetail = () => {
                                                                         className="form-label"
                                                                     >
                                                                         Pan Card Number
-                                                                    </label>
+                                                                    </label><span className="astrick"> *</span>
                                                                     <input
                                                                         type="text"
                                                                         className="form-control"
@@ -358,7 +385,7 @@ const Bankdetail = () => {
                                                                         className="form-label"
                                                                     >
                                                                         Account Type
-                                                                    </label>
+                                                                    </label><span className="astrick"> *</span>
                                                                     <select className='form-control' onChange={inputHandler}
                                                                         value={bankdetails?.accountType}
 
@@ -378,26 +405,64 @@ const Bankdetail = () => {
                                                                                 className="form-label"
                                                                             >
                                                                                 Company Name
-                                                                            </label>
+                                                                            </label><span className="astrick"> *</span>
                                                                             <input
                                                                                 type="text"
                                                                                 className="form-control"
                                                                                 onChange={inputHandler}
-                                                                                value={bankdetails?.company_name}
+                                                                                value={bankdetails?.company_name == 'undefined' ? '' : bankdetails.company_name}
 
                                                                                 name="company_name"
 
                                                                             />
+                                                                            <span className="validationErr">{validatioError.company_nameError}</span>
 
                                                                         </div>
 
 
                                                                         <div className="mb-3">
                                                                             <label className="form-label">
-                                                                                GST Image :
-                                                                                {bankdetails.GSTImage ?
-                                                                                    <a href={config.imageUrl + bankdetails.GSTImage} target="_blank">View</a> : ''
-                                                                                }
+                                                                                GST Image :<span className="astrick"> *</span>
+                                                                                {image_preview == "" ? (
+                                                                                    bankdetails.GSTImage == null ||
+                                                                                        bankdetails.GSTImage == "null" ||
+                                                                                        bankdetails.GSTImage == "" ||
+                                                                                        bankdetails.GSTImage == "undefined" ? (
+                                                                                        <img
+                                                                                            style={{
+                                                                                                height: "150px",
+                                                                                                width: "150px",
+                                                                                                objectFit: "cover",
+                                                                                            }}
+                                                                                            className="object-cover w-full h-32"
+                                                                                            src="images/document.png"
+                                                                                            alt=""
+                                                                                        />
+                                                                                    ) : (
+                                                                                        <img
+                                                                                            style={{
+                                                                                                height: "150px",
+                                                                                                width: "150px",
+                                                                                                objectFit: "cover",
+                                                                                            }}
+                                                                                            className="object-cover w-full h-32"
+                                                                                            src={`${config.imageUrl}${bankdetails.GSTImage}`}
+                                                                                            alt=""
+                                                                                        />
+                                                                                    )
+                                                                                ) : (
+                                                                                    <img
+                                                                                        style={{
+                                                                                            height: "150px",
+                                                                                            width: "150px",
+                                                                                            objectFit: "cover",
+                                                                                        }}
+                                                                                        id="image"
+                                                                                        className="object-cover w-full h-32"
+                                                                                        src={image_preview}
+                                                                                    />
+                                                                                )}
+
 
                                                                             </label>
                                                                             <input
@@ -408,18 +473,54 @@ const Bankdetail = () => {
                                                                                 type="file"
                                                                                 onChange={gstPic}
                                                                             />
-                                                                            <span className="validationErr danger">
-
-                                                                            </span>
+                                                                            <span className="validationErr">{validatioError.image_fileError}</span>
                                                                         </div>
 
                                                                         <div className="mb-3">
                                                                             <label className="form-label">
                                                                                 Cancelled Cheque Image :
-                                                                                {bankdetails.cancelledChequeImage ?
-                                                                                    <a href={config.imageUrl + bankdetails.cancelledChequeImage} target="_blank">View</a> : ''
+                                                                                <span className="astrick"> *</span>
+                                                                                {image_preview2 == "" ? (
+                                                                                    bankdetails.cancelledChequeImage == null ||
+                                                                                        bankdetails.cancelledChequeImage == "null" ||
+                                                                                        bankdetails.cancelledChequeImage == "" ||
+                                                                                        bankdetails.cancelledChequeImage == "undefined" ? (
+                                                                                        <img
+                                                                                            style={{
+                                                                                                height: "150px",
+                                                                                                width: "150px",
+                                                                                                objectFit: "cover",
+                                                                                            }}
+                                                                                            className="object-cover w-full h-32"
+                                                                                            src="images/document.png"
+                                                                                            alt=""
+                                                                                        />
+                                                                                    ) : (
+                                                                                        <img
+                                                                                            style={{
+                                                                                                height: "150px",
+                                                                                                width: "150px",
+                                                                                                objectFit: "cover",
+                                                                                            }}
+                                                                                            className="object-cover w-full h-32"
+                                                                                            src={`${config.imageUrl}${bankdetails.cancelledChequeImage}`}
+                                                                                            alt=""
+                                                                                        />
+                                                                                    )
+                                                                                ) : (
+                                                                                    <img
+                                                                                        style={{
+                                                                                            height: "150px",
+                                                                                            width: "150px",
+                                                                                            objectFit: "cover",
+                                                                                        }}
+                                                                                        id="image"
+                                                                                        className="object-cover w-full h-32"
+                                                                                        src={image_preview2}
+                                                                                    />
+                                                                                )}
 
-                                                                                }
+
                                                                             </label>
                                                                             <input
                                                                                 name="cancelledChequeImage"
@@ -429,18 +530,53 @@ const Bankdetail = () => {
                                                                                 type="file"
                                                                                 onChange={cancelCheque}
                                                                             />
-                                                                            <span className="validationErr danger">
-
-                                                                            </span>
+                                                                            <span className="validationErr">{validatioError.image_file2Error}</span>
                                                                         </div>
 
                                                                         <div className="mb-3">
                                                                             <label className="form-label">
                                                                                 Bank Statement Image :
-                                                                                {bankdetails.bankStatementImage ?
-                                                                                    <a href={config.imageUrl + bankdetails.bankStatementImage} target="_blank">View</a> : ''
+                                                                                <span className="astrick"> *</span>
+                                                                                {image_preview3 == "" ? (
+                                                                                    bankdetails.bankStatementImage == null ||
+                                                                                        bankdetails.bankStatementImage == "null" ||
+                                                                                        bankdetails.bankStatementImage == "" ||
+                                                                                        bankdetails.bankStatementImage == "undefined" ? (
+                                                                                        <img
+                                                                                            style={{
+                                                                                                height: "150px",
+                                                                                                width: "150px",
+                                                                                                objectFit: "cover",
+                                                                                            }}
+                                                                                            className="object-cover w-full h-32"
+                                                                                            src="images/document.png"
+                                                                                            alt=""
+                                                                                        />
+                                                                                    ) : (
+                                                                                        <img
+                                                                                            style={{
+                                                                                                height: "150px",
+                                                                                                width: "150px",
+                                                                                                objectFit: "cover",
+                                                                                            }}
+                                                                                            className="object-cover w-full h-32"
+                                                                                            src={`${config.imageUrl}${bankdetails.bankStatementImage}`}
+                                                                                            alt=""
+                                                                                        />
+                                                                                    )
+                                                                                ) : (
+                                                                                    <img
+                                                                                        style={{
+                                                                                            height: "150px",
+                                                                                            width: "150px",
+                                                                                            objectFit: "cover",
+                                                                                        }}
+                                                                                        id="image"
+                                                                                        className="object-cover w-full h-32"
+                                                                                        src={image_preview3}
+                                                                                    />
+                                                                                )}
 
-                                                                                }
                                                                             </label>
                                                                             <input
                                                                                 name="bankStatementImage"
@@ -450,9 +586,7 @@ const Bankdetail = () => {
                                                                                 type="file"
                                                                                 onChange={bankStatement}
                                                                             />
-                                                                            <span className="validationErr danger">
-
-                                                                            </span>
+                                                                            <span className="validationErr">{validatioError.image_file3Error}</span>
                                                                         </div>
                                                                     </> : ''
                                                                 }
@@ -472,7 +606,7 @@ const Bankdetail = () => {
 
                                                 </div>
 
-                                                <div className='col-md-6 '>
+                                                <div className='col-md-6 ' style={{ display: 'none' }}>
                                                     <div className='card p-3'>
                                                         <h4>Admin Bank detail</h4>
                                                         <hr class="mt-2" />

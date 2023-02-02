@@ -639,3 +639,7 @@ button:disabled {
 .astrick{
   color: red;
 }
+
+.tableData div#as-react-datatable-table-head, .tableData div#as-react-datatable-table-foot {
+  display: none;
+}

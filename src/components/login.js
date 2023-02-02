@@ -103,7 +103,7 @@ const Login = () => {
             else {
                 let res = await LoginAction(form);
                 if (res?.data?.is_admin == 0) {
-                    toast.error('We dont have user with this email');
+                    toast.error('User not found');
                 }
                 else {
                     if (res.status == true) {

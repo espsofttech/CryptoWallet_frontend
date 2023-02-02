@@ -9,6 +9,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import * as ACTIONTYPES from '../../../src/redux/actionTypes'
 import { getProfileAction } from '../../Action/user.action';
 
+
 const Dashboardheader = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -18,14 +19,25 @@ const Dashboardheader = () => {
     const USER_LOGIN_DETAILS = useSelector((state) => state.auth.USER_LOGIN_DETAILS)
 
     useEffect(() => {
+
         // Update the document title using the browser API
         $('body').addClass("lighttheme");
         var lastPart = window.location.href.split("/").pop();
         setActivebar(lastPart)
-        if (USER_LOGIN_DETAILS.template == '') {
-            window.location.href = config.baseUrl
+        if (USER_LOGIN_DETAILS.template == undefined) {
+            dispatch({
+                type: ACTIONTYPES.USER_FORM, payload: {
+                    template: '',
+                }
+            })
+            Cookies.remove('loginSuccessCryptoWallet')
+            Cookies.remove('loginSuccessCryptoWalletLogin')
+            setTimeout(() => {
+                window.location.href = config.baseUrl;
+            }, 500);
         }
         getProfileAPI(USER_LOGIN_DETAILS.template.id)
+        Cookies.set('loginSuccessCryptoWalletLogin', JSON.stringify(USER_LOGIN_DETAILS.template));
 
         Cookies.set('loginSuccessCryptoWallet', JSON.stringify(USER_LOGIN_DETAILS.token));
     }, []);
@@ -41,6 +53,8 @@ const Dashboardheader = () => {
                 template: '',
             }
         })
+        Cookies.remove('loginSuccessCryptoWallet')
+        Cookies.remove('loginSuccessCryptoWalletLogin')
         setTimeout(() => {
             window.location.href = config.baseUrl;
         }, 500);
@@ -125,7 +139,7 @@ const Dashboardheader = () => {
                             </a>
                             <div className="dropdown-menu dropdown-menu-end" aria-labelledby="userSettings">
                                 <div className="header-profile-actions">
-                                    <Link to={`${config.baseUrl}profile`}>Profile</Link><a onClick={logoutClick} href="javascript:void(0)">Logout</a></div>
+                                    <a href={`${config.baseUrl}profile`}>Profile</a><a onClick={logoutClick} href="javascript:void(0)">Logout</a></div>
                             </div>
                         </li>
                     </ul>

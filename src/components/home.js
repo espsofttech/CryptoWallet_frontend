@@ -7,7 +7,7 @@ import CountUp, { useCountUp } from "react-countup";
 import AnimatedText from 'react-animated-text-content';
 import { Zoom, Fade, Roll } from 'react-reveal';
 import Websocket from 'react-websocket';
-// import LivePrice from '../components/liveprice'
+import LivePrice from '../components/liveprice'
 const Home = () => {
     function livePairDataFromBinance(data){
         console.log("aaaaaa",data)
@@ -65,88 +65,7 @@ const Home = () => {
                             {/* <div className="section-title style1 text-center mb-40"><h2>Market Trade</h2></div> */}
                         </Col>
                     </Row>
-                    <div className="exchange-table">
-                        <div className="table-responsive">
-                            <table className="table table-striped mb-0">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" className="pl-2">Name</th>
-                                        <th scope="col">Amount</th>
-                                        <th scope="col">24h Change</th>
-                                        {/* <th scope="col">Markets</th> */}
-                                        <th scope="col">Trade</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td className="pl-2">
-                                            <div className="country-flag">
-                                                {/* <img src="images/BTC.png" alt="Image" /> */}
-                                                BTC</div>
-                                        </td>
-                                        <td>$48,706.42</td>
-                                        <td><span className="text-green">+0.50%</span></td>
-                                        {/* <td><img src="images/waveline.png" alt="Image" width="90px" /></td> */}
-                                        <td>
-                                            <div className="d-flex">
-                                                <button className="btn style1 mr-1" type="button">Buy</button>&nbsp;&nbsp;
-                                                <button className="btn style1" type="button">Sell</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td className="pl-2">
-                                            <div className="country-flag">
-                                                {/* <img src="images/ETC.png" alt="Image" /> */}
-                                                ETH</div>
-                                        </td>
-                                        <td>$0.332767</td>
-                                        <td><span className="text-green">+0.24%</span></td>
-                                        {/* <td><img src="images/waveline.png" alt="Image" width="90px" /></td> */}
-                                        <td>
-                                            <div className="d-flex">
-                                                <button className="btn style1 mr-1" type="button">Buy</button>&nbsp;&nbsp;
-                                                <button className="btn style1" type="button">Sell</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td className="pl-2">
-                                            <div className="country-flag">
-                                                {/* <img src="images/usdt.png" alt="Image" /> */}
-                                                USDT</div>
-                                        </td>
-                                        <td>$48,706.42</td>
-                                        <td><span className="text-red">-0.30%</span></td>
-                                        {/* <td><img src="images/waveline.png" alt="Image" width="90px" /></td> */}
-                                        <td>
-                                            <div className="d-flex">
-                                                <button className="btn style1 mr-1" type="button">Buy</button>&nbsp;&nbsp;
-                                                <button className="btn style1" type="button">Sell</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td className="pl-2">
-                                            <div className="country-flag">
-                                                {/* <img src="images/usdc.png" alt="Image" /> */}
-                                                USDC</div>
-                                        </td>
-                                        <td>$0.332767</td>
-                                        <td><span className="text-red">-0.063%</span></td>
-                                        {/* <td><img src="images/waveline.png" alt="Image" width="90px" /></td> */}
-                                        <td>
-                                            <div className="d-flex">
-                                                <button className="btn style1 mr-1" type="button">Buy</button>&nbsp;&nbsp;
-                                                <button className="btn style1" type="button">Sell</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                    <LivePrice/>
 
                 </Container>
             </section>

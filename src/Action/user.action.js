@@ -43,6 +43,10 @@ export const getgetuserbankdetailsAction = (data) => {
    return getRequest(`getBankDetailsById/${data.id}`).then(res => { return res.data })
 }
 
+export const getAllDepositTransactionsAction = (data) => {
+   return getRequest(`getAllDepositTransactionsbyuser/${data}`).then(res => { return res.data })
+}
+
 export const buyNowAction = (data) => {
    return postRequest(`exchange`, data).then(res => { return res.data })
 }

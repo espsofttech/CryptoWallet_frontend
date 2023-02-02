@@ -6,12 +6,13 @@ import ReactDatatable from '@ashvin27/react-datatable'
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
 import * as ACTIONTYPES from '../../src/redux/actionTypes'
-import { depositFiatAction, getgetuserbankdetailsAction, updateupdateuserbankdetailsAction } from '../Action/user.action';
+import { depositFiatAction, getgetuserbankdetailsAction, getAllDepositTransactionsAction } from '../Action/user.action';
 import toast, { Toaster } from 'react-hot-toast';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
 // const loginData = (!Cookies.get('loginSuccessSilkyExchangeDevelopement')) ? [] : JSON.parse(Cookies.get('loginSuccessSilkyExchangeDevelopement'));
+import moment from "moment";
 
 const Deposit = () => {
     const dispatch = useDispatch();
@@ -36,6 +37,7 @@ const Deposit = () => {
     })
     const [liveprice, setliveprice] = useState(0)
     const [date, setdate] = useState(new Date())
+    const [depositHistory, setdepositHistory] = useState([]);
 
 
 
@@ -56,6 +58,7 @@ const Deposit = () => {
         getbankdetails({ id: USER_LOGIN_DETAILS.template.id });
         getadminbankdetails({ id: 1 });
         getinrtousdtprice()
+        getAllDepositTransactions()
 
     }, []);
 
@@ -68,7 +71,77 @@ const Deposit = () => {
     }
 
 
+    const columnsForWallet = [
+        {
+            key: "Sno.",
+            text: "Sno.",
+            cell: (row, index) => index + 1
+        },
+        
 
+        
+        {
+            key: "coinName",
+            text: "Coin Name",
+
+        },
+        {
+            key: "balance",
+            text: "Amount",
+
+        },
+        {
+            key: "createdAt",
+            text: "Date",
+            cell: (item) => {
+                return (
+                    `${moment(item.createdAt).format('DD/MM/YYYY hh:mm:ss')}`
+                );
+            }
+
+        },
+
+
+
+        {
+            text: "Status",
+            cell: (item) => {
+                return (
+
+                    item.status == 0 ? <span style={{ color: '#ffbc00f2' }}>Pending</span> :
+                        item.status == 1 ? <span style={{ color: 'green' }}>Accepted</span> :
+                            item.status == 2 ? <span style={{ color: 'red' }}>Rejected</span> :
+                                'NA'
+                );
+            }
+        },
+    ];
+
+    const configForWallet = {
+        page_size: 10,
+        length_menu: [10, 20, 50],
+        show_filter: true,
+        show_pagination: true,
+        pagination: 'advance',
+        button: {
+            excel: false,
+            print: false
+
+        }
+    }
+
+
+    const getAllDepositTransactions = async () => {
+        try {
+            let res = await getAllDepositTransactionsAction(USER_LOGIN_DETAILS.template.id);
+            if (res.status == true) {
+                setdepositHistory(res.data);
+            }
+        }
+        catch (err) {
+
+        }
+    };
 
     const getinrtousdtprice = () => {
 
@@ -156,11 +229,11 @@ const Deposit = () => {
 
         if (isValid) {
             if (!image_file) {
-               
+
                 depositfiat.old_upload_file = depositfiat?.upload_file;
             }
             else {
-              
+
 
                 depositfiat.upload_file = image_file;
             }
@@ -423,8 +496,10 @@ const Deposit = () => {
 
                                                                 </div>
 
+
                                                                 <div className='col-sm-12'>
                                                                     <div className='row'>
+
                                                                         <div className='col-lg-6 my-3'>
                                                                             <div class="upload-btn-wrapper">
                                                                                 <button class="btn-upload">{receipt_name == '' ? `Upload File` : `${receipt_name.toString().substring(0, 5) + '...' + receipt_name.toString().substring(receipt_name.length - 5)}`}</button>
@@ -447,6 +522,20 @@ const Deposit = () => {
                                                                                 </button> */}
                                                                             {/* } */}
                                                                         </div>
+                                                                        {image_preview == "" ? '' : (
+
+                                                                            <img
+                                                                                style={{
+                                                                                    height: "150px",
+                                                                                    width: "150px",
+                                                                                    objectFit: "cover",
+                                                                                }}
+                                                                                id="image"
+                                                                                className="object-cover w-full h-32"
+                                                                                src={image_preview}
+                                                                            />
+
+                                                                        )}
                                                                     </div>
                                                                 </div>
                                                             </form>
@@ -456,6 +545,17 @@ const Deposit = () => {
                                                 </div>
 
 
+                                            </div>
+
+                                            <div className='row mt-5'>
+                                                <div className='col-lg-12 col-12 '>
+                                                    <h4 class="mb-3">Deposit History</h4>
+                                                    <ReactDatatable
+                                                        config={configForWallet}
+                                                        records={depositHistory}
+                                                        columns={columnsForWallet}
+                                                    />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

@@ -68,7 +68,6 @@ const Resetpassword = () => {
         }
     }
     catch (err) {
-        console.log(err.response)
         toast.error(err.response.data.msg);
     }
     }
@@ -86,8 +85,6 @@ const Resetpassword = () => {
                                 <p className="mb-2 ">
                                     Generate Your Password
                                 </p>
-                                <small>Enter your email address below. If we have it on file, we will <br />send you a reset email.</small> <br />
-
                                 <form className="form-border" onSubmit={SubmitForm}>
                                     <div className="field-set mt-4 mb-3">
                                         <input type="password" name="password" className="form-control" autoComplete="off" onChange={inputHandler} placeholder="Password" id='passwordError' />

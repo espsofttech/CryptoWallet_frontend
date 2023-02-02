@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 
 import Websocket from 'react-websocket';
-
+import Cookies from 'js-cookie';
+import config from '../config/config';
 export default class LivePrice extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             my_pair_list: [],
-            mainData1: [ { pair: 'BTCUSDT', coin_name: 'BTC' }, { pair: 'ETHUSDT', coin_name: 'ETH' },{ pair: 'USDCUSDT', coin_name: 'USDC' },{ pair: 'USDTUSDT', coin_name: 'USDT' }],
+            mainData1: [{ pair: 'BTCUSDT', coin_name: 'BTC' }, { pair: 'ETHUSDT', coin_name: 'ETH' }],
+            loginData:(!Cookies.get('loginSuccessCryptoWalletLogin')) ? [] : JSON.parse(Cookies.get('loginSuccessCryptoWalletLogin'))
         }
+
         // this.livePairDataFromBinance = this.livePairDataFromBinance.bind(this)
     }
 
@@ -51,6 +54,15 @@ export default class LivePrice extends Component {
     }
 
 
+    exchangeData = async() => {
+        if(this.state.loginData.length == 0){
+            window.location.href = `${config.baseUrl}login`
+        }
+        else{
+            window.location.href = `${config.baseUrl}buy`
+        }
+    }
+
 
     render() {
         return (
@@ -89,8 +101,11 @@ export default class LivePrice extends Component {
                                             {/* <td><img src="images/waveline.png" alt="Image" width="90px" /></td> */}
                                             <td>
                                                 <div className="d-flex">
-                                                    <button className="btn style1 mr-1" type="button">Buy</button>&nbsp;&nbsp;
-                                                    <button className="btn style1" type="button">Sell</button>
+                                                
+                                                            <button className="btn style1 mr-1" onClick={this.exchangeData.bind(this)} type="submit">Buy</button>&nbsp;&nbsp;
+                                                            <button className="btn style1" onClick={this.exchangeData.bind(this)} type="submit">Sell</button>
+                                                    
+
                                                 </div>
                                             </td>
                                         </tr>
