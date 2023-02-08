@@ -19,7 +19,7 @@ const Changepassword = () => {
     
     const [toggleSet, settoggleSet] = useState(1)
     const [passwordType, setPasswordType] = useState("password");
-    const [form, setForm] = useState({ email:USER_LOGIN_DETAILS.template.email, old_password: '', password: '', confirm_password: '' })
+    const [form, setForm] = useState({id:USER_LOGIN_DETAILS.template.id, email:USER_LOGIN_DETAILS.template.email, old_password: '', password: '', confirm_password: '' })
     const [validatioError, setvalidatioError] = useState({});
 
     const inputHandler = (e) => {

@@ -6,7 +6,7 @@ import ReactDatatable from '@ashvin27/react-datatable'
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
 import * as ACTIONTYPES from '../../src/redux/actionTypes'
-import { depositFiatAction, getgetuserbankdetailsAction, getAllDepositTransactionsAction } from '../Action/user.action';
+import { depositFiatAction, getgetuserbankdetailsAction, getAllDepositTransactionsAction,showkycAction } from '../Action/user.action';
 import toast, { Toaster } from 'react-hot-toast';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
@@ -25,6 +25,8 @@ const Deposit = () => {
 
     const [receipt, setreceipt] = useState('')
     const [receipt_name, setreceipt_name] = useState('')
+    const [purchaseList11, setPurchaseList11] = useState([]);
+
     const [depositfiat, setdepositfiat] = useState({
         'user_id': USER_LOGIN_DETAILS.template.id,
         'coin_id': 5,
@@ -43,6 +45,7 @@ const Deposit = () => {
 
 
 
+    const [kycStatusApproveReject, setkycStatusApproveReject] = useState(false);
 
     const [image_file, setimage_file] = useState("");
     const [image_preview, setimage_preview] = useState("");
@@ -59,8 +62,22 @@ const Deposit = () => {
         getadminbankdetails({ id: 1 });
         getinrtousdtprice()
         getAllDepositTransactions()
+        getkycdetails(USER_LOGIN_DETAILS.template.id)
+        
 
     }, []);
+
+    const getkycdetails = async (data) => {
+        let res = await showkycAction({ id: data });
+        setkycStatusApproveReject(res.data.kyc_status);
+        if (res.data.doc_no == "") {
+            setPurchaseList11(true);
+        }
+        if (res.status == true) {
+            setPurchaseList11(res.data);
+            console.log("123", res.data.doc_no == "");
+        }
+    };
 
     const toggleManage = (data) => {
         settoggleSet(data)
@@ -77,9 +94,9 @@ const Deposit = () => {
             text: "Sno.",
             cell: (row, index) => index + 1
         },
-        
 
-        
+
+
         {
             key: "coinName",
             text: "Coin Name",
@@ -281,130 +298,30 @@ const Deposit = () => {
                                 <div className='col-md-12 '>
                                     <div className=' p-3'>
                                         <Toaster />
-                                        <div className='form-body'>
-                                            <div className='row'>
+                                        {purchaseList11.kyc_status == 2 ?
+                                            <div className='form-body'>
+                                                <div className='row'>
 
-                                                <div className='col-md-6 '>
-                                                    <div className='card p-3'>
-                                                        <h4>Admin Bank Account</h4>
-                                                        <hr class="mt-2" />
-                                                        <div className="">
-                                                            <div className="mb-3">
-                                                                <label
-
-                                                                    className="form-label"
-                                                                >
-                                                                    Bank Account Holder Name
-                                                                </label>
-                                                                <input
-                                                                    type="text"
-                                                                    className="form-control"
-                                                                    disabled
-                                                                    name="bank_account_holder_name"
-                                                                    value={adminbankdetails?.bank_account_holder_name}
-
-                                                                />
-                                                            </div>
-
-                                                            <div className="mb-3">
-                                                                <label
-
-                                                                    className="form-label"
-                                                                >
-                                                                    Branch Name
-                                                                </label>
-                                                                <input
-                                                                    type="text"
-                                                                    className="form-control"
-                                                                    disabled
-                                                                    name="branchName"
-                                                                    value={adminbankdetails?.branchName}
-
-                                                                />
-                                                            </div>
-
-                                                            <div className="mb-3">
-                                                                <label
-
-                                                                    className="form-label"
-                                                                >
-                                                                    Bank Name
-                                                                </label>
-                                                                <input
-                                                                    type="text"
-                                                                    className="form-control"
-                                                                    disabled
-                                                                    name="bank_name"
-                                                                    value={adminbankdetails?.bank_name}
-
-                                                                />
-                                                            </div>
-                                                            <div className="mb-3">
-                                                                <label
-
-                                                                    className="form-label"
-                                                                >
-                                                                    Account Number
-                                                                </label>
-                                                                <input
-                                                                    type="text"
-                                                                    className="form-control"
-                                                                    disabled
-                                                                    name="AccountNumber"
-                                                                    value={adminbankdetails?.AccountNumber}
-
-                                                                />
-                                                            </div>
-
-
-                                                            <div className="mb-3">
-                                                                <label className="form-label">
-                                                                    IFSC Code
-                                                                </label>
-                                                                <input
-                                                                    type="text"
-                                                                    className="form-control"
-                                                                    disabled
-                                                                    name="ifsc_code"
-                                                                    value={adminbankdetails?.ifsc_code}
-
-                                                                />
-                                                            </div>
-
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-                                                <div className='col-md-6'>
-
-                                                    <div className='card p-3'>
-
-                                                        <h4>Deposit</h4>
-                                                        <hr class="mt-2" />
-                                                        <div className="">
-                                                            <form
-                                                                onSubmit={updatebankdetails}>
-
-
+                                                    <div className='col-md-6 '>
+                                                        <div className='card p-3'>
+                                                            <h4>Admin Bank Account</h4>
+                                                            <hr class="mt-2" />
+                                                            <div className="">
                                                                 <div className="mb-3">
                                                                     <label
 
                                                                         className="form-label"
                                                                     >
-                                                                        Your Bank
+                                                                        Bank Account Holder Name
                                                                     </label>
                                                                     <input
                                                                         type="text"
-                                                                        className="form-control" disabled
-                                                                        value={bankdetails?.bank_name}
-
-                                                                        name="bank_name"
+                                                                        className="form-control"
+                                                                        disabled
+                                                                        name="bank_account_holder_name"
+                                                                        value={adminbankdetails?.bank_account_holder_name}
 
                                                                     />
-                                                                    <span className="validationErr">{validatioError.bankError}</span>
-
                                                                 </div>
 
                                                                 <div className="mb-3">
@@ -412,7 +329,24 @@ const Deposit = () => {
 
                                                                         className="form-label"
                                                                     >
-                                                                        Admin Bank
+                                                                        Branch Name
+                                                                    </label>
+                                                                    <input
+                                                                        type="text"
+                                                                        className="form-control"
+                                                                        disabled
+                                                                        name="branchName"
+                                                                        value={adminbankdetails?.branchName}
+
+                                                                    />
+                                                                </div>
+
+                                                                <div className="mb-3">
+                                                                    <label
+
+                                                                        className="form-label"
+                                                                    >
+                                                                        Bank Name
                                                                     </label>
                                                                     <input
                                                                         type="text"
@@ -423,141 +357,250 @@ const Deposit = () => {
 
                                                                     />
                                                                 </div>
-
                                                                 <div className="mb-3">
                                                                     <label
 
                                                                         className="form-label"
                                                                     >
-                                                                        Amount
+                                                                        Account Number
                                                                     </label>
                                                                     <input
                                                                         type="text"
                                                                         className="form-control"
-                                                                        onChange={inputHandler}
-                                                                        value={depositfiat?.balance}
-                                                                        name="balance"
-                                                                    />
-                                                                    <span className="validationErr">{validatioError.balanceError}</span>
+                                                                        disabled
+                                                                        name="AccountNumber"
+                                                                        value={adminbankdetails?.AccountNumber}
 
+                                                                    />
                                                                 </div>
 
 
                                                                 <div className="mb-3">
-                                                                    <label
-
-                                                                        className="form-label"
-                                                                    >
-                                                                        USDT Amount
+                                                                    <label className="form-label">
+                                                                        IFSC Code
                                                                     </label>
                                                                     <input
                                                                         type="text"
                                                                         className="form-control"
-                                                                        onChange={inputHandler}
-                                                                        value={parseFloat(depositfiat?.balance / liveprice).toFixed(6)}
-                                                                    />
-
-                                                                </div>
-
-
-                                                                <div className="mb-3">
-                                                                    <label
-
-                                                                        className="form-label"
-                                                                    >
-                                                                        Date
-                                                                    </label>
-                                                                    <DatePicker
-                                                                        className="form-control"
-                                                                        autoComplete={false}
-                                                                        onChange={e => handleChangeStart(e)}
-                                                                        selected={date}
-                                                                        name="start_date"
-                                                                    />
-                                                                    <span className="validationErr">{validatioError.ifsccodeError}</span>
-                                                                </div>
-
-                                                                <div className="mb-3">
-                                                                    <label
-
-                                                                        className="form-label"
-                                                                    >
-                                                                        Transaction Id
-                                                                    </label>
-                                                                    <input
-                                                                        type="text"
-                                                                        className="form-control"
-                                                                        onChange={inputHandler}
-                                                                        value={depositfiat?.transaction_id}
-                                                                        name="transaction_id"
+                                                                        disabled
+                                                                        name="ifsc_code"
+                                                                        value={adminbankdetails?.ifsc_code}
 
                                                                     />
-                                                                    <span className="validationErr">{validatioError.transaction_idError}</span>
-
                                                                 </div>
 
 
-                                                                <div className='col-sm-12'>
-                                                                    <div className='row'>
-
-                                                                        <div className='col-lg-6 my-3'>
-                                                                            <div class="upload-btn-wrapper">
-                                                                                <button class="btn-upload">{receipt_name == '' ? `Upload File` : `${receipt_name.toString().substring(0, 5) + '...' + receipt_name.toString().substring(receipt_name.length - 5)}`}</button>
-                                                                                <input type="file" accept="image/png, image/gif, image/jpeg,application/pdf" name="receipt" onChange={e => uploadFile(e)} />
-                                                                                {/* {this.state.error.length > 0 && this.state.error[0].name == 'receipt_name' ? <div>
-                                                                                    <span className='alert_validation'>{this.state.error[0].err}</span>
-                                                                                </div> : ''} */}
-                                                                                <span className="validationErr">{validatioError.upload_fileError}</span>
-
-                                                                            </div>
-                                                                        </div>
-                                                                        <div className='col-lg-6'>
-                                                                            {/* {this.state.spinLoader === '0' ? */}
-                                                                            <button className="crypt-button-red-full mt-3" type="submit"  >
-                                                                                Submit
-                                                                            </button>
-                                                                            {/* :
-                                                                                <button className="crypt-button-red-full mt-3">
-                                                                                    Loading<i class="fa fa-spinner fa-spin validat"></i>
-                                                                                </button> */}
-                                                                            {/* } */}
-                                                                        </div>
-                                                                        {image_preview == "" ? '' : (
-
-                                                                            <img
-                                                                                style={{
-                                                                                    height: "150px",
-                                                                                    width: "150px",
-                                                                                    objectFit: "cover",
-                                                                                }}
-                                                                                id="image"
-                                                                                className="object-cover w-full h-32"
-                                                                                src={image_preview}
-                                                                            />
-
-                                                                        )}
-                                                                    </div>
-                                                                </div>
-                                                            </form>
+                                                            </div>
                                                         </div>
                                                     </div>
 
+
+                                                    <div className='col-md-6'>
+
+                                                        <div className='card p-3'>
+
+                                                            <h4>Deposit</h4>
+                                                            <hr class="mt-2" />
+                                                            <div className="">
+                                                                <form
+                                                                    onSubmit={updatebankdetails}>
+
+
+                                                                    <div className="mb-3">
+                                                                        <label
+
+                                                                            className="form-label"
+                                                                        >
+                                                                            Your Bank
+                                                                        </label>
+                                                                        <input
+                                                                            type="text"
+                                                                            className="form-control" disabled
+                                                                            value={bankdetails?.bank_name}
+
+                                                                            name="bank_name"
+
+                                                                        />
+                                                                        <span className="validationErr">{validatioError.bankError}</span>
+
+                                                                    </div>
+
+                                                                    <div className="mb-3">
+                                                                        <label
+
+                                                                            className="form-label"
+                                                                        >
+                                                                            Admin Bank
+                                                                        </label>
+                                                                        <input
+                                                                            type="text"
+                                                                            className="form-control"
+                                                                            disabled
+                                                                            name="bank_name"
+                                                                            value={adminbankdetails?.bank_name}
+
+                                                                        />
+                                                                    </div>
+
+                                                                    <div className="mb-3">
+                                                                        <label
+
+                                                                            className="form-label"
+                                                                        >
+                                                                            Amount
+                                                                        </label>
+                                                                        <input
+                                                                            type="text"
+                                                                            className="form-control"
+                                                                            onChange={inputHandler}
+                                                                            value={depositfiat?.balance}
+                                                                            name="balance"
+                                                                        />
+                                                                        <span className="validationErr">{validatioError.balanceError}</span>
+
+                                                                    </div>
+
+
+                                                                    <div className="mb-3">
+                                                                        <label
+
+                                                                            className="form-label"
+                                                                        >
+                                                                            USDT Amount
+                                                                        </label>
+                                                                        <input
+                                                                            type="text"
+                                                                            className="form-control"
+                                                                            onChange={inputHandler}
+                                                                            value={parseFloat(depositfiat?.balance / liveprice).toFixed(6)}
+                                                                        />
+
+                                                                    </div>
+
+
+                                                                    <div className="mb-3">
+                                                                        <label
+
+                                                                            className="form-label"
+                                                                        >
+                                                                            Date
+                                                                        </label>
+                                                                        <DatePicker
+                                                                            className="form-control"
+                                                                            autoComplete={false}
+                                                                            onChange={e => handleChangeStart(e)}
+                                                                            selected={date}
+                                                                            name="start_date"
+                                                                        />
+                                                                        <span className="validationErr">{validatioError.ifsccodeError}</span>
+                                                                    </div>
+
+                                                                    <div className="mb-3">
+                                                                        <label
+
+                                                                            className="form-label"
+                                                                        >
+                                                                            Transaction Id
+                                                                        </label>
+                                                                        <input
+                                                                            type="text"
+                                                                            className="form-control"
+                                                                            onChange={inputHandler}
+                                                                            value={depositfiat?.transaction_id}
+                                                                            name="transaction_id"
+
+                                                                        />
+                                                                        <span className="validationErr">{validatioError.transaction_idError}</span>
+
+                                                                    </div>
+
+
+                                                                    <div className='col-sm-12'>
+                                                                        <div className='row'>
+
+                                                                            <div className='col-lg-6 my-3'>
+                                                                                <div class="upload-btn-wrapper">
+                                                                                    <button class="btn-upload">{receipt_name == '' ? `Upload File` : `${receipt_name.toString().substring(0, 5) + '...' + receipt_name.toString().substring(receipt_name.length - 5)}`}</button>
+                                                                                    <input type="file" accept="image/png, image/gif, image/jpeg,application/pdf" name="receipt" onChange={e => uploadFile(e)} />
+                                                                                    {/* {this.state.error.length > 0 && this.state.error[0].name == 'receipt_name' ? <div>
+                                                                                    <span className='alert_validation'>{this.state.error[0].err}</span>
+                                                                                </div> : ''} */}
+                                                                                    <span className="validationErr">{validatioError.upload_fileError}</span>
+
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className='col-lg-6'>
+                                                                                {/* {this.state.spinLoader === '0' ? */}
+                                                                                <button className="crypt-button-red-full mt-3" type="submit"  >
+                                                                                    Submit
+                                                                                </button>
+                                                                                {/* :
+                                                                                <button className="crypt-button-red-full mt-3">
+                                                                                    Loading<i class="fa fa-spinner fa-spin validat"></i>
+                                                                                </button> */}
+                                                                                {/* } */}
+                                                                            </div>
+                                                                            {image_preview == "" ? '' : (
+
+                                                                                <img
+                                                                                    style={{
+                                                                                        height: "150px",
+                                                                                        width: "150px",
+                                                                                        objectFit: "cover",
+                                                                                    }}
+                                                                                    id="image"
+                                                                                    className="object-cover w-full h-32"
+                                                                                    src={image_preview}
+                                                                                />
+
+                                                                            )}
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+
                                                 </div>
 
-
-                                            </div>
-
-                                            <div className='row mt-5'>
-                                                <div className='col-lg-12 col-12 '>
-                                                    <h4 class="mb-3">Deposit History</h4>
-                                                    <ReactDatatable
-                                                        config={configForWallet}
-                                                        records={depositHistory}
-                                                        columns={columnsForWallet}
-                                                    />
+                                                <div className='row mt-5'>
+                                                    <div className='col-lg-12 col-12 '>
+                                                        <h4 class="mb-3">Deposit History</h4>
+                                                        <ReactDatatable
+                                                            config={configForWallet}
+                                                            records={depositHistory}
+                                                            columns={columnsForWallet}
+                                                        />
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
+
+                                            :
+
+                                            <div className="row">
+                                                <div className="col-md-12">
+                                                    <div className="kycStatus">
+                                                        {purchaseList11.kyc_status == 3 ?
+                                                            <span style={{ color: 'red' }}>
+                                                                Your KYC Is Rejected From Admin Side
+                                                            </span> :
+                                                            purchaseList11.kyc_status == 1 ?
+                                                                <span style={{ color: '#000' }}>
+                                                                    Your KYC Is Pending From Admin Side
+                                                                </span> :
+                                                                <span style={{ color: '#000' }}>
+                                                                    For Deposit Firstly You have to Complete Your KYC
+                                                                </span>
+                                                        }
+
+
+
+
+                                                    </div>
+                                                </div>
+                                            </div>}
                                     </div>
                                 </div>
                             </div>

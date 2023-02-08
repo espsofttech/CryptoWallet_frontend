@@ -4,7 +4,7 @@ import { Container, Row, Col, Form, Button, InputGroup, FormGroup } from 'react-
 import Header from "./directives/Header";
 import Footer from "./directives/Footer";
 import { Zoom } from 'react-reveal';
-import { LoginAction, verifyAccountAction } from '../Action/user.action';
+import { twoAuthenticationVerifyAction, verifyAccountAction } from '../Action/user.action';
 import config from "../config/config"
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
@@ -12,11 +12,13 @@ import toast, { Toaster } from 'react-hot-toast';
 import { useSelector, useDispatch } from 'react-redux'
 import * as ACTIONTYPES from '../../src/redux/actionTypes'
 
-const Login = () => {
+const Twofactor = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
-    const [form, setForm] = useState({ email: '', password: '' })
+    const USER_LOGIN_DETAILS_DATA = useSelector((state) => state.auth.USER_LOGIN_DETAILS_DATA)
+    const USER_LOGIN_DETAILS = useSelector((state) => state.auth.USER_LOGIN_DETAILS)
+    
+    const [form, setForm] = useState({ SecretKey: '' })
     const [validatioError, setvalidatioError] = useState({});
     const [loginType, setloginType] = useState('');
     const [isCaptcha, setisCaptcha] = useState(0);
@@ -71,26 +73,23 @@ const Login = () => {
 
 
     function validate() {
-        let emailError = "";
-        let passwordError = "";
+        let secretkeyError = "";
 
-        if (form.email === '') {
-            emailError = "Email is required."
-        }
-        if (form.password === '') {
-            passwordError = "Password is required."
+        if (form.SecretKey === '') {
+            secretkeyError = "SecretKey is required."
         }
 
-
-        if (emailError || passwordError) {
+        if (secretkeyError) {
             setvalidatioError({
-                emailError, passwordError
+                secretkeyError
             })
             return false
         } else {
             return true
         }
     }
+
+
 
     const SubmitForm = async (e) => {
         e.preventDefault()
@@ -101,52 +100,37 @@ const Login = () => {
 
             }
             else {
-                let res = await LoginAction(form);
-                if (res?.data?.is_admin == 0) {
-                    toast.error('User not found');
-                }
-                else {
-                    if (res.status == true) {
 
-                        if (res.data.enableTwoFactor == 0) {
-                            toast.success(res.msg);
-                            dispatch({
-                                type: ACTIONTYPES.USER_FORM, payload: {
-                                    template: res.data,
-                                    token: res.token
-                                }
-                            })
-                            setTimeout(() => {
-                                window.location.href = `${config.baseUrl}dashboard`;
-                            }, 2000);
-                        }
-                        else if (res.data.enableTwoFactor == 1) {
-                            dispatch({
-                                type: ACTIONTYPES.USER_FORM_DATA, payload: {
-                                    template: res.data,
-                                    token: res.token
-                                }
-                            })
-                            setTimeout(() => {
-                                window.location.href = `${config.baseUrl}Twofactor`;
-                            }, 2000);
-                        }
-
-
-                    }
-
-                    else {
-                        toast.error(res.msg);
-                    }
+                let userData = {
+                    "email": USER_LOGIN_DETAILS_DATA.template.email, "user_id": USER_LOGIN_DETAILS_DATA.template.id, 'SecretKey': form.SecretKey, 'enableTwoFactor': 1
                 }
 
-
+                let res = await twoAuthenticationVerifyAction(userData);
+                if (res.success == true) {
+                    toast.success('2FA Authentication Success Now you can Login!');
+                    dispatch({
+                        type: ACTIONTYPES.USER_FORM, payload: {
+                            template: USER_LOGIN_DETAILS_DATA.template,
+                            token: USER_LOGIN_DETAILS_DATA.token
+                        }
+                    })
+                    setTimeout(() => {
+                        window.location.href = `${config.baseUrl}dashboard`;
+                    }, 2000);
+                } else {
+                    toast.error('Wrong Code');
+                }
             }
         }
+
         catch (err) {
             toast.error(err.response.data.msg);
         }
+
+
+
     }
+
 
 
     const navigation = async (id) => {
@@ -170,38 +154,30 @@ const Login = () => {
                         <Col lg={6} className="">
                             <Zoom>
                                 <div className="login-form-wrap ">
-                                    <div class="login-header text-center"><h2>Login</h2></div>
+
+                                    <div class="login-header text-center"><h5>Google Authentication</h5></div>
+
+                                    <div class="login-header text-center"><h5>Please Type code to continue</h5></div>
                                     <div className="login-body mt-4">
                                         <Form>
-                                            <FormGroup className="mb-3">
-                                                <InputGroup>
-                                                    <InputGroup.Text id="basic-addon1"><img src="images/send.png" /></InputGroup.Text>
-                                                    <Form.Control
-                                                        placeholder="Email Address"
-                                                        aria-label="Email Address"
-                                                        aria-describedby="basic-addon1"
-                                                        autoComplete="off" name="email" onChange={inputHandler}
-                                                    />
-                                                </InputGroup>
-                                                <span className="validationErr">{validatioError.emailError}</span>
-                                            </FormGroup>
+
                                             <FormGroup className="mb-3">
                                                 <InputGroup >
                                                     <InputGroup.Text id="basic-addon1"><img src="images/key.png" /></InputGroup.Text>
                                                     <Form.Control
-                                                        type="password"
-                                                        placeholder="Password"
-                                                        aria-label="Password"
-                                                        aria-describedby="basic-addon1"
-                                                        autoComplete="off" name="password" onChange={inputHandler}
+                                                        type="text"
+                                                        placeholder="SecretKey"
+                                                        aria-label="SecretKey"
+                                                        aria-describedby="basic-addon1" value={form.SecretKey}
+                                                        autoComplete="off" name="SecretKey" onChange={inputHandler}
                                                     />
                                                 </InputGroup>
-                                                <span className="validationErr">{validatioError.passwordError}</span>
+                                                <span className="validationErr">{validatioError.secretkeyError}</span>
                                             </FormGroup>
                                             <Row className=" mt-4">
                                                 <Col lg={6}>
                                                     <button className="btn style1 btn-rounded" onClick={SubmitForm} type="submit">
-                                                        Login
+                                                        Submit
                                                     </button>
                                                 </Col>
                                                 <Col lg={6} className="text-right">
@@ -224,4 +200,4 @@ const Login = () => {
         </>
     )
 }
-export default Login
+export default Twofactor

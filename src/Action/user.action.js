@@ -9,18 +9,18 @@ export const LoginAction = (data) => {
 }
 export const getFaqListAction = (data) => {
    return getRequest("getfaqDetails", data).then((res) => {
-     return res.data;
+      return res.data;
    });
- };
- 
+};
+
 export const verifyAccountAction = (data) => {
    return postRequest('verifyAccount', data).then(res => { return res.data })
 }
 export const getAboutListAction = (data) => {
    return getRequest("getDetails1", data).then((res) => {
-     return res.data;
+      return res.data;
    });
- };
+};
 
 export const ForgotPasswordAction = (data) => {
    return postRequest('forgetPassword', data).then(res => { return res.data })
@@ -41,6 +41,15 @@ export const getgetadminbankdetailsAction = (data) => {
 
 export const getgetuserbankdetailsAction = (data) => {
    return getRequest(`getBankDetailsById/${data.id}`).then(res => { return res.data })
+}
+
+export const getAllActivityAction = (data) => {
+   return getRequest(`userActivity/${data}`).then(res => { return res.data })
+}
+
+
+export const getdashBoardDataCountUserAction = (data) => {
+   return getRequest(`getdashBoardDataCountUser/${data.id}`).then(res => { return res.data })
 }
 
 export const getAllDepositTransactionsAction = (data) => {
@@ -103,6 +112,14 @@ export const getProfileAction = (data) => {
 
 export const UpdateProfileAction = (data) => {
    return putRequestFormData(`updateUser/${data.id}`, data).then(res => { return res.data })
+}
+
+export const twoAuthenticationAction = (data) => {
+   return getRequest(`getQR/${data}`).then(res => { return res.data })
+}
+
+export const twoAuthenticationVerifyAction = (data) => {
+   return postRequest(`twoAuthenticationVerify`, data).then(res => { return res.data })
 }
 
 export const ContactFormAction = (data) => {

@@ -21,6 +21,8 @@ import Faq from '../components/faq';
 import Contactus from '../components/contactus';
 import LivePrice from '../components/liveprice';
 import Deposit from '../components/deposit';
+import Twofactor from '../components/twofactor';
+import Activity from '../components/activity';
 const RouterComponent = () => {
     return (<BrowserRouter >
         <div>
@@ -45,6 +47,8 @@ const RouterComponent = () => {
                 <Route path={`${config.baseUrl}contactus`} element={<Contactus />} />
                 <Route path={`${config.baseUrl}LivePrice`} element={<LivePrice />} />
                 <Route path={`${config.baseUrl}deposit`} element={<Deposit />} />
+                <Route path={`${config.baseUrl}Twofactor`} element={<Twofactor />} />
+                <Route path={`${config.baseUrl}Activity`} element={<Activity />} />
 
 
 

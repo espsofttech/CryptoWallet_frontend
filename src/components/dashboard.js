@@ -5,67 +5,163 @@ import Dashboardheader from "./directives/dashboardheader";
 import Dashboardsidebar from "./directives/dashboardsidebar";
 import { useSelector, useDispatch } from 'react-redux'
 import * as ACTIONTYPES from '../../src/redux/actionTypes'
+import { getdashBoardDataCountUserAction } from '../Action/user.action';
 
 const Dashboard = () => {
 
     const dispatch = useDispatch();
     const USER_LOGIN_DETAILS = useSelector((state) => state.auth.USER_LOGIN_DETAILS)
+    const [userDashboard, setuserDashboard] = useState('')
+    useEffect(() => {
+        getUserDashboardAPI({ id: USER_LOGIN_DETAILS.template.id });
 
-    console.log(USER_LOGIN_DETAILS)
+    }, []);
+
+    const getUserDashboardAPI = async (data) => {
+        let res = await getdashBoardDataCountUserAction(data);
+        if (res) {
+            setuserDashboard(res.data);
+        }
+    };
+
+
     return (
         <>
             <div>
 
                 <div className="page-wrapper">
-                    <Dashboardsidebar/>
+                    <Dashboardsidebar />
                     <div className="main-container">
                         <Dashboardheader />
 
                         <div className="content-wrapper-scroll">
                             <div className="content-wrapper">
                                 <Row>
-                                   
-                                    <Col lg={4}>
-                                    <div className="stats-tile">
-                                            <div className="d-flex">
-                                                <div className="sale-icon shade-blue">
-                                                    <i className="bi bi-wallet" /></div>
-                                                <div className="sale-details">
-                                                    <h3 className="text-black">0.00 ~ </h3>INR 0.00<p>Total Withdraw</p>
-                                                </div>
-                                                <div className="sale-graph"><div id="sparklineLine1" /></div>
-                                            </div>
-                                        </div>
-                                    </Col>
-                                    <Col lg={4}>
-                                    <div className="stats-tile">
+                                    <h4>Total Buy</h4>
+                                    <Col lg={3}>
+                                        <div className="stats-tile">
                                             <div className="d-flex">
                                                 <div className="sale-icon shade-blue">
                                                     <i className="fa fa-credit-card-alt" /></div>
                                                 <div className="sale-details">
-                                                    <h3 className="text-black">0.00 ~</h3>
-                                                    INR 0.00
-                                                    <p>Total Buy</p>
+                                                    <h3 className="text-black">BTC {parseFloat(userDashboard.buyBTC ? userDashboard.buyBTC : '0.00').toFixed(8)}</h3>
+                                                    {/* BTC 0.00 */}
+                                                    <p>Total BTC Buy</p>
                                                 </div>
-                                                <div className="sale-graph"><div id="sparklineLine1" /></div>
+
                                             </div>
                                         </div>
                                     </Col>
-                                    <Col lg={4}>
-                                    <div className="stats-tile">
+                                    <Col lg={3}>
+                                        <div className="stats-tile">
                                             <div className="d-flex">
                                                 <div className="sale-icon shade-blue">
-                                                    <i className="fa fa-users" /></div>
+                                                    <i className="fa fa-credit-card-alt" /></div>
                                                 <div className="sale-details">
-                                                    <h3 className="text-black">0.00 ~</h3>
-                                                    INR 0.00
-                                                    <p>Total Sell</p>
+                                                    <h3 className="text-black">ETH {parseFloat(userDashboard.buyETH ? userDashboard.buyETH : '0.00').toFixed(8)} </h3>
+
+                                                    <p>Total ETH Buy</p>
                                                 </div>
                                                 <div className="sale-graph"><div id="sparklineLine1" /></div>
                                             </div>
                                         </div>
                                     </Col>
+                                    <Col lg={3}>
+                                        <div className="stats-tile">
+                                            <div className="d-flex">
+                                                <div className="sale-icon shade-blue">
+                                                    <i className="fa fa-credit-card-alt" /></div>
+                                                <div className="sale-details">
+                                                    <h3 className="text-black">USDT {parseFloat(userDashboard.buyUSDT ? userDashboard.buyUSDT : '0.00').toFixed(8)}</h3>
+                                                    <p>Total USDC Buy</p>
+                                                </div>
+                                                <div className="sale-graph"><div id="sparklineLine1" /></div>
+                                            </div>
+                                        </div>
+                                    </Col>
+                                    <Col lg={3}>
+                                        <div className="stats-tile">
+                                            <div className="d-flex">
+                                                <div className="sale-icon shade-blue">
+                                                    <i className="fa fa-credit-card-alt" /></div>
+                                                <div className="sale-details">
+                                                    <h3 className="text-black">USDC {parseFloat(userDashboard.buyUSDC ?
+                                                        userDashboard.buyUSDC : '0.00').toFixed(8)}</h3>
+
+                                                    <p>Total USDT Buy</p>
+                                                </div>
+                                                <div className="sale-graph"><div id="sparklineLine1" /></div>
+                                            </div>
+                                        </div>
+                                    </Col>
+
                                 </Row>
+
+                                <Row>
+                                    <h4>Total Sell</h4>
+                                    <Col lg={3}>
+                                        <div className="stats-tile">
+                                            <div className="d-flex">
+                                                <div className="sale-icon shade-blue">
+                                                    <i className="fa fa-credit-card-alt" /></div>
+                                                <div className="sale-details">
+                                                    <h3 className="text-black">BTC {parseFloat(userDashboard.sellBTC ?
+                                                        userDashboard.sellBTC : '0.00').toFixed(8)}</h3>
+                                                    {/* BTC 0.00 */}
+                                                    <p>Total BTC Sell</p>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </Col>
+                                    <Col lg={3}>
+                                        <div className="stats-tile">
+                                            <div className="d-flex">
+                                                <div className="sale-icon shade-blue">
+                                                    <i className="fa fa-credit-card-alt" /></div>
+                                                <div className="sale-details">
+                                                    <h3 className="text-black">ETH {parseFloat(userDashboard.sellETH ?
+                                                        userDashboard.sellETH : '0.00').toFixed(8)} </h3>
+
+                                                    <p>Total ETH Sell</p>
+                                                </div>
+                                                <div className="sale-graph"><div id="sparklineLine1" /></div>
+                                            </div>
+                                        </div>
+                                    </Col>
+                                    <Col lg={3}>
+                                        <div className="stats-tile">
+                                            <div className="d-flex">
+                                                <div className="sale-icon shade-blue">
+                                                    <i className="fa fa-credit-card-alt" /></div>
+                                                <div className="sale-details">
+                                                    <h3 className="text-black">USDT {parseFloat(userDashboard.sellUSDT ?
+                                                        userDashboard.sellUSDT : '0.00').toFixed(8)}</h3>
+                                                    <p>Total USDC Sell</p>
+                                                </div>
+                                                <div className="sale-graph"><div id="sparklineLine1" /></div>
+                                            </div>
+                                        </div>
+                                    </Col>
+                                    <Col lg={3}>
+                                        <div className="stats-tile">
+                                            <div className="d-flex">
+                                                <div className="sale-icon shade-blue">
+                                                    <i className="fa fa-credit-card-alt" /></div>
+                                                <div className="sale-details">
+                                                    <h3 className="text-black">USDC {parseFloat(userDashboard.sellUSDC ? 
+                                                    userDashboard.sellUSDC:'0.00').toFixed(8)}</h3>
+
+                                                    <p>Total USDT Sell</p>
+                                                </div>
+                                                <div className="sale-graph"><div id="sparklineLine1" /></div>
+                                            </div>
+                                        </div>
+                                    </Col>
+
+                                </Row>
+
+
                             </div>
 
                         </div>

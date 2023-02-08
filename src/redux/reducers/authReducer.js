@@ -15,6 +15,12 @@ export default function auth(state = initialState, action) {
                 USER_LOGIN_DETAILS: action.payload,
             };
 
+            case ACTIONTYPES.USER_FORM_DATA:
+                return {
+                    ...state,
+                    USER_LOGIN_DETAILS_DATA: action.payload,
+                };
+
         case ACTIONTYPES.SECOND_FARMING_FORM:
             return {
                 ...state,

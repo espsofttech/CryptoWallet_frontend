@@ -5,7 +5,7 @@ import ReactDatatable from '@ashvin27/react-datatable';
 import Dashboardheader from "./directives/dashboardheader";
 import Dashboardsidebar from "./directives/dashboardsidebar";
 import toast, { Toaster } from 'react-hot-toast';
-import { getProfileAction, UpdateProfileAction } from '../Action/user.action';
+import { getProfileAction, UpdateProfileAction, twoAuthenticationAction, twoAuthenticationVerifyAction } from '../Action/user.action';
 import config from "../config/config";
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -16,9 +16,12 @@ const Profile = () => {
     const [userDetails, setuserDetails] = useState({});
     const [image_preview, setimage_preview] = useState('');
     const [image_file, setimage_file] = useState('');
+    const [twoAuthenticationData, settwoAuthenticationData] = useState('');
+    const [twoAuthenticationData11, settwoAuthenticationData11] = useState('');
 
     useEffect(() => {
         getProfileAPI(USER_LOGIN_DETAILS.template.id)
+        twoAuthenticationAPI(USER_LOGIN_DETAILS.template.id)
     }, []);
 
     const getProfileAPI = async (id) => {
@@ -39,6 +42,19 @@ const Profile = () => {
     const inputHandler = (e) => {
         const { name, value } = e.target
         setuserDetails((old) => {
+            return { ...old, [name]: value }
+        })
+    }
+
+    const inputHandlerAuth = (e) => {
+        const { name, value } = e.target
+        if (e.target.checked === true && e.target.type === 'checkbox') {
+            settwoAuthenticationData11(1)
+        }
+        else if (e.target.checked === false && e.target.type === 'checkbox') {
+            settwoAuthenticationData11(0)
+        }
+        settwoAuthenticationData((old) => {
             return { ...old, [name]: value }
         })
     }
@@ -73,6 +89,59 @@ const Profile = () => {
 
     const toggleManage = (data) => {
         settoggleSet(data)
+    }
+
+    const twoAuthenticationAPI = async (id) => {
+        let res = await twoAuthenticationAction(id);
+        if (res.status == true) {
+            settwoAuthenticationData(res.data)
+        }
+    }
+
+
+    //==================================  twoupdateAuthentication ========================
+
+    const twoAuthenticationVerifyAPI = async (e) => {
+        e.preventDefault()
+    
+        try {
+            let userData = {
+                "email": USER_LOGIN_DETAILS.template.email, "user_id": USER_LOGIN_DETAILS.template.id, 'SecretKey': twoAuthenticationData.SecretKey, 'enableTwoFactor': twoAuthenticationData11 == '' ? 0 :
+                    twoAuthenticationData11
+            }
+
+            let res = await twoAuthenticationVerifyAction(userData);
+            if (res.success == true) {
+                toast.success(`2FA Authentication has been ${twoAuthenticationData11 == 0 ? 'Disabled' : 'enabled'}  successfully!`);
+
+            } else {
+                toast.error('Wrong Code');
+            }
+        }
+
+
+        catch (err) {
+            toast.error(err.response.data.msg);
+        }
+
+
+        // await axios({
+        //     method: 'post',
+        //     url: `${config.serverPath}twoAuthenticationVerify `,
+        //     headers: { "Authorization": this.loginData?.Token },
+        //     data: { "email": this.loginData.data?.user_email, "user_id": this.loginData.data?.id, 'SecretKey': this.state.twoAuthenticationData.SecretKey, 'enableTwoFactor': this.state.twoAuthenticationData.enableTwoFactor }
+        // }).then(response => {
+        //     if (response.data.success === true) {
+        //         toast.success('2FA Authentication has been enabled successfully!', {
+        //             position: toast.POSITION.TOP_CENTER
+        //         });
+        //         window.location.reload()
+        //     }
+        // }).catch(err => {
+        //     toast.error('Wrong Code', {
+        //         position: toast.POSITION.TOP_CENTER
+        //     })
+        // })
     }
 
 
@@ -137,6 +206,75 @@ const Profile = () => {
                                         </div>
                                     </div>
                                 </div>
+
+
+
+
+
+
+
+
+
+                                <div className="row">
+                                    <div className='col-lg-12'>
+                                        <div className='card profile_box p-4 pt-5 pb-5'>
+                                            <div className='row'>
+                                                <div className="sec" data-sec="security-Authentication">
+
+                                                    <div className="be-large-post mb-4">
+                                                        <div className="info-block style-1">
+                                                            <div className="be-large-post-align "><h3 className="info-block-label">Security and Authentication</h3></div>
+                                                        </div>
+
+                                                        <div className="be-large-post-align"><div className="row mb-3">
+                                                            <div className="col-sm-6"><h3 className="info-block-label mt-3"><strong>Two-Factor Authentication</strong></h3><small>Two-Factor Authentication (2FA) is an extra layer of security to ensure that only you have the ability to log in.</small>
+                                                                <input type="text"
+                                                                    value={twoAuthenticationData.SecretKey} onChange={inputHandlerAuth}
+                                                                    name="SecretKey" className="form-control mt-3" onKeyPress={(event) => {
+                                                                        if (!/^\d*[.]?\d{0,1}$/.test(event.key)) {
+                                                                            event.preventDefault();
+                                                                        }
+                                                                    }} />
+                                                                <div className="contact100-form-checkbox pt-4">
+                                                                    <p>Enable/Disabled:</p>
+
+                                                                    {twoAuthenticationData?.enableTwoFactor === 1 ?
+                                                                        <input className="input-checkbox100" id="ckb1" value="1" checked type="checkbox"
+                                                                            name="enableTwoFactor"
+                                                                            onChange={inputHandlerAuth}
+                                                                        />
+                                                                        :
+                                                                        <input className="input-checkbox100" id="ckb1" value="0" type="checkbox"
+                                                                            name="enableTwoFactor" onChange={inputHandlerAuth} />
+
+                                                                    }
+
+
+                                                                    <label className="label-checkbox100" for="ckb1">&nbsp;
+                                                                        Enable 2FA
+                                                                    </label>
+                                                                </div>
+                                                                <div className=" mt-4"><button className="btn btn-primary"
+                                                                    disabled={!twoAuthenticationData.SecretKey}
+                                                                    type="submit"
+                                                                    onClick={(e) => twoAuthenticationVerifyAPI(e)}
+                                                                >Submit</button></div>
+                                                            </div>
+                                                            <div className="col-sm-6"><img
+                                                                src={twoAuthenticationData.QR_code}
+                                                            /></div>
+
+
+
+                                                            <div className="col-6 mb-2"></div><div className="col-6 col-lg-6 pl-0"></div><div className="col-md-6"></div></div><div className="row"><div className="col-4 float-left"></div></div></div>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div></div>
+                                </div>
+
                             </div>
 
                         </div>

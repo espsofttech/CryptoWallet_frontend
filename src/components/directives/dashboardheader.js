@@ -139,7 +139,9 @@ const Dashboardheader = () => {
                             </a>
                             <div className="dropdown-menu dropdown-menu-end" aria-labelledby="userSettings">
                                 <div className="header-profile-actions">
-                                    <a href={`${config.baseUrl}profile`}>Profile</a><a onClick={logoutClick} href="javascript:void(0)">Logout</a></div>
+                                    <a href={`${config.baseUrl}Activity`}>Activity</a>
+                                    <a href={`${config.baseUrl}profile`}>Profile</a>
+                                    <a onClick={logoutClick} href="javascript:void(0)">Logout</a></div>
                             </div>
                         </li>
                     </ul>

@@ -1,3 +1,4 @@
 export const USER_FORM = 'USER_FORM'
+export const USER_FORM_DATA = 'USER_FORM_DATA'
 export const SECOND_FARMING_FORM = "SECOND_FARMING_FORM"
 export const TOKENLIST = "TOKENLIST"

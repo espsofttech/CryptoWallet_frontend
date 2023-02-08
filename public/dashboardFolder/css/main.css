@@ -1654,7 +1654,7 @@ img {
     padding: 1.5rem 1rem;
     margin: 0 0 24px 0;
     border-radius: 8px;
-    min-height: 138px;
+    /* min-height: 138px; */
     /* background: rgba(0, 0, 0, 0.67); */
     background: #fff;
     /* display: -webkit-box; */
