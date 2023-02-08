@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Row, Col, Form, Button, InputGroup } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, InputGroup, Dropdown } from 'react-bootstrap';
 import $ from 'jquery';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import config from '../../config/config';
@@ -126,8 +126,79 @@ const Dashboardheader = () => {
 
                 <div className="header-actions-container">
                     {/* <a class="btn style1 mb-3" href="#">Exchange</a> */}
+                    <div className="notification-dropdown">
+                        <Dropdown>
+                            <Dropdown.Toggle variant="default" id="dropdown-basic">
+                                <span href="" class="leads d-xl-flex">
+
+                                    <span class="lead-icon">
+                                        <i class="bi bi-bell-fill animate__animated animate__swing animate__infinite infinite"></i>
+                                        <b class="dot animate__animated animate__heartBeat animate__infinite"></b>
+                                    </span>
+                                </span>
+                            </Dropdown.Toggle>
+
+                            <Dropdown.Menu>
+                                <div>
+                                    <ul className=" notify-drop">
+                                        <div className="notify-drop-title">
+                                            <div className="row">
+                                                <div className="col-md-6 col-sm-6 col-xs-6">Bildirimler (<b>2</b>)</div>
+                                                <div className="col-md-6 col-sm-6 col-xs-6 text-right"><a href className="rIcon allRead" data-tooltip="tooltip" data-placement="bottom" title data-original-title="tümü okundu."><i className="fa fa-dot-circle-o" /></a></div>
+                                            </div>
+                                        </div>
+                                        {/* end notify title */}
+                                        {/* notify content */}
+                                        <div className="drop-content">
+                                            <li>
+                                                <div className="col-md-3 col-sm-3 col-xs-3"><div className="notify-img"><img src="http://placehold.it/45x45" alt /></div></div>
+                                                <div className="col-md-9 col-sm-9 col-xs-9 pd-l0"><a href>Ahmet</a> yorumladı. <a href>Çicek bahçeleri...</a> <a href className="rIcon"><i className="fa fa-dot-circle-o" /></a>
+                                                    <hr />
+                                                    <p className="time">Şimdi</p>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div className="col-md-3 col-sm-3 col-xs-3"><div className="notify-img"><img src="http://placehold.it/45x45" alt /></div></div>
+                                                <div className="col-md-9 col-sm-9 col-xs-9 pd-l0"><a href>Ahmet</a> yorumladı. <a href>Çicek bahçeleri...</a> <a href className="rIcon"><i className="fa fa-dot-circle-o" /></a>
+                                                    <p>Lorem ipsum sit dolor amet consilium.</p>
+                                                    <p className="time">1 Saat önce</p>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div className="col-md-3 col-sm-3 col-xs-3"><div className="notify-img"><img src="http://placehold.it/45x45" alt /></div></div>
+                                                <div className="col-md-9 col-sm-9 col-xs-9 pd-l0"><a href>Ahmet</a> yorumladı. <a href>Çicek bahçeleri...</a> <a href className="rIcon"><i className="fa fa-dot-circle-o" /></a>
+                                                    <p>Lorem ipsum sit dolor amet consilium.</p>
+                                                    <p className="time">29 Dakika önce</p>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div className="col-md-3 col-sm-3 col-xs-3"><div className="notify-img"><img src="http://placehold.it/45x45" alt /></div></div>
+                                                <div className="col-md-9 col-sm-9 col-xs-9 pd-l0"><a href>Ahmet</a> yorumladı. <a href>Çicek bahçeleri...</a> <a href className="rIcon"><i className="fa fa-dot-circle-o" /></a>
+                                                    <p>Lorem ipsum sit dolor amet consilium.</p>
+                                                    <p className="time">Dün 13:18</p>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div className="col-md-3 col-sm-3 col-xs-3"><div className="notify-img"><img src="http://placehold.it/45x45" alt /></div></div>
+                                                <div className="col-md-9 col-sm-9 col-xs-9 pd-l0"><a href>Ahmet</a> yorumladı. <a href>Çicek bahçeleri...</a> <a href className="rIcon"><i className="fa fa-dot-circle-o" /></a>
+                                                    <p>Lorem ipsum sit dolor amet consilium.</p>
+                                                    <p className="time">2 Hafta önce</p>
+                                                </div>
+                                            </li>
+                                        </div>
+                                        <div className="notify-drop-footer text-center">
+                                            <a href><i className="fa fa-eye" /> Tümünü Göster</a>
+                                        </div>
+                                    </ul>
+                                </div>
+                            </Dropdown.Menu>
+                        </Dropdown>
+                    </div>
+
+
 
                     <ul className="header-actions">
+
                         <li className="dropdown">
                             <a href="javascript:void(0)" id="userSettings" className="user-settings" data-toggle="dropdown" aria-haspopup="true">
                                 <span className="avatar">
