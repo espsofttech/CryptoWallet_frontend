@@ -6,7 +6,7 @@ import ReactDatatable from '@ashvin27/react-datatable'
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
 import * as ACTIONTYPES from '../../src/redux/actionTypes'
-import { depositFiatAction, getgetuserbankdetailsAction, getAllDepositTransactionsAction,showkycAction } from '../Action/user.action';
+import { depositFiatAction, getgetuserbankdetailsAction, getAllDepositTransactionsAction, showkycAction, getProfileAction, getAdminBankDetailAction } from '../Action/user.action';
 import toast, { Toaster } from 'react-hot-toast';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
@@ -56,14 +56,16 @@ const Deposit = () => {
     const [bankdetails, setbankdetails] = useState([]);
     const [adminbankdetails, setadminbankdetails] = useState([]);
     const [validatioError, setvalidatioError] = useState(false);
+    const [userDetails, setuserDetails] = useState({});
+
     useEffect(() => {
         // console.log(loginData)
         getbankdetails({ id: USER_LOGIN_DETAILS.template.id });
-        getadminbankdetails({ id: 1 });
         getinrtousdtprice()
         getAllDepositTransactions()
         getkycdetails(USER_LOGIN_DETAILS.template.id)
-        
+        getProfileAPI(USER_LOGIN_DETAILS.template.id)
+
 
     }, []);
 
@@ -86,7 +88,14 @@ const Deposit = () => {
     const handleChangeStart = (date) => {
         setdate(date)
     }
+    const getProfileAPI = async (id) => {
+        let res = await getProfileAction(id);
+        if (res.status == true) {
+            setuserDetails(res.data)
+            getadminbankdetails(res.data);
 
+        }
+    }
 
     const columnsForWallet = [
         {
@@ -203,20 +212,28 @@ const Deposit = () => {
         }
     };
 
-    const getadminbankdetails = async (data) => {
-        let res = await getgetuserbankdetailsAction(data);
-        if (res) {
-            setadminbankdetails(res.data);
-        }
-    };
 
+    const getadminbankdetails = async (data) => {
+
+        // setLoader(true)
+        let res = await getAdminBankDetailAction();
+
+        if (res.status == true) {
+            // setLoader(false)
+
+            setadminbankdetails(res.data.filter(item => item.id == data.depositFiat))
+            // console.log('userDetails.depositFiat',userDetails.depositFiat)
+            // console.log('adminbankdetails:',adminbankdetails)
+        }
+    }
 
     function validate() {
         let bankError = "";
         let balanceError = "";
         let transaction_idError = "";
         let upload_fileError = "";
-        if (bankdetails.bank_name === '') {
+        console.log('bankdetails.bank_name', bankdetails.bank_name)
+        if (bankdetails.bank_name === '' || bankdetails.bank_name == undefined) {
             bankError = "Bank Name is required."
         }
         if (depositfiat.balance === '') {
@@ -290,6 +307,7 @@ const Deposit = () => {
             <div className={`page-wrapper${toggleSet == 1 ? '' : ' toggled'}`}>
                 <Dashboardsidebar />
                 <div className="main-container">
+                    {console.log('userDetails.depositFiat', userDetails.depositFiat)}
                     <Dashboardheader clickToggle={toggleManage} />
                     <div className="content-wrapper-scroll">
                         <div className="content-wrapper">
@@ -298,7 +316,7 @@ const Deposit = () => {
                                 <div className='col-md-12 '>
                                     <div className=' p-3'>
                                         <Toaster />
-                                        {purchaseList11.kyc_status == 2 ?
+                                        {purchaseList11.kyc_status == 2 && userDetails.depositFiat ?
                                             <div className='form-body'>
                                                 <div className='row'>
 
@@ -319,7 +337,7 @@ const Deposit = () => {
                                                                         className="form-control"
                                                                         disabled
                                                                         name="bank_account_holder_name"
-                                                                        value={adminbankdetails?.bank_account_holder_name}
+                                                                        value={adminbankdetails[0]?.bank_account_holder_name}
 
                                                                     />
                                                                 </div>
@@ -336,7 +354,7 @@ const Deposit = () => {
                                                                         className="form-control"
                                                                         disabled
                                                                         name="branchName"
-                                                                        value={adminbankdetails?.branchName}
+                                                                        value={adminbankdetails[0]?.branchName}
 
                                                                     />
                                                                 </div>
@@ -353,7 +371,7 @@ const Deposit = () => {
                                                                         className="form-control"
                                                                         disabled
                                                                         name="bank_name"
-                                                                        value={adminbankdetails?.bank_name}
+                                                                        value={adminbankdetails[0]?.bank_name}
 
                                                                     />
                                                                 </div>
@@ -369,7 +387,7 @@ const Deposit = () => {
                                                                         className="form-control"
                                                                         disabled
                                                                         name="AccountNumber"
-                                                                        value={adminbankdetails?.AccountNumber}
+                                                                        value={adminbankdetails[0]?.AccountNumber}
 
                                                                     />
                                                                 </div>
@@ -384,7 +402,7 @@ const Deposit = () => {
                                                                         className="form-control"
                                                                         disabled
                                                                         name="ifsc_code"
-                                                                        value={adminbankdetails?.ifsc_code}
+                                                                        value={adminbankdetails[0]?.ifsc_code}
 
                                                                     />
                                                                 </div>
@@ -437,7 +455,7 @@ const Deposit = () => {
                                                                             className="form-control"
                                                                             disabled
                                                                             name="bank_name"
-                                                                            value={adminbankdetails?.bank_name}
+                                                                            value={adminbankdetails[0]?.bank_name}
 
                                                                         />
                                                                     </div>
@@ -579,28 +597,46 @@ const Deposit = () => {
 
                                             :
 
-                                            <div className="row">
-                                                <div className="col-md-12">
-                                                    <div className="kycStatus">
-                                                        {purchaseList11.kyc_status == 3 ?
+                                            userDetails.depositFiat == 'null' || userDetails.depositFiat === '' ?
+                                                <div className="row">
+                                                    <div className="col-md-12">
+                                                        <div className="kycStatus">
+
                                                             <span style={{ color: 'red' }}>
-                                                                Your KYC Is Rejected From Admin Side
-                                                            </span> :
-                                                            purchaseList11.kyc_status == 1 ?
-                                                                <span style={{ color: '#000' }}>
-                                                                    Your KYC Is Pending From Admin Side
-                                                                </span> :
-                                                                <span style={{ color: '#000' }}>
-                                                                    For Deposit Firstly You have to Complete Your KYC
-                                                                </span>
-                                                        }
+                                                                Admin Didn't assigned any Bank Account for deposit
+                                                            </span>
 
 
 
 
+
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>}
+                                                :
+
+                                                <div className="row">
+                                                    <div className="col-md-12">
+                                                        <div className="kycStatus">
+                                                            {purchaseList11.kyc_status == 3 ?
+                                                                <span style={{ color: 'red' }}>
+                                                                    Your KYC Is Rejected From Admin Side
+                                                                </span> :
+                                                                purchaseList11.kyc_status == 1 ?
+                                                                    <span style={{ color: '#000' }}>
+                                                                        Your KYC Is Pending From Admin Side
+                                                                    </span> :
+                                                                    <span style={{ color: '#000' }}>
+                                                                        For Deposit Firstly You have to Complete Your KYC
+                                                                    </span>
+                                                            }
+
+
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>}
                                     </div>
                                 </div>
                             </div>

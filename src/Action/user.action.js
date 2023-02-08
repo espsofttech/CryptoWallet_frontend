@@ -55,7 +55,9 @@ export const getdashBoardDataCountUserAction = (data) => {
 export const getAllDepositTransactionsAction = (data) => {
    return getRequest(`getAllDepositTransactionsbyuser/${data}`).then(res => { return res.data })
 }
-
+export const getAdminBankDetailAction = (data) => {
+   return getRequest(`getAdminBank`).then(res => { return res.data })
+ }
 export const buyNowAction = (data) => {
    return postRequest(`exchange`, data).then(res => { return res.data })
 }
