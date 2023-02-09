@@ -57,7 +57,7 @@ export const getAllDepositTransactionsAction = (data) => {
 }
 export const getAdminBankDetailAction = (data) => {
    return getRequest(`getAdminBank`).then(res => { return res.data })
- }
+}
 export const buyNowAction = (data) => {
    return postRequest(`exchange`, data).then(res => { return res.data })
 }
@@ -89,7 +89,7 @@ export const depositFiatAction = (data) => {
 
 
 export const updateupdateuserbankdetailsAction = (data) => {
-   console.log('data:', data)
+
    return putRequestFormData(`updateBankDetails/${data.id}`, data).then((res) => {
       return res.data;
    });
@@ -108,7 +108,7 @@ export const getAllIdentity = (data) => {
 }
 
 export const getProfileAction = (data) => {
-   console.log('data', data)
+
    return getRequest(`getUserDetailsById/${data}`).then(res => { return res.data })
 }
 

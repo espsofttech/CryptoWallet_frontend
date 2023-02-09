@@ -105,7 +105,7 @@ const Withdraw = () => {
             if (res.status == true) {
                 toast.success(res.msg);
                 setwithDrawData({
-                    'user_id': '', 'coin_id': '', 'withdrawal_Address': '', 'amount': ''
+                    'user_id': USER_LOGIN_DETAILS.template.id, 'coin_id': '', 'withdrawal_Address': '', 'amount': ''
                 })
                 getAllWithdrawTransactions()
 
@@ -130,7 +130,7 @@ const Withdraw = () => {
             if (res.status == true) {
                 toast.success(res.msg);
                 setwithDrawData({
-                    'user_id': '', 'coin_id': '', 'withdrawal_Address': '', 'amount': ''
+                    'user_id': USER_LOGIN_DETAILS.template.id, 'coin_id': '', 'withdrawal_Address': '', 'amount': ''
                 })
                 getAllWithdrawTransactions()
             }

@@ -40,6 +40,9 @@ const Dashboardsidebar = () => {
                                 <a href={`${config.baseUrl}deposit`} className={activeBar == 'deposit' ? "menuLink activebar" : "menuLink"}><i className="fa fa-credit-card-alt"></i><span className="menu-text">Deposit Fiat</span></a>
                             </li>
                             <li>
+                                <a href={`${config.baseUrl}depositCrypto`} className={activeBar == 'depositCrypto' ? "menuLink activebar" : "menuLink"}><i className="fa fa-credit-card-alt"></i><span className="menu-text">Deposit Crypto</span></a>
+                            </li>
+                            <li>
                                 <a href={`${config.baseUrl}bankdetail`} className={activeBar == 'bankdetail' ? "menuLink activebar" : "menuLink"}><i className="fa fa-database"></i><span className="menu-text">Bank detail</span></a>
                             </li>
 

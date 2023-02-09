@@ -23,6 +23,7 @@ import LivePrice from '../components/liveprice';
 import Deposit from '../components/deposit';
 import Twofactor from '../components/twofactor';
 import Activity from '../components/activity';
+import DepositCrypto from '../components/depositCrypto'
 const RouterComponent = () => {
     return (<BrowserRouter >
         <div>
@@ -49,6 +50,8 @@ const RouterComponent = () => {
                 <Route path={`${config.baseUrl}deposit`} element={<Deposit />} />
                 <Route path={`${config.baseUrl}Twofactor`} element={<Twofactor />} />
                 <Route path={`${config.baseUrl}Activity`} element={<Activity />} />
+                <Route path={`${config.baseUrl}DepositCrypto`} element={<DepositCrypto />} />
+
 
 
 

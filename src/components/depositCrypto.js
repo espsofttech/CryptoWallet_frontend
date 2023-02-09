@@ -5,8 +5,8 @@ import Dashboardsidebar from "./directives/dashboardsidebar";
 import ReactDatatable from '@ashvin27/react-datatable'
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
-import * as ACTIONTYPES from '../../src/redux/actionTypes'
-import { depositFiatAction, getgetuserbankdetailsAction, getAllDepositTransactionsAction, showkycAction, getProfileAction, getAdminBankDetailAction } from '../Action/user.action';
+import * as ACTIONTYPES from '../redux/actionTypes'
+import { depositFiatAction, getgetuserbankdetailsAction, getAllDepositTransactionsAction, showkycAction, getProfileAction, getAdminBankDetailAction, getAllDetailsOfcoinAction } from '../Action/user.action';
 import toast, { Toaster } from 'react-hot-toast';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
@@ -14,7 +14,7 @@ import axios from 'axios';
 // const loginData = (!Cookies.get('loginSuccessSilkyExchangeDevelopement')) ? [] : JSON.parse(Cookies.get('loginSuccessSilkyExchangeDevelopement'));
 import moment from "moment";
 
-const Deposit = () => {
+const DepositCrypto = () => {
     const dispatch = useDispatch();
 
 
@@ -26,17 +26,19 @@ const Deposit = () => {
     const [receipt, setreceipt] = useState('')
     const [receipt_name, setreceipt_name] = useState('')
     const [purchaseList11, setPurchaseList11] = useState([]);
+    const [purchaseList1, setPurchaseList1] = useState([]);
 
     const [depositfiat, setdepositfiat] = useState({
         'user_id': USER_LOGIN_DETAILS.template.id,
-        'coin_id': 5,
+        'crypto_address':'',
+        'coin_id': '',
         'balance': '',
         'status': 0,
-        'bank_name': '',
         'admin_bank_id': '',
         'upload_file': '',
         'transaction_id': '',
-        'type': 0
+        'type': 1
+
     })
     const [liveprice, setliveprice] = useState(0)
     const [date, setdate] = useState(new Date())
@@ -66,9 +68,25 @@ const Deposit = () => {
         getAllDepositTransactions()
         getkycdetails(USER_LOGIN_DETAILS.template.id)
         getProfileAPI(USER_LOGIN_DETAILS.template.id)
+        getAllDetailsOfcoinApi(USER_LOGIN_DETAILS.template.id);
 
 
     }, []);
+
+
+    const getAllDetailsOfcoinApi = async (data) => {
+        try {
+            let res = await getAllDetailsOfcoinAction(data);
+
+            if (res.status == true) {
+
+                setPurchaseList1(res.msg.filter((item => item.coin == 1 || item.coin == 2 || item.coin == 3 || item.coin == 4)));
+            }
+        }
+        catch (err) {
+
+        }
+    };
 
     const getkycdetails = async (data) => {
         let res = await showkycAction({ id: data });
@@ -162,8 +180,7 @@ const Deposit = () => {
         try {
             let res = await getAllDepositTransactionsAction(USER_LOGIN_DETAILS.template.id);
             if (res.status == true) {
-                setdepositHistory(res.data.filter((item) => item.type == 0));
-
+                setdepositHistory(res.data.filter((item) => item.type == 1 || item.type ==2 || item.type == 3 || item.type == 4));
             }
         }
         catch (err) {
@@ -223,20 +240,20 @@ const Deposit = () => {
         if (res.status == true) {
             // setLoader(false)
 
-            setadminbankdetails(res.data.filter(item => item.id == data.depositFiat))
+            setadminbankdetails(res.data.filter(item => item.id == data.depositCrypto))
             // console.log('userDetails.depositFiat',userDetails.depositFiat)
             // console.log('adminbankdetails:',adminbankdetails)
         }
     }
 
     function validate() {
-        let bankError = "";
+        let cryptoError = "";
         let balanceError = "";
         let transaction_idError = "";
         let upload_fileError = "";
-        console.log('bankdetails.bank_name', bankdetails.bank_name)
-        if (bankdetails.bank_name === '' || bankdetails.bank_name == undefined) {
-            bankError = "Bank Name is required."
+        let coinError = "";
+        if (depositfiat.crypto_address === '' || depositfiat.crypto_address == undefined) {
+            cryptoError = "Crypto Address is required."
         }
         if (depositfiat.balance === '') {
             balanceError = "Balance is required."
@@ -247,9 +264,12 @@ const Deposit = () => {
         if (image_file === '') {
             upload_fileError = "File is required."
         }
-        if (bankError || balanceError || transaction_idError || upload_fileError) {
+        if (depositfiat.coin_id === '') {
+            coinError = "Coin is required."
+        }
+        if (cryptoError || balanceError || transaction_idError || upload_fileError || coinError) {
             setvalidatioError({
-                bankError, balanceError, transaction_idError, upload_fileError
+                cryptoError, balanceError, transaction_idError, upload_fileError, coinError
             })
             return false
         } else {
@@ -273,8 +293,7 @@ const Deposit = () => {
 
                 depositfiat.upload_file = image_file;
             }
-            depositfiat.admin_bank_id = adminbankdetails[0].id
-            depositfiat.bank_name = bankdetails?.bank_name
+            depositfiat.admin_bank_id = adminbankdetails.id
 
             let res = await depositFiatAction(depositfiat);
             if (res.status == true) {
@@ -283,9 +302,9 @@ const Deposit = () => {
                 toast.success(res.msg);
                 // }, 10000);
                 // toast.success(res.msg);
-                // setTimeout(() => {
-                //     window.location.reload()
-                // }, 1000);
+                setTimeout(() => {
+                    window.location.reload()
+                }, 1000);
             } else {
                 toast.error(res.msg);
             }
@@ -318,13 +337,13 @@ const Deposit = () => {
                                 <div className='col-md-12 '>
                                     <div className=' p-3'>
                                         <Toaster />
-                                        {purchaseList11.kyc_status == 2 && userDetails.depositFiat ?
+                                        {purchaseList11.kyc_status == 2 && userDetails.depositCrypto ?
                                             <div className='form-body'>
                                                 <div className='row'>
 
                                                     <div className='col-md-6 '>
                                                         <div className='card p-3'>
-                                                            <h4>Admin Bank Account</h4>
+                                                            <h4>Admin Crypto Account</h4>
                                                             <hr class="mt-2" />
                                                             <div className="">
                                                                 <div className="mb-3">
@@ -332,7 +351,7 @@ const Deposit = () => {
 
                                                                         className="form-label"
                                                                     >
-                                                                        Bank Account Holder Name
+                                                                        Crypto Account Holder Name
                                                                     </label>
                                                                     <input
                                                                         type="text"
@@ -349,65 +368,18 @@ const Deposit = () => {
 
                                                                         className="form-label"
                                                                     >
-                                                                        Branch Name
+                                                                        Crypto Address
                                                                     </label>
                                                                     <input
                                                                         type="text"
                                                                         className="form-control"
                                                                         disabled
-                                                                        name="branchName"
-                                                                        value={adminbankdetails[0]?.branchName}
+                                                                        name="crypto_address"
+                                                                        value={adminbankdetails[0]?.crypto_address}
 
                                                                     />
                                                                 </div>
 
-                                                                <div className="mb-3">
-                                                                    <label
-
-                                                                        className="form-label"
-                                                                    >
-                                                                        Bank Name
-                                                                    </label>
-                                                                    <input
-                                                                        type="text"
-                                                                        className="form-control"
-                                                                        disabled
-                                                                        name="bank_name"
-                                                                        value={adminbankdetails[0]?.bank_name}
-
-                                                                    />
-                                                                </div>
-                                                                <div className="mb-3">
-                                                                    <label
-
-                                                                        className="form-label"
-                                                                    >
-                                                                        Account Number
-                                                                    </label>
-                                                                    <input
-                                                                        type="text"
-                                                                        className="form-control"
-                                                                        disabled
-                                                                        name="AccountNumber"
-                                                                        value={adminbankdetails[0]?.AccountNumber}
-
-                                                                    />
-                                                                </div>
-
-
-                                                                <div className="mb-3">
-                                                                    <label className="form-label">
-                                                                        IFSC Code
-                                                                    </label>
-                                                                    <input
-                                                                        type="text"
-                                                                        className="form-control"
-                                                                        disabled
-                                                                        name="ifsc_code"
-                                                                        value={adminbankdetails[0]?.ifsc_code}
-
-                                                                    />
-                                                                </div>
 
 
                                                             </div>
@@ -431,17 +403,17 @@ const Deposit = () => {
 
                                                                             className="form-label"
                                                                         >
-                                                                            Your Bank
+                                                                            Your Address
                                                                         </label>
                                                                         <input
                                                                             type="text"
-                                                                            className="form-control" disabled
-                                                                            value={bankdetails?.bank_name}
-
-                                                                            name="bank_name"
+                                                                            className="form-control"
+                                                                            value={depositfiat?.crypto_address}
+                                                                            onChange={inputHandler}
+                                                                            name="crypto_address"
 
                                                                         />
-                                                                        <span className="validationErr">{validatioError.bankError}</span>
+                                                                        <span className="validationErr">{validatioError.cryptoError}</span>
 
                                                                     </div>
 
@@ -456,10 +428,29 @@ const Deposit = () => {
                                                                             type="text"
                                                                             className="form-control"
                                                                             disabled
-                                                                            name="bank_name"
-                                                                            value={adminbankdetails[0]?.bank_name}
-
+                                                                            name="crypto_address"
+                                                                            value={adminbankdetails[0]?.crypto_address}
                                                                         />
+                                                                    </div>
+
+                                                                    <div className="mb-3">
+                                                                        <label
+
+                                                                            className="form-label"
+                                                                        >
+                                                                            Select Crypto
+                                                                        </label>
+                                                                        <select className='form-control' value={depositfiat?.coin_id} name="coin_id" onChange={inputHandler}>
+                                                                            <option value="">Select</option>
+                                                                            {purchaseList1.map((item) => {
+                                                                                return (
+                                                                                    <option value={item.coin}>{item.coinName}</option>
+                                                                                )
+
+                                                                            })}
+
+                                                                        </select>
+                                                                        <span className="validationErr">{validatioError.coinError}</span>
                                                                     </div>
 
                                                                     <div className="mb-3">
@@ -481,21 +472,7 @@ const Deposit = () => {
                                                                     </div>
 
 
-                                                                    <div className="mb-3">
-                                                                        <label
 
-                                                                            className="form-label"
-                                                                        >
-                                                                            USDT Amount
-                                                                        </label>
-                                                                        <input
-                                                                            type="text"
-                                                                            className="form-control"
-                                                                            onChange={inputHandler}
-                                                                            value={parseFloat(depositfiat?.balance / liveprice).toFixed(6)}
-                                                                        />
-
-                                                                    </div>
 
 
                                                                     <div className="mb-3">
@@ -599,13 +576,13 @@ const Deposit = () => {
 
                                             :
 
-                                            userDetails.depositFiat == 'null' || userDetails.depositFiat == null || userDetails.depositFiat === '' ?
+                                            userDetails.depositCrypto == 'null' || userDetails.depositCrypto == null || userDetails.depositCrypto === '' ?
                                                 <div className="row">
                                                     <div className="col-md-12">
                                                         <div className="kycStatus">
 
                                                             <span style={{ color: 'red' }}>
-                                                                Admin Didn't assigned any Bank Account for deposit
+                                                                Admin Didn't assigned any Crypto Account for deposit
                                                             </span>
 
 
@@ -629,7 +606,7 @@ const Deposit = () => {
                                                                         Your KYC Is Pending From Admin Side
                                                                     </span> :
                                                                     <span style={{ color: '#000' }}>
-                                                                        For Deposit Firstly You have to Complete Your KYC
+                                                                        For Deposit Crypto Firstly You have to Complete Your KYC
                                                                     </span>
                                                             }
 
@@ -649,4 +626,4 @@ const Deposit = () => {
         </>
     )
 }
-export default Deposit;
+export default DepositCrypto;
