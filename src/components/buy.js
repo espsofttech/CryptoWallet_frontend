@@ -5,7 +5,7 @@ import ReactDatatable from '@ashvin27/react-datatable';
 import Dashboardheader from "./directives/dashboardheader";
 import Dashboardsidebar from "./directives/dashboardsidebar";
 import axios from "axios";
-import { buyNowAction, getAllTransactionsAction, showkycAction } from '../Action/user.action';
+import { buyNowAction, getAllTransactionsAction, showkycAction , getAllDetailsOfcoinAction } from '../Action/user.action';
 import { useSelector, useDispatch } from 'react-redux'
 import toast, { Toaster } from 'react-hot-toast';
 import moment from "moment";
@@ -13,6 +13,13 @@ import moment from "moment";
 const Buy = () => {
     const [purchaseList, setPurchaseList] = useState([]);
     const [purchaseList11, setPurchaseList11] = useState([]);
+    const [inrvalue, setinrvalue] = useState([]);
+    const [cryptovalue, setcryptovalue] = useState({});
+    const [btcvalue, setbtcvalue] = useState([]);
+    const [ethvalue, setethvalue] = useState([]);
+    const [usdtvalue, setusdtvalue] = useState([]);
+    const [usdcvalue, setusdcvalue] = useState([]);
+    const [type , settype] = useState("");
 
     const [liveCryptoPrice, setliveCryptoPrice] = useState('')
     const [kycStatus, setkycStatus] = useState(false);
@@ -93,12 +100,30 @@ const Buy = () => {
         livePriceAPI()
         getAllTransactions(USER_LOGIN_DETAILS.template.id)
         getkycdetails(USER_LOGIN_DETAILS.template.id)
+        getAllDetailsOfcoinApi(USER_LOGIN_DETAILS.template.id)
     }, []);
+
+    const getAllDetailsOfcoinApi = async (data) => {
+        try {
+            let res = await getAllDetailsOfcoinAction(data);
+            if (res.status == true) {
+                // console.log(res.msg);
+                setinrvalue(res.msg[4])
+                setbtcvalue(res.msg[0])
+                setethvalue(res.msg[1])
+                setusdtvalue(res.msg[2])
+                setusdcvalue(res.msg[3])
+                }
+        }
+        catch (err) {
+
+        }
+    };
 
     const getAllTransactions = async (data) => {
         try {
             let res = await getAllTransactionsAction(data);
-            console.log('res', res.success);
+            // console.log('res', res.success);
             if (res.status == true) {
                 setPurchaseList(res.data);
             }
@@ -116,7 +141,7 @@ const Buy = () => {
         }
         if (res.status == true) {
             setPurchaseList11(res.data);
-            console.log("123", res.data.doc_no == "");
+            // console.log("123", res.data.doc_no == "");
         }
     };
 
@@ -132,8 +157,56 @@ const Buy = () => {
             })
     }
 
-    const inputHandler = (e) => {
+    const inputHandler = async (e) => {
         const { name, value } = e.target;
+        settype(e.target.value)
+
+        // console.log(e.target.name , e.target.value)
+        // if (e.target.name == "crypto_type" )
+        // {
+        //     let res = await getAllDetailsOfcoinAction(USER_LOGIN_DETAILS.template.id);
+        //     if (res.status == true) {
+        //         // console.log(res.msg.filter((item => item.coin == e.target.value)));
+        //         setcryptovalue(res.msg[e.target.value]);
+        //         console.log(res.msg[e.target.value]);
+        //         // setinrvalue(res.msg[4])
+        //         }
+        // }
+        setformData((old) => {
+            return { ...old, [name]: value };
+        });
+    };
+
+    const inputHandler1 = async (e) => {
+        const { name, value } = e.target;
+        // console.log(e.target.name , e.target.value)
+        // console.log(e.target.value);
+        settype(e.target.value)
+
+        if (e.target.name == "crypto_type" )
+        {
+            let res = await getAllDetailsOfcoinAction(USER_LOGIN_DETAILS.template.id);
+            if (res.status == true) {
+                // console.log(res.msg.filter((item => item.coin == e.target.value)));
+                setcryptovalue(res.msg.filter((item => item.coin == parseInt(e.target.value))));
+                // console.log("asfd",res.msg[parseInt(e.target.value)]);
+                // if (e.target.value == 1){
+                //     console.log(res.msg[0]);
+                // }
+                // if (e.target.value == 2){
+                //     console.log(res.msg[1]);
+                // }
+                // if (e.target.value == 3){
+                //     console.log(res.msg[2]);
+                // }
+                // if (e.target.value == 4){
+                //     console.log(res.msg[3]);
+                // }
+                // console.log("asfd",res.msg[0]);
+                // console.log(res.msg.filter((item => item.coin == e.target.value)));
+                // setinrvalue(res.msg[4])
+                }
+        }
         setformData((old) => {
             return { ...old, [name]: value };
         });
@@ -232,7 +305,11 @@ const Buy = () => {
                                                                                 {/* <a onClick={adminBank} className="btn w-10">Admin bank</a> */}
 
                                                                                 <span className="text-left text-black" style={{ display: 'flex', flex: '1 1 auto', justifyContent: "center" }}>
-                                                                                    <strong style={{ fontSize: "22px" }}>BUY Crypto</strong></span>
+                                                                                    <strong style={{ fontSize: "22px", marginLeft: "130px" }}>BUY Crypto</strong>  &emsp;&emsp;&emsp;
+                                                                                    <strong style={{ fontSize: "22px" }}>INR</strong>&emsp;  
+                                                                                    <strong style={{ fontSize: "22px" }}>-</strong> &emsp;
+                                                                                    <strong style={{ fontSize: "22px" }}>{inrvalue.balance}</strong>
+                                                                                    </span>
                                                                                 <div className="sc-kcDeIU cvqsCp">
                                                                                     {/* Connected Wallet: */}
                                                                                     <div style={{ wordBreak: "break-all" }}>
@@ -352,7 +429,12 @@ const Buy = () => {
                                                                                 {/* <a onClick={adminBank} className="btn w-10">Admin bank</a> */}
 
                                                                                 <span className="text-left text-black" style={{ display: 'flex', flex: '1 1 auto', justifyContent: "center" }}>
-                                                                                    <strong style={{ fontSize: "22px" }}>Sell Crypto</strong></span>
+                                                                                    <strong style={{ fontSize: "22px" }}>Sell Crypto</strong> &emsp; &emsp;
+                                                                                     <strong style={{ fontSize: "22px" }}>Crypto Value</strong> &emsp;
+                                                                                     {/* <strong style={{ fontSize: "22px" }}>{cryptovalue.map((item => item.balance))}</strong> */}
+                                                                                     <strong style={{ fontSize: "22px" }}>{type == 1 ? btcvalue.balance : type == 2 ? ethvalue.balance  : type == 3 ? usdtvalue.balance : type == 4 ? usdcvalue.balance :""}</strong> &emsp;
+
+                                                                                    </span>
                                                                                 <div className="sc-kcDeIU cvqsCp">
                                                                                     {/* Connected Wallet: */}
                                                                                     <div style={{ wordBreak: "break-all" }}>

@@ -42,7 +42,7 @@ const Dashboard = () => {
                                         <div className="stats-tile">
                                             <div className="d-flex">
                                                 <div className="sale-icon shade-blue">
-                                                    <i className="fa fa-credit-card-alt" /></div>
+                                                    <i class="fa fa-btc" aria-hidden="true"></i></div>
                                                 <div className="sale-details">
                                                     <h3 className="text-black">BTC {parseFloat(userDashboard.buyBTC ? userDashboard.buyBTC : '0.00').toFixed(8)}</h3>
                                                     {/* BTC 0.00 */}
@@ -56,7 +56,8 @@ const Dashboard = () => {
                                         <div className="stats-tile">
                                             <div className="d-flex">
                                                 <div className="sale-icon shade-blue">
-                                                    <i className="fa fa-credit-card-alt" /></div>
+                                                <img src="images/icons8-ethereum-64.png" alt="" width="200"
+                                                        height="50"></img></div>
                                                 <div className="sale-details">
                                                     <h3 className="text-black">ETH {parseFloat(userDashboard.buyETH ? userDashboard.buyETH : '0.00').toFixed(8)} </h3>
 
@@ -70,7 +71,8 @@ const Dashboard = () => {
                                         <div className="stats-tile">
                                             <div className="d-flex">
                                                 <div className="sale-icon shade-blue">
-                                                    <i className="fa fa-credit-card-alt" /></div>
+                                                <img src="images/icons8-usdc-64.png" alt="" width="200"
+                                                        height="50"></img></div>
                                                 <div className="sale-details">
                                                     <h3 className="text-black">USDT {parseFloat(userDashboard.buyUSDT ? userDashboard.buyUSDT : '0.00').toFixed(8)}</h3>
                                                     <p>Total USDC Buy</p>
@@ -83,7 +85,8 @@ const Dashboard = () => {
                                         <div className="stats-tile">
                                             <div className="d-flex">
                                                 <div className="sale-icon shade-blue">
-                                                    <i className="fa fa-credit-card-alt" /></div>
+                                                <img src="images/icons8-tether-80.png" alt="" width="200"
+                                                        height="50"></img> </div>
                                                 <div className="sale-details">
                                                     <h3 className="text-black">USDC {parseFloat(userDashboard.buyUSDC ?
                                                         userDashboard.buyUSDC : '0.00').toFixed(8)}</h3>
@@ -103,7 +106,7 @@ const Dashboard = () => {
                                         <div className="stats-tile">
                                             <div className="d-flex">
                                                 <div className="sale-icon shade-blue">
-                                                    <i className="fa fa-credit-card-alt" /></div>
+                                                    <i class="fa fa-btc" aria-hidden="true"></i></div>
                                                 <div className="sale-details">
                                                     <h3 className="text-black">BTC {parseFloat(userDashboard.sellBTC ?
                                                         userDashboard.sellBTC : '0.00').toFixed(8)}</h3>
@@ -118,7 +121,8 @@ const Dashboard = () => {
                                         <div className="stats-tile">
                                             <div className="d-flex">
                                                 <div className="sale-icon shade-blue">
-                                                    <i className="fa fa-credit-card-alt" /></div>
+                                                <img src="images/icons8-ethereum-64.png" alt="" width="200"
+                                                        height="50"></img></div>
                                                 <div className="sale-details">
                                                     <h3 className="text-black">ETH {parseFloat(userDashboard.sellETH ?
                                                         userDashboard.sellETH : '0.00').toFixed(8)} </h3>
@@ -133,7 +137,8 @@ const Dashboard = () => {
                                         <div className="stats-tile">
                                             <div className="d-flex">
                                                 <div className="sale-icon shade-blue">
-                                                    <i className="fa fa-credit-card-alt" /></div>
+                                                <img src="images/icons8-usdc-64.png" alt="" width="200"
+                                                        height="50"></img></div>
                                                 <div className="sale-details">
                                                     <h3 className="text-black">USDT {parseFloat(userDashboard.sellUSDT ?
                                                         userDashboard.sellUSDT : '0.00').toFixed(8)}</h3>
@@ -147,10 +152,11 @@ const Dashboard = () => {
                                         <div className="stats-tile">
                                             <div className="d-flex">
                                                 <div className="sale-icon shade-blue">
-                                                    <i className="fa fa-credit-card-alt" /></div>
+                                                <img src="images/icons8-tether-80.png" alt="" width="200"
+                                                        height="50"></img></div>
                                                 <div className="sale-details">
-                                                    <h3 className="text-black">USDC {parseFloat(userDashboard.sellUSDC ? 
-                                                    userDashboard.sellUSDC:'0.00').toFixed(8)}</h3>
+                                                    <h3 className="text-black">USDC {parseFloat(userDashboard.sellUSDC ?
+                                                        userDashboard.sellUSDC : '0.00').toFixed(8)}</h3>
 
                                                     <p>Total USDT Sell</p>
                                                 </div>
