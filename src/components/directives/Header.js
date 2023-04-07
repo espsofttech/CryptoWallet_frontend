@@ -7,11 +7,14 @@ import config from "../../config/config";
 import { useSelector, useDispatch } from 'react-redux'
 import * as ACTIONTYPES from '../../../src/redux/actionTypes'
 import { getProfileAction } from '../../Action/user.action';
+import Cookies from "js-cookie";
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const USER_LOGIN_DETAILS = useSelector((state) => state.auth.USER_LOGIN_DETAILS)
+const loginData = (!Cookies.get('loginSuccessCryptoWallet')) ? [] : JSON.parse(Cookies.get('loginSuccessCryptoWallet'));
+
   const [userDetails, setuserDetails] = useState({});
   const logoutClick = () => {
     dispatch({
@@ -27,6 +30,8 @@ const Header = () => {
 
   useEffect(() => {
     getProfileAPI(USER_LOGIN_DETAILS?.template?.id)
+    console.log("asdf",USER_LOGIN_DETAILS?.template?.id);
+    console.log(USER_LOGIN_DETAILS);
   }, []);
 
 
@@ -62,7 +67,7 @@ const Header = () => {
                       <Nav.Link href="#">Explore </Nav.Link>
                       <Nav.Link href={`${config.baseUrl}aboutus`}>About Us</Nav.Link>
                       <Nav.Link href="#">Learn</Nav.Link>
-                      {USER_LOGIN_DETAILS.template != '' ?
+                      {USER_LOGIN_DETAILS.template != '' && !loginData ?
                         <>
                           <Nav.Link className="" href={`${config.baseUrl}dashboard`}>Dashboard </Nav.Link>
                           <Link className="mr-0" href="javascript:void(0)" onClick={logoutClick} ><button type="button" className="btn style1">Logout</button></Link>

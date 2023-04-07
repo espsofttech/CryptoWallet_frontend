@@ -27,10 +27,10 @@ const DepositCrypto = () => {
     const [receipt_name, setreceipt_name] = useState('')
     const [purchaseList11, setPurchaseList11] = useState([]);
     const [purchaseList1, setPurchaseList1] = useState([]);
-
+    const [type, settype] = useState({});
     const [depositfiat, setdepositfiat] = useState({
         'user_id': USER_LOGIN_DETAILS.template.id,
-        'crypto_address':'',
+        'crypto_address': '',
         'coin_id': '',
         'balance': '',
         'status': 0,
@@ -58,8 +58,15 @@ const DepositCrypto = () => {
     const [toggleSet, settoggleSet] = useState(1)
     const [bankdetails, setbankdetails] = useState([]);
     const [adminbankdetails, setadminbankdetails] = useState([]);
+    const [adminbankdetails2, setadminbankdetails2] = useState([]);
+    const [adminbankdetails3, setadminbankdetails3] = useState([]);
+    const [adminbankdetails4, setadminbankdetails4] = useState([]);
+    const [adminbankid, setadminbankid] = useState([]);
+
     const [validatioError, setvalidatioError] = useState(false);
-    const [userDetails, setuserDetails] = useState({});
+    const [userDetails, setuserDetails] = useState({
+
+    });
 
     useEffect(() => {
         // console.log(loginData)
@@ -69,7 +76,10 @@ const DepositCrypto = () => {
         getkycdetails(USER_LOGIN_DETAILS.template.id)
         getProfileAPI(USER_LOGIN_DETAILS.template.id)
         getAllDetailsOfcoinApi(USER_LOGIN_DETAILS.template.id);
-
+        // console.log("adminbankid",adminbankid);
+        setTimeout(() => {
+            console.log("adminbankid", adminbankid.filter(item => item.id == adminbankdetails[0]?.id || adminbankdetails2[0]?.id), adminbankdetails[0]?.id, adminbankdetails2[0]?.id);
+        }, 5000);
 
     }, []);
 
@@ -77,9 +87,7 @@ const DepositCrypto = () => {
     const getAllDetailsOfcoinApi = async (data) => {
         try {
             let res = await getAllDetailsOfcoinAction(data);
-
             if (res.status == true) {
-
                 setPurchaseList1(res.msg.filter((item => item.coin == 1 || item.coin == 2 || item.coin == 3 || item.coin == 4)));
             }
         }
@@ -108,10 +116,15 @@ const DepositCrypto = () => {
         setdate(date)
     }
     const getProfileAPI = async (id) => {
+        console.log("getProfileAPI", id);
         let res = await getProfileAction(id);
+        // alert('3333')
+        console.log('resss', res)
         if (res.status == true) {
+            console.log('res.data', res.data)
             setuserDetails(res.data)
             getadminbankdetails(res.data);
+            console.log("getadminbankdetails", res.data.btc_address, res.data.eth_address, res.data.usdt_address, res.data.usdc_address);
 
         }
     }
@@ -180,7 +193,7 @@ const DepositCrypto = () => {
         try {
             let res = await getAllDepositTransactionsAction(USER_LOGIN_DETAILS.template.id);
             if (res.status == true) {
-                setdepositHistory(res.data.filter((item) => item.type == 1 || item.type ==2 || item.type == 3 || item.type == 4));
+                setdepositHistory(res.data.filter((item) => item.type == 1 || item.type == 2 || item.type == 3 || item.type == 4));
             }
         }
         catch (err) {
@@ -212,6 +225,9 @@ const DepositCrypto = () => {
 
     const inputHandler = (e) => {
         const { name, value, id } = e.target
+        if (e.target.name == "coin_id") {
+            settype(value)
+        }
         setdepositfiat((old) => {
             return { ...old, [name]: value }
         })
@@ -240,7 +256,12 @@ const DepositCrypto = () => {
         if (res.status == true) {
             // setLoader(false)
 
-            setadminbankdetails(res.data.filter(item => item.id == data.depositCrypto))
+            setadminbankdetails(res.data.filter(item => item.id == data.btc_address))
+            setadminbankdetails2(res.data.filter(item => item.id == data.eth_address))
+            setadminbankdetails3(res.data.filter(item => item.id == data.usdt_address))
+            setadminbankdetails4(res.data.filter(item => item.id == data.usdc_address))
+            setadminbankid(res.data)
+
             // console.log('userDetails.depositFiat',userDetails.depositFiat)
             // console.log('adminbankdetails:',adminbankdetails)
         }
@@ -326,9 +347,10 @@ const DepositCrypto = () => {
     return (
         <>
             <div className={`page-wrapper${toggleSet == 1 ? '' : ' toggled'}`}>
+                {console.log("depositCrypto", userDetails.depositCrypto)}
                 <Dashboardsidebar />
                 <div className="main-container">
-                    {console.log('userDetails.depositFiat', userDetails.depositFiat)}
+
                     <Dashboardheader clickToggle={toggleManage} />
                     <div className="content-wrapper-scroll">
                         <div className="content-wrapper">
@@ -337,7 +359,7 @@ const DepositCrypto = () => {
                                 <div className='col-md-12 '>
                                     <div className=' p-3'>
                                         <Toaster />
-                                        {purchaseList11.kyc_status == 2 && userDetails.depositCrypto ?
+                                        {purchaseList11.kyc_status == 2 && userDetails.crypto_address || userDetails.crypto_address2 || userDetails.crypto_address3 || userDetails.crypto_address4 ?
                                             <div className='form-body'>
                                                 <div className='row'>
 
@@ -368,7 +390,7 @@ const DepositCrypto = () => {
 
                                                                         className="form-label"
                                                                     >
-                                                                        Crypto Address
+                                                                        BTC Address
                                                                     </label>
                                                                     <input
                                                                         type="text"
@@ -376,6 +398,120 @@ const DepositCrypto = () => {
                                                                         disabled
                                                                         name="crypto_address"
                                                                         value={adminbankdetails[0]?.crypto_address}
+
+                                                                    />
+                                                                </div>
+
+
+
+                                                            </div>
+                                                            <div className="">
+                                                                <div className="mb-3">
+                                                                    <label
+
+                                                                        className="form-label"
+                                                                    >
+                                                                        Crypto Account Holder Name
+                                                                    </label>
+                                                                    <input
+                                                                        type="text"
+                                                                        className="form-control"
+                                                                        disabled
+                                                                        name="bank_account_holder_name"
+                                                                        value={adminbankdetails2[0]?.bank_account_holder_name}
+
+                                                                    />
+                                                                </div>
+
+                                                                <div className="mb-3">
+                                                                    <label
+
+                                                                        className="form-label"
+                                                                    >
+                                                                        ETH Address
+                                                                    </label>
+                                                                    <input
+                                                                        type="text"
+                                                                        className="form-control"
+                                                                        disabled
+                                                                        name="crypto_address"
+                                                                        value={adminbankdetails2[0]?.crypto_address}
+
+                                                                    />
+                                                                </div>
+
+
+
+                                                            </div>
+                                                            <div className="">
+                                                                <div className="mb-3">
+                                                                    <label
+
+                                                                        className="form-label"
+                                                                    >
+                                                                        Crypto Account Holder Name
+                                                                    </label>
+                                                                    <input
+                                                                        type="text"
+                                                                        className="form-control"
+                                                                        disabled
+                                                                        name="bank_account_holder_name"
+                                                                        value={adminbankdetails3[0]?.bank_account_holder_name}
+
+                                                                    />
+                                                                </div>
+
+                                                                <div className="mb-3">
+                                                                    <label
+
+                                                                        className="form-label"
+                                                                    >
+                                                                        USDT Address
+                                                                    </label>
+                                                                    <input
+                                                                        type="text"
+                                                                        className="form-control"
+                                                                        disabled
+                                                                        name="crypto_address"
+                                                                        value={adminbankdetails3[0]?.crypto_address}
+
+                                                                    />
+                                                                </div>
+
+
+
+                                                            </div>
+                                                            <div className="">
+                                                                <div className="mb-3">
+                                                                    <label
+
+                                                                        className="form-label"
+                                                                    >
+                                                                        Crypto Account Holder Name
+                                                                    </label>
+                                                                    <input
+                                                                        type="text"
+                                                                        className="form-control"
+                                                                        disabled
+                                                                        name="bank_account_holder_name"
+                                                                        value={adminbankdetails4[0]?.bank_account_holder_name}
+
+                                                                    />
+                                                                </div>
+
+                                                                <div className="mb-3">
+                                                                    <label
+
+                                                                        className="form-label"
+                                                                    >
+                                                                        USDC Address
+                                                                    </label>
+                                                                    <input
+                                                                        type="text"
+                                                                        className="form-control"
+                                                                        disabled
+                                                                        name="crypto_address"
+                                                                        value={adminbankdetails4[0]?.crypto_address}
 
                                                                     />
                                                                 </div>
@@ -418,6 +554,26 @@ const DepositCrypto = () => {
                                                                     </div>
 
                                                                     <div className="mb-3">
+                                                                       
+                                                                        <select name='coin_id' onChange={inputHandler} className='form-control'>
+                                                                        <option value="">Select Crypto Address</option>
+                                                                            {adminbankdetails[0]?.crypto_type == undefined ? "" : <option value="1">
+                                                                                BTC
+                                                                            </option>}
+                                                                            {adminbankdetails2[0]?.crypto_type == undefined ? "" : <option value="2">
+                                                                                ETH
+                                                                            </option>}
+                                                                            {adminbankdetails3[0]?.crypto_type == undefined ? "" : <option value="3">
+                                                                                USDT
+                                                                            </option>}
+                                                                            {adminbankdetails4[0]?.crypto_type == undefined ? "" : <option value="4">
+                                                                                USDC
+                                                                            </option>}
+                                                                        </select>
+                                                                        <span className="validationErr">{validatioError.coinError}</span>
+                                                                    </div>
+
+                                                                    <div className="mb-3">
                                                                         <label
 
                                                                             className="form-label"
@@ -429,29 +585,11 @@ const DepositCrypto = () => {
                                                                             className="form-control"
                                                                             disabled
                                                                             name="crypto_address"
-                                                                            value={adminbankdetails[0]?.crypto_address}
+                                                                            value={type == 1 ? adminbankdetails[0]?.crypto_address : type == 2 ? adminbankdetails2[0]?.crypto_address : type == 3 ? adminbankdetails3[0]?.crypto_address : type == 4 ? adminbankdetails4[0]?.crypto_address : ""}
                                                                         />
                                                                     </div>
 
-                                                                    <div className="mb-3">
-                                                                        <label
 
-                                                                            className="form-label"
-                                                                        >
-                                                                            Select Crypto
-                                                                        </label>
-                                                                        <select className='form-control' value={depositfiat?.coin_id} name="coin_id" onChange={inputHandler}>
-                                                                            <option value="">Select</option>
-                                                                            {purchaseList1.map((item) => {
-                                                                                return (
-                                                                                    <option value={item.coin}>{item.coinName}</option>
-                                                                                )
-
-                                                                            })}
-
-                                                                        </select>
-                                                                        <span className="validationErr">{validatioError.coinError}</span>
-                                                                    </div>
 
                                                                     <div className="mb-3">
                                                                         <label

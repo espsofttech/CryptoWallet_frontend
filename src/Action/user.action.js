@@ -112,6 +112,10 @@ export const getProfileAction = (data) => {
    return getRequest(`getUserDetailsById/${data}`).then(res => { return res.data })
 }
 
+export const getProfilesAction = (data) => {
+   return postRequest(`getUsersDetailsById`, data).then(res => { return res.data })
+}
+
 export const UpdateProfileAction = (data) => {
    return putRequestFormData(`updateUser/${data.id}`, data).then(res => { return res.data })
 }
